@@ -1,5 +1,5 @@
 <!-- Footer.svelte -->
-<footer class="bg-gray-800">
+<footer class="bg-gray-800 mt-auto mb-0">
   <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     <div class="flex justify-center space-x-6">
       <a href="#" class="text-gray-400 hover:text-white">
