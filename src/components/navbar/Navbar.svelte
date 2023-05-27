@@ -79,7 +79,7 @@
 						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 						<a href="/" class="nav-bar-selected" aria-current="page">Home</a>
 						<a href="/blog" class="nav-bar-default">My Blog</a>
-						<a href="#" class="nav-bar-default">About</a>
+						<a href="/about" class="nav-bar-default">About</a>
 						<a href="#" class="nav-bar-default">Contact</a>
 					</div>
 				</div>
