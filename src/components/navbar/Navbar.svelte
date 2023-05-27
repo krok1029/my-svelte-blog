@@ -1,15 +1,21 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import type { Page } from '@sveltejs/kit';
 	import ProfileDropdown from './ProfileDropdown.svelte';
 	import MobileMenuDropdown from './MobileMenuDropdown.svelte';
+	import { navbarList } from '$lib/const';
 
 	let showMainMenu = false;
 	const handleMainIconClick = () => {
 		showMainMenu = !showMainMenu;
 	};
+
 	let showUserMenu = false;
 	const handleUserIconClick = () => {
 		showUserMenu = true;
 	};
+	const checkCurrentUrl = (current: Page, url: string) =>
+		current.url.pathname === url ? 'nav-bar-selected' : 'nav-bar-default';
 </script>
 
 <nav class="bg-gray-800">
@@ -77,10 +83,9 @@
 				<div class="hidden sm:ml-6 sm:block">
 					<div class="flex space-x-4">
 						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-						<a href="/" class="nav-bar-selected" aria-current="page">Home</a>
-						<a href="/blog" class="nav-bar-default">My Blog</a>
-						<a href="/about" class="nav-bar-default">About</a>
-						<a href="#" class="nav-bar-default">Contact</a>
+						{#each navbarList as navbar}
+							<a href={navbar.link} class={checkCurrentUrl($page, navbar.link)}>{navbar.text}</a>
+						{/each}
 					</div>
 				</div>
 			</div>

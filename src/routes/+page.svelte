@@ -3,8 +3,4 @@
 
 </div>
 
-<style lang="postcss">
-	:global(html) {
-		background-color: theme(colors.orange.100);
-	}
-</style>
+
