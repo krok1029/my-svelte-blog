@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { User2 } from 'lucide-svelte';
+
 	import { page } from '$app/stores';
 	import type { Page } from '@sveltejs/kit';
 	import ProfileDropdown from './ProfileDropdown.svelte';
@@ -125,11 +127,12 @@
 							aria-haspopup="true"
 						>
 							<span class="sr-only">Open user menu</span>
-							<img
+							<User2 class="rounded-full bg-gray-800 text-gray-400 hover:text-white focus:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"/>
+							<!-- <img
 								class="h-8 w-8 rounded-full"
 								src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
 								alt=""
-							/>
+							/> -->
 						</button>
 					</div>
 

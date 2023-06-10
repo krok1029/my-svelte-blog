@@ -1,13 +1,12 @@
+import type { NavbarList } from "$type/NavbarList"
+
 export enum NAVBAR_URL {
   HOME = '/',
   BLOG = '/blog',
   ABOUT = '/about',
   DEFAULT = '#',
 }
-type NavbarList = {
-  text: string,
-  link: string,
-}
+
 export const navbarList: NavbarList[] = [
   {text: 'Home', link: NAVBAR_URL.HOME},
   {text: 'My Blog', link: NAVBAR_URL.BLOG},
