@@ -20,7 +20,7 @@
           email: userCredentials.user.email || ''
         };
 
-        goto('/protected');
+        goto('/admin');
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -1,4 +1,4 @@
-// src/routes/protected/+page.ts
+// src/routes/admin/+page.ts
 
 import { authUser } from '$lib/authStore';
 import { redirect } from '@sveltejs/kit';

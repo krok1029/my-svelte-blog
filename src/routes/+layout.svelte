@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	// import Test from "$components/Test.svelte"
+
 	import Navbar from '$components/navbar/Navbar.svelte';
 	import Footer from '$components/footer/Footer.svelte';
 
@@ -30,9 +30,9 @@
 		<nav class="flex gap-4">
 			{#if $authUser}
 				<a
-					href="/protected"
+					href="/admin"
 					class="hover:underline"
-					class:active={$page.url.pathname === '/protected'}>Protected</a
+					class:active={$page.url.pathname === '/admin'}>Admin</a
 				>
 				<button class="hover:underline" on:click={handleLogout}>Logout</button>
 			{:else}
