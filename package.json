@@ -37,7 +37,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"cl-editor": "^2.3.0",
 		"firebase": "^10.0.0",
-		"lucide-svelte": "^0.241.0"
+		"lucide-svelte": "^0.241.0",
+		"sass": "^1.64.1"
 	}
 }
