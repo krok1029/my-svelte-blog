@@ -5,51 +5,57 @@
 
 	import { signInWithEmailAndPassword } from 'firebase/auth';
 	import { firebaseAuth } from '$lib/firebase';
-  import { authUser } from '$lib/authStore';
-  
-  let email: string;
-  let password: string;
+	import { authUser } from '$lib/authStore';
 
-  let success: boolean | undefined = undefined;
+	let email: string;
+	let password: string;
 
-  const login = () => {
-    signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then((userCredentials) => {
-        $authUser = {
-          uid: userCredentials.user.uid,
-          email: userCredentials.user.email || ''
-        };
+	let success: boolean | undefined = undefined;
 
-        goto('/admin');
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+	const login = () => {
+		signInWithEmailAndPassword(firebaseAuth, email, password)
+			.then((userCredentials) => {
+				$authUser = {
+					uid: userCredentials.user.uid,
+					email: userCredentials.user.email || ''
+				};
 
-        success = false;
-      });
-  };
+				goto('/admin');
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(errorCode, errorMessage);
+
+				success = false;
+			});
+	};
 </script>
 
-<form
-  class="flex flex-col gap-4 p-8 space-y-4 bg-white sm:w-10/12"
-  on:submit|preventDefault={login}
->
-  <input
-    type="email"
-    placeholder="Email"
-    class="px-4 py-2 border border-gray-300 rounded-md"
-    required
-    bind:value={email}
-  />
-  <input
-    type="password"
-    placeholder="Password"
-    class="px-4 py-2 border border-gray-300 rounded-md"
-    required
-    bind:value={password}
-  />
+<div class="login-form flex justify-center p-4 pt-24">
+	<form
+		class="flex flex-col gap-4 p-8 bg-slate-400 sm:w-4/12 rounded"
+		on:submit|preventDefault={login}
+	>
+		<label for="email" class="text-gray-100">Email</label>
+		<input
+			type="email"
+			placeholder="Email"
+			class="px-4 py-2 border border-gray-300 rounded-md"
+			required
+			bind:value={email}
+		/>
+		<label for="password" class="text-gray-100">Password</label>
+		<input
+			type="password"
+			placeholder="Password"
+			class="px-4 py-2 border border-gray-300 rounded-md"
+			required
+			bind:value={password}
+		/>
 
-  <button type="submit" class="default-action">Login</button>
-</form>
+		<button type="submit" class="default-action bg-slate-100 rounded-md py-2 hover:bg-slate-300"
+			>Login</button
+		>
+	</form>
+</div>

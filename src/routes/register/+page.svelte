@@ -14,7 +14,7 @@
 	const register = () => {
 		createUserWithEmailAndPassword(firebaseAuth, email, password)
 			.then((userCredentials) => {
-        console.log(userCredentials);
+				console.log(userCredentials);
 				goto('/login');
 			})
 			.catch((error) => {
@@ -27,27 +27,37 @@
 	};
 </script>
 
-<form
-	class="flex flex-col gap-4 p-8 space-y-4 bg-white sm:w-10/12"
-	on:submit|preventDefault={register}
->
-	<input
-		type="email"
-		placeholder="Email"
-		class="px-4 py-2 border border-gray-300 rounded-md"
-		required
-		bind:value={email}
-	/>
-	<input
-		type="password"
-		placeholder="Password"
-		class="px-4 py-2 border border-gray-300 rounded-md"
-		required
-		bind:value={password}
-	/>
-	{#if !success && success !== undefined}
-		<div class="p-8 text-red-500 bg-red-100">There was an error registering. Please try again.</div>
-	{/if}
+<div class="register-form flex justify-center p-4 pt-24">
+	<form
+		class="flex flex-col gap-4 p-8 bg-slate-400 sm:w-4/12 rounded"
+		on:submit|preventDefault={register}
+	>
+		<label for="email" class="text-gray-100">Email</label>
 
-	<button type="submit" class="default-action">Register</button>
-</form>
+		<input
+			type="email"
+			placeholder="Email"
+			class="px-4 py-2 border border-gray-300 rounded-md"
+			required
+			bind:value={email}
+		/>
+		<label for="password" class="text-gray-100">Password</label>
+
+		<input
+			type="password"
+			placeholder="Password"
+			class="px-4 py-2 border border-gray-300 rounded-md"
+			required
+			bind:value={password}
+		/>
+		{#if !success && success !== undefined}
+			<div class="p-4 text-red-500 bg-red-100 rounded-md">
+				There was an error registering. Please try again.
+			</div>
+		{/if}
+
+		<button type="submit" class="default-action bg-slate-100 rounded-md py-2 hover:bg-slate-300"
+			>Register</button
+		>
+	</form>
+</div>

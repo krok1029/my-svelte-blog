@@ -1,5 +1,10 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { authUser } from '$lib/authStore';
+	import { goto } from '$app/navigation';
+	import { signOut } from 'firebase/auth';
+	import { firebaseAuth } from '$lib/firebase';
+
 	export let showDropdown: boolean;
 
 	let dropdown: HTMLDivElement;
@@ -12,6 +17,16 @@
 	document.addEventListener('click', handleClick, true);
 
 	onDestroy(() => document.removeEventListener('click', handleClick, true));
+	const handleLogout = () => {
+		signOut(firebaseAuth)
+			.then(() => {
+				$authUser = undefined;
+				goto('/login');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 </script>
 
 <div
@@ -23,25 +38,43 @@
 	tabindex="-1"
 >
 	<!-- Active: "bg-gray-100", Not Active: "" -->
-	<a
-		href="#"
-		class="block px-4 py-2 text-sm text-gray-700"
-		role="menuitem"
-		tabindex="-1"
-		id="user-menu-item-0">Your Profile</a
-	>
-	<a
-		href="#"
-		class="block px-4 py-2 text-sm text-gray-700"
-		role="menuitem"
-		tabindex="-1"
-		id="user-menu-item-1">Settings</a
-	>
-	<a
-		href="login"
-		class="block px-4 py-2 text-sm text-gray-700"
-		role="menuitem"
-		tabindex="-1"
-		id="user-menu-item-1">Login / Sign in</a
-	>
+	{#if $authUser}
+		<a
+			href="#"
+			class="block px-4 py-2 text-sm text-gray-700"
+			role="menuitem"
+			tabindex="-1"
+			id="user-menu-item-0">Your Profile</a
+		>
+		<a
+			href="admin"
+			class="block px-4 py-2 text-sm text-gray-700"
+			role="menuitem"
+			tabindex="-1"
+			id="user-menu-item-1">Admin</a
+		>
+		<button
+
+			class="block px-4 py-2 text-sm text-gray-700"
+			role="menuitem"
+			tabindex="-1"
+			on:click={handleLogout}
+			id="user-menu-item-1">Logout</button
+		>
+	{:else}
+		<a
+			href="login"
+			class="block px-4 py-2 text-sm text-gray-700"
+			role="menuitem"
+			tabindex="-1"
+			id="user-menu-item-1">Login</a
+		>
+		<a
+			href="register"
+			class="block px-4 py-2 text-sm text-gray-700"
+			role="menuitem"
+			tabindex="-1"
+			id="user-menu-item-1">Register</a
+		>
+	{/if}
 </div>
