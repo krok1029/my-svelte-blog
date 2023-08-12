@@ -13,3 +13,7 @@ export const navbarList: NavbarList[] = [
   {text: 'About', link: NAVBAR_URL.ABOUT},
   {text: 'Contact me', link: NAVBAR_URL.DEFAULT},
 ]
+
+export enum DATABASE {
+  FIRESTORE = 'Firestore',
+}

@@ -6,7 +6,6 @@
 	import { signInWithEmailAndPassword } from 'firebase/auth';
 	import { firebaseAuth } from '$lib/firebase';
 	import { authUser } from '$lib/authStore';
-	import { addTestDoc, getTestDoc } from '$lib/fireStore/fireStore';
 
 	let email: string;
 	let password: string;
@@ -59,12 +58,4 @@
 			>Login</button
 		>
 	</form>
-	<button
-		class="flex-none m-3 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm"
-		on:click={() => addTestDoc()}>addTESTDOV</button
-	>
-	<button
-		class="flex-none m-3 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm"
-		on:click={() => getTestDoc()}>getTESTDOV</button
-	>
 </div>
