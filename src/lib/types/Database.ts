@@ -1,2 +1,1 @@
-
-export type DatabaseType = 'Firestore';
+export type DatabaseType = 'Firestore' | 'GithubIssue';

@@ -3,15 +3,11 @@
 	import { onMount } from 'svelte';
 	import { blogRepo } from '$lib/repositoryFactory/RepositoryFactory';
 	import type { BlogPost } from '$lib/types/BlogPost';
-	import type { Timestamp } from 'firebase/firestore';
 
 	let blogPosts: BlogPost[] = [];
 	onMount(async () => {
 		blogPosts = await blogRepo.getAllBlogPosts();
 	});
-
-	const format = (timestamp: Timestamp) =>
-		Intl.DateTimeFormat('en-US').format(new Date(timestamp.seconds * 1000));
 </script>
 
 <svelte:head>
@@ -29,7 +25,7 @@
 				<th scope="col" class="px-3 text-center py-4">#</th>
 				<th scope="col" class="px-2 text-left py-4">title</th>
 				<th scope="col" class="px-2 text-left py-4">tag</th>
-				<th scope="col" class="px-6 w-10 text-left py-4">brief</th>
+				<th scope="col" class="px-6 text-left py-4">brief</th>
 				<th scope="col" class="px-6 text-left py-4">createdAt</th>
 				<th scope="col" class="px-6 text-left py-4">updatedAt</th>
 			</tr>
@@ -42,13 +38,9 @@
 					>
 					<td class="whitespace-nowrap text-left px-2 py-4">{blogPost.title}</td>
 					<td class="whitespace-nowrap text-left px-2 py-4">{blogPost.tags}</td>
-					<td class="w-10 text-left px-6 py-4 overflow-auto">{blogPost.brief}</td>
-					<td class="whitespace-nowrap text-left px-6 py-4"
-						>{blogPost.createdAt ? format(blogPost.createdAt) : ''}</td
-					>
-					<td class="whitespace-nowrap text-left px-6 py-4"
-						>{blogPost.updatedAt ? format(blogPost.updatedAt) : ''}</td
-					>
+					<td class="text-left px-6 py-4 overflow-auto">{blogPost.brief}</td>
+					<td class="whitespace-nowrap text-left px-6 py-4">{blogPost.createdAt}</td>
+					<td class="whitespace-nowrap text-left px-6 py-4">{blogPost.updatedAt}</td>
 				</tr>
 			{/each}
 		</tbody>

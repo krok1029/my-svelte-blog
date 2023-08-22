@@ -16,4 +16,5 @@ export const navbarList: NavbarList[] = [
 
 export enum DATABASE {
   FIRESTORE = 'Firestore',
+  GITHUB_ISSUE = 'GithubIssue',
 }
