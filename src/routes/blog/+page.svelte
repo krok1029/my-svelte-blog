@@ -7,9 +7,8 @@
 </script>
 
 <div class="container mx-auto p-4">
-	<h1 class="text-3xl font-bold underline mb-4">Hello world!</h1>
   <div class="grid grid-cols-4 gap-4">
-    {#each data.testCards as card} 
+    {#each data.blogPosts as card} 
       <Card card={card} />
     {/each}
   </div>

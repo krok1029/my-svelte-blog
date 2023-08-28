@@ -12,7 +12,7 @@
 	const handleClick = async () => {
 		const res = await blogRepo.createBlogPost({
 			title,
-			tags: inputTags.split(','),
+			tags: inputTags?.split(','),
 			brief,
 			content
 		});
