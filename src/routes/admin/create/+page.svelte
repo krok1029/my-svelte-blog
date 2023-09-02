@@ -61,17 +61,6 @@
 						bind:value={inputTags}
 					/>
 				</div>
-
-				<div class="mb-3 col-span-12">
-					<label for="brief">Brief</label>
-					<textarea
-						class="px-2 w-full rounded border-2 border-slate-200 placeholder-slate-400"
-						name="brief"
-						id="brief"
-						placeholder="brief"
-						bind:value={brief}
-					/>
-				</div>
 			</header>
 
 			<div class="markdown-editor rounded">

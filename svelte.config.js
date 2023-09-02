@@ -16,7 +16,7 @@ const config = {
 			$components: 'src/components',
 			$actions: 'src/actions',
 			$lib: 'src/lib',
-			$asset: 'src/lib/assets',
+			$asset: 'src/assets',
 			$type: 'src/lib/types',
 		}
 	}

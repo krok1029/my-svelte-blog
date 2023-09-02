@@ -1,6 +1,7 @@
 import BlogRepository from './BlogRepository';
 import type { BlogPost } from '$lib/types/BlogPost';
 import octokit, { octokitPath } from '$lib/octokit';
+import { blogBriefBuilder } from '$lib/builder/builder';
 
 export default class GithubIssueBlogRepository extends BlogRepository {
 	constructor() {
@@ -40,7 +41,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 				id: data.number,
 				title: data.title,
 				tags: data.labels.map((label: any) => label.name),
-				brief: data.body.substring(0, 30),
+				brief: blogBriefBuilder(data.body),
 				content: data.body,
 				createdAt: data.created_at,
 				updatedAt: data.updated_at

@@ -5,13 +5,14 @@ export enum NAVBAR_URL {
   BLOG = '/blog',
   ABOUT = '/about',
   DEFAULT = '#',
+  PRACTICE = '/practices',
 }
 
 export const navbarList: NavbarList[] = [
   {text: 'Home', link: NAVBAR_URL.HOME},
   {text: 'My Blog', link: NAVBAR_URL.BLOG},
   {text: 'About', link: NAVBAR_URL.ABOUT},
-  {text: 'Contact me', link: NAVBAR_URL.DEFAULT},
+  {text: 'Practice', link: NAVBAR_URL.PRACTICE},
 ]
 
 export enum DATABASE {
