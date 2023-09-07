@@ -1,1 +1,7 @@
-[]
+[
+	{
+		"id": 1,
+		"type": "css",
+		"title": "Reveal Elements on Page Scroll with Animation using Vanilla Javascript"
+	}
+]
