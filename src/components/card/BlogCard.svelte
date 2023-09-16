@@ -1,7 +1,7 @@
 <script lang="ts">
 	import defaultImageUrl from '$asset/card-top.jpg';
-	import type { Card } from '$type/Card';
-	export let card: Card;
+	import type { BlogCard } from '$type/Card';
+	export let card: BlogCard;
 </script>
 
 <div class="max-w-sm rounded overflow-hidden shadow-lg">
