@@ -5,19 +5,11 @@
 	import { marked } from 'marked';
 
 	export let data;
-	let { content = '', title = '', tags, brief = '' } = data.blogPost;
-	// let content = `	UPdate my blog`;
-	// let title: string;
+	let { id ,content = '', title = '', tags, brief = '' } = data.blogPost;
 	let inputTags: string = tags?.join(',') || '';
-	// let brief: string;
 
 	const handleClick = async () => {
-		const res = await blogRepo.createBlogPost({
-			title,
-			tags: inputTags.split(','),
-			brief,
-			content
-		});
+		const res = await blogRepo.updateBlogPost(id, title, inputTags.split(','), content);
 		if (res) {
 			alert('更新成功！');
 		}

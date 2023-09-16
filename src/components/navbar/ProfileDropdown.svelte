@@ -47,7 +47,7 @@
 			id="user-menu-item-0">Your Profile</a
 		>
 		<a
-			href="admin"
+			href="/admin"
 			class="block px-4 py-2 text-sm text-gray-700"
 			role="menuitem"
 			tabindex="-1"
@@ -63,14 +63,14 @@
 		>
 	{:else}
 		<a
-			href="login"
+			href="/login"
 			class="block px-4 py-2 text-sm text-gray-700"
 			role="menuitem"
 			tabindex="-1"
 			id="user-menu-item-1">Login</a
 		>
 		<a
-			href="register"
+			href="/register"
 			class="block px-4 py-2 text-sm text-gray-700"
 			role="menuitem"
 			tabindex="-1"

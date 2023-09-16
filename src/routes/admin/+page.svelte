@@ -9,6 +9,12 @@
 	onMount(async () => {
 		blogPosts = await blogRepo.getAllBlogPosts();
 	});
+	const handleDelete = async (id: number) => {
+		const res = await blogRepo.deleteBlogPost(id);
+		if (res) {
+			alert('刪除成功！');
+		}
+	};
 </script>
 
 <svelte:head>
@@ -44,9 +50,7 @@
 					<td class="whitespace-nowrap text-left px-6 py-4">{blogPost.createdAt}</td>
 					<td class="whitespace-nowrap text-left px-6 py-4">{blogPost.updatedAt}</td>
 					<td class="whitespace-nowrap text-center px-6 py-4"
-						><button
-							class="mx-auto"
-							on:click={async () => await blogRepo.deleteBlogPost(Number(blogPost.id))}
+						><button class="mx-auto" on:click={() => handleDelete(Number(blogPost.id))}
 							><Trash2 /></button
 						></td
 					>
