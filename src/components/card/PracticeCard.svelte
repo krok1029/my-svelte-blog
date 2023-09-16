@@ -8,7 +8,7 @@
 </script>
 
 <div class="rounded shadow-lg flex hover:cursor-pointer" on:click={go} on:keydown={() => {}}>
-	<img class="w-1/6" src={card?.image || defaultImageUrl} alt="Sunset in the mountains" />
+	<img class="w-1/6" class:object-contain={!!card?.image} src={card?.image || defaultImageUrl} alt="Sunset in the mountains" />
 
 	<div class="w-fill">
 		<div class="px-6 pt-4">

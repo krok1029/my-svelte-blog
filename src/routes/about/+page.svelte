@@ -115,7 +115,7 @@
 			</div>
 		</div>
 	</div>
-	<div>
+	<div class="mt-6">
 		<div class="text-3xl">學歷</div>
 		<hr class="border-t-2 my-3" />
 		<div class="grid grid-cols-11 gap-1">
