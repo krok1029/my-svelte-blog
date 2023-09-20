@@ -6,9 +6,11 @@
 </script>
 
 <div class="container mx-auto p-4">
-  <div class="">
-    {#each data.practice as card} 
-      <Card card={card} />
-    {/each}
-  </div>
+	<div class="">
+		{#each data.practice as card}
+			<div class="my-3">
+				<Card {card} />
+			</div>
+		{/each}
+	</div>
 </div>
