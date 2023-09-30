@@ -25,12 +25,13 @@
 				success = false;
 			});
 	};
+	const disableRegister = () => {}
 </script>
 
 <div class="register-form flex justify-center p-4 pt-24">
 	<form
 		class="flex flex-col gap-4 p-8 bg-slate-400 sm:w-4/12 rounded"
-		on:submit|preventDefault={register}
+		on:submit|preventDefault={disableRegister}
 	>
 		<label for="email" class="text-gray-100">Email</label>
 

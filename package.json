@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/marked": "^5.0.1",
 		"cl-editor": "^2.3.0",
