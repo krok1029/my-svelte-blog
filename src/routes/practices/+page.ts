@@ -1,5 +1,5 @@
 import type { PracticeCard } from '$lib/types/Card';
-import data from './practice.json'
+import data from './practice'
 
 export const load = async () => {
 
