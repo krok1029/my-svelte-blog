@@ -9,7 +9,7 @@
 			required
 		/>
 		<span
-			class="input_span peer-focus:bg-[#1d2b3a] peer-valid:bg-[#1d2b3a] peer-focus:text-blue-500 peer-valid:text-blue-500"
+			class="input_span text-gray-700 peer-focus:bg-[#1d2b3a] peer-valid:bg-[#1d2b3a] peer-focus:text-blue-500 peer-valid:text-blue-500"
 			>First Name</span
 		>
 	</div>
@@ -20,7 +20,7 @@
 			required
 		/>
 		<span
-			class="input_span peer-focus:bg-blue-500 peer-valid:bg-blue-500 peer-focus:text-[#1d2b3a] peer-valid:text-[#1d2b3a]"
+			class="input_span text-gray-700 peer-focus:bg-blue-500 peer-valid:bg-blue-500 peer-focus:text-[#1d2b3a] peer-valid:text-[#1d2b3a]"
 			>Last Name</span
 		>
 	</div>
@@ -36,6 +36,6 @@
 		background-color: #1d2b3a;
 	}
 	.input_span {
-		@apply uppercase rounded peer-focus:text-sm peer-focus:px-[5px] peer-focus:py-[0px] peer-focus:translate-x-[10px] peer-focus:-translate-y-[7px] transition-all duration-300 peer-valid:text-sm peer-valid:px-[10px] peer-valid:py-[0px]  peer-valid:translate-x-[10px] peer-valid:-translate-y-[7px]   absolute left-0 p-[10px] pointer-events-none text-base text-gray-700;
+		@apply uppercase rounded peer-focus:text-sm peer-focus:px-[5px] peer-focus:py-[0px] peer-focus:translate-x-[10px] peer-focus:-translate-y-[7px] transition-all duration-300 peer-valid:text-sm peer-valid:px-[10px] peer-valid:py-[0px]  peer-valid:translate-x-[10px] peer-valid:-translate-y-[7px] absolute left-0 p-[10px] pointer-events-none text-base ;
 	}
 </style>

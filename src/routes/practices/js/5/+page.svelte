@@ -18,7 +18,7 @@
 		}
 	};
 
-	const aaa = (name: string, content: string) => fileRepo.createFileContent(name, content);
+	const uploadImgToGithub = (name: string, content: string) => fileRepo.createFileContent(name, content);
 </script>
 
 <input bind:files type="file" name="image" id="image_input " />
@@ -29,4 +29,4 @@
 	</p>
 {/if}
 
-<button type="button" on:click={() => aaa(files[0].name, imgSrc)}> 上傳 </button>
+<button type="button" on:click={() => uploadImgToGithub(files[0].name, imgSrc)}> 上傳 </button>
