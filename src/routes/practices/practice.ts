@@ -20,6 +20,16 @@ const practices = [
 		id: 4,
 		type: 'js',
 		title: 'Simple metronome'
+	},
+	{
+		id: 5,
+		type: 'js',
+		title: 'Image Hosting'
+	},
+	{
+		id: 6,
+		type: 'css',
+		title: 'Input Field Text Animation'
 	}
 ];
 export default practices;
