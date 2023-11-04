@@ -1,5 +1,4 @@
 <script lang="ts">
-	let value0 = 0;
 	let value1 = 10;
 	let value2 = 65;
 	let value3 = 90;
@@ -13,15 +12,14 @@
 		}
 	};
 	const label = (value: number) => `${value}%`;
-	const items = ['HTML', 'HTML', 'CSS', 'Javascript'];
-	const values = [value0, value1, value2, value3];
+	const items = ['AAA', 'BBB', 'CCC'];
+	const values = [value1, value2, value3];
 </script>
 
 <div class="body">
 	<div class="container">
 		{#each items as item, index}
 			<div class="box" style:--i={label(values[index])} style:--clr={level(values[index])}>
-				<input style="margin-bottom: 30px;" bind:value={values[index]} />
 				<div class="circle"><h2>{values[index]}<small>%</small></h2></div>
 				<h3>{item}</h3>
 			</div>
@@ -63,19 +61,12 @@
 		position: relative;
 		width: 150px;
 		height: 150px;
-		/* background: conic-gradient(
+		background: conic-gradient(
 			from 0deg,
 			var(--clr) 0%,
 			var(--clr) 0% var(--i),
 			#333 var(--i),
 			#333 100%
-		); */
-		background: conic-gradient(
-			from 0deg,
-			red 0%,
-			pink 30%,
-			blue 60%,
-			gray 100%
 		);
 		border-radius: 50%;
 
