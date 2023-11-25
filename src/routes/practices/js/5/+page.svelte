@@ -30,3 +30,6 @@
 {/if}
 
 <button type="button" class="rounded border-blue-700 bg-blue-700 text-slate-100 px-[10px] py-[3px] mt-3" on:click={() => uploadImgToGithub(files[0].name, imgSrc)}> 上傳 </button>
+
+
+<div>dsfijdlsaifj</div>
