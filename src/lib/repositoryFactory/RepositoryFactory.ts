@@ -23,7 +23,7 @@ export default class RepositoryFactory {
 			case DATABASE.GITHUB_ISSUE:
 				return new GithubFileContentRepository();
 			default:
-				throw new Error('不支援的資料庫類型');
+				throw new Error('不支援的資料庫類型 ');
 		}
 	}
 }
