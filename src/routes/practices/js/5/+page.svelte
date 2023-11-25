@@ -38,7 +38,3 @@
 >
 	上傳
 </button>
-
-
-<div>dsfijdl</div>
-<div>dsdfasf</div>
