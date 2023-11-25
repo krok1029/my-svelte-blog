@@ -18,7 +18,8 @@
 		}
 	};
 
-	const uploadImgToGithub = (name: string, content: string) => fileRepo.createFileContent(name, content);
+	const uploadImgToGithub = (name: string, content: string) =>
+		fileRepo.createFileContent(name, content);
 </script>
 
 <input bind:files type="file" name="image" id="image_input " />
@@ -29,7 +30,15 @@
 	</p>
 {/if}
 
-<button type="button" class="rounded border-blue-700 bg-blue-700 text-slate-100 px-[10px] py-[3px] mt-3" on:click={() => uploadImgToGithub(files[0].name, imgSrc)}> 上傳 </button>
+<div>dsfijdlsaifj</div>
+<button
+	type="button"
+	class="rounded border-blue-700 bg-blue-700 text-slate-100 px-[10px] py-[3px] mt-3"
+	on:click={() => uploadImgToGithub(files[0].name, imgSrc)}
+>
+	上傳
+</button>
 
 
 <div>dsfijdl</div>
+<div>dsdfasf</div>
