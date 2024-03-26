@@ -36,6 +36,7 @@
 	function toggleMetronome() {
 		if (isPlaying) {
 			clearInterval(interval);
+			beatCount = 0
 		} else {
 			interval = setInterval(() => {
 				playSound();
