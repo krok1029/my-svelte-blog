@@ -40,6 +40,12 @@ const practices = [
 		title: 'Input Field Text Animation',
 		image:
 			'https://github.com/krok1029/my-svelte-blog/blob/image/src/assets/image/imageHosting.png?raw=true'
+	},
+	{
+		id: 7,
+		type: 'css',
+		title: 'Digital Clock',
+		image: ''
 	}
 ];
 export default practices;
