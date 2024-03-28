@@ -7,7 +7,7 @@
 
 <div class="root min-h-screen flex flex-col">
 	<Navbar />
-	<div class="p-4">
+	<div>
 		<slot />
 	</div>
 	<Footer />
