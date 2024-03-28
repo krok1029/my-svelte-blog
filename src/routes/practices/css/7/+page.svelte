@@ -4,7 +4,7 @@
 	setInterval(() => (date = new Date()), 1000);
 </script>
 
-<div class="container bg-slate-600 h-screen w-screen flex items-center justify-center gap-20">
+<div class="bg-slate-600 h-screen flex items-center justify-center gap-20">
 	<div class="section">
 		<span class="time">{date.getHours()}</span>
 		<span class="title">Hours</span>
