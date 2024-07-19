@@ -46,6 +46,12 @@ const practices = [
 		type: 'css',
 		title: 'Digital Clock',
 		image: ''
+	},
+	{
+		id: 8,
+		type: 'js',
+		title: 'navigator share',
+		image: ''
 	}
 ];
 export default practices;
