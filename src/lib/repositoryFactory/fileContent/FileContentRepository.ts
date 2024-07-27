@@ -7,15 +7,16 @@ export default class FileContentRepository {
 
 	// Create
 	createFileContent(fileName: string, fileContent: string) {
-    //
-  }
+		//
+	}
 
 	// Read
-	getAllFileContents(): Promise<BlogPost[]> {
+	getAllFileContents(path: string): Promise<Array<{ name: string; path: string }>> {
 		// 在這裡實現讀取所有文章的邏輯，可能涉及查詢資料庫中的所有文章
 		// 假設 BlogPost 是表示部落格文章的介面或類別
 		// 例如：interface BlogPost { title: string; tags: string[]; content: string; }
-		return Promise.resolve([]); // 假設這裡返回一個 BlogPost 陣列
+		// return Promise.resolve([]); // 假設這裡返回一個 BlogPost 陣列
+		return Promise.resolve([]);
 	}
 
 	// Read

@@ -18,6 +18,7 @@ export const octokitPath = {
 	updateBlogPost: (id: string | number) => `PATCH ${fixPath}/issues/${id}`,
 	deleteBlogPost: (id: string | number) => `PATCH ${fixPath}/issues/${id}`,
 	createOrUpdateFile: (filename: string) =>
-		`PUT ${fixPath}/contents/${PUBLIC_GIT_FILE_PATH + filename}`
+		`PUT ${fixPath}/contents/${PUBLIC_GIT_FILE_PATH + filename}`,
+	getAllFiles: (path: string) => `GET ${fixPath}/contents/src/assets/image/${path}`
 };
 export default octokit;
