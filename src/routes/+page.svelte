@@ -59,6 +59,11 @@
 				path="https://fight-game-steel.vercel.app/"
 				imgPath="https://github.com/krok1029/my-svelte-blog/blob/image/src/assets/image/%E6%88%AA%E5%9C%96%202024-03-10%20%E4%B8%8B%E5%8D%883.44.51.png?raw=true"
 			/>
+			<SideProjectCard
+				projecName="svelte weather app"
+				path="https://my-svelte-weather.vercel.app/"
+				imgPath="https://github.com/krok1029/my-svelte-blog/blob/image/src/assets/image/%E6%88%AA%E5%9C%96_2024-08-03.png?raw=true"
+			/>
 		</div>
 	</section>
 </div>
