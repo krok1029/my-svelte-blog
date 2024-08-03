@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { fileRepo } from '$lib/repositoryFactory/RepositoryFactory';
+	import { onMount } from 'svelte';
 
 	let files: FileList;
 	let imgSrc: string;
@@ -21,18 +22,20 @@
 	const uploadImgToGithub = async (name: string, content: string) => {
 		await fileRepo.createFileContent(nameTrimer(name), content);
 		alert('上傳成功');
+		window.location.reload()
 	};
 	let imgArr: Array<{ name: string; path: string }> = [];
-	const click = async () => {
+
+	onMount(async () => {
 		const result = await fileRepo.getAllFileContents();
 		imgArr = result;
-	};
+	});
 	const imgClick = (str: string) => {
 		navigator.clipboard.writeText(str);
 	};
 </script>
 
-<div class="grid grid-cols-[1fr_3fr] h-[63vh]">
+<div class="grid grid-cols-[1fr_3fr] h-[63vh] p-3">
 	<div>
 		<input bind:files type="file" name="image" id="image_input " />
 		<img src={imgSrc} alt="" srcset="" width={imgSrc && 100} height={imgSrc && 100} />
@@ -50,22 +53,24 @@
 			上傳
 		</button>
 	</div>
-	<div class="bg-slate-50">
-		<div>title</div>
-		<div class="grid grid-cols-3 gap-3">
+	<div class=" h-full overflow-auto">
+		<div class="mb-3">點擊圖片複製連結</div>
+		<div class="grid grid-cols-3 gap-3 h-full">
 			{#each imgArr as { name, path }, i}
 				<div
+					class="border rounded-md border-gray-400 p-3 cursor-pointer"
 					on:keydown={() => {}}
 					on:click={() =>
 						imgClick(`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`)}
 				>
 					<img
+						class="object-fill max-h-32 overflow-hidden"
 						src={`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`}
 						alt={name}
+						title={name}
 					/>
 				</div>
 			{/each}
 		</div>
 	</div>
-	<button on:click={click}>test</button>
 </div>
