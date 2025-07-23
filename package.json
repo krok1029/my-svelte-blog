@@ -38,12 +38,12 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-vercel": "^4.0.0",
+		"@sveltejs/adapter-vercel": "^5.8.0",
 		"@tailwindcss/typography": "^0.5.9",
 		"@types/marked": "^5.0.1",
 		"cl-editor": "^2.3.0",
 		"firebase": "^10.0.0",
-		"lucide-svelte": "^0.241.0",
+		"lucide-svelte": "^0.525.0",
 		"marked": "^5.1.2",
 		"octokit": "^3.1.0",
 		"sass": "^1.64.1"
