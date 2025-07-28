@@ -11,6 +11,9 @@ export type BlogCard = {
 export type PracticeCard = {
   id: number;
   title: string;
-  type: 'css';
+  type: 'css' | 'js';
   image?: string;
+  description?: string; // 練習描述
+  difficulty?: 'easy' | 'medium' | 'hard'; // 難度等級
+  tags?: string[]; // 相關標籤
 }
