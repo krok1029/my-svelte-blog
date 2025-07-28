@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { User2 } from 'lucide-svelte';
+	import { User2, Menu, X } from 'lucide-svelte';
 
 	import { page } from '$app/stores';
 	import type { Page } from '@sveltejs/kit';
@@ -14,119 +14,65 @@
 
 	let showUserMenu = false;
 	const handleUserIconClick = () => {
-		showUserMenu = true;
+		showUserMenu = !showUserMenu;
 	};
 	const checkCurrentUrl = (current: Page, url: string) =>
 		current.url.pathname === url ? 'nav-bar-selected' : 'nav-bar-default';
 </script>
 
-<nav class="bg-gray-800">
-	<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+<nav class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 items-center justify-between">
 			<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 				<!-- Mobile menu button-->
 				<button
 					on:click={handleMainIconClick}
 					type="button"
-					class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
 					aria-controls="mobile-menu"
 					aria-expanded="false"
 				>
 					<span class="sr-only">Open main menu</span>
-					<!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-					<svg
-						class="block h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-						/>
-					</svg>
-					<!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-					<svg
-						class="hidden h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="currentColor"
-						aria-hidden="true"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-					</svg>
+					{#if showMainMenu}
+						<X class="h-6 w-6" />
+					{:else}
+						<Menu class="h-6 w-6" />
+					{/if}
 				</button>
 			</div>
+			
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<div class="flex flex-shrink-0 items-center">
-					<img
-						class="block h-8 w-auto lg:hidden"
-						src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-						alt="Your Company"
-					/>
-					<img
-						class="hidden h-8 w-auto lg:block"
-						src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-						alt="Your Company"
-					/>
+					<a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+						李明峯
+					</a>
 				</div>
-				<div class="hidden sm:ml-6 sm:block">
-					<div class="flex space-x-4">
-						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+				<div class="hidden sm:ml-8 sm:block">
+					<div class="flex space-x-1">
 						{#each navbarList as navbar}
 							<a href={navbar.link} class={checkCurrentUrl($page, navbar.link)}>{navbar.text}</a>
 						{/each}
 					</div>
 				</div>
 			</div>
-			<div
-				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-			>
-
-
+			
+			<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 				<!-- Profile dropdown -->
 				<div class="relative ml-3">
 					<div>
 						<button
 							on:click={handleUserIconClick}
 							type="button"
-							class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+							class="flex rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
 							id="user-menu-button"
 							aria-expanded="false"
 							aria-haspopup="true"
 						>
 							<span class="sr-only">Open user menu</span>
-							<User2 class="rounded-full bg-gray-800 text-gray-400 hover:text-white focus:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"/>
-							<!-- <img
-								class="h-8 w-8 rounded-full"
-								src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-								alt=""
-							/> -->
+							<User2 class="h-6 w-6"/>
 						</button>
 					</div>
 
-					<!--
-            Dropdown menu, show/hide based on menu state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
 					{#if showUserMenu}
 						<ProfileDropdown bind:showDropdown={showUserMenu} />
 					{/if}
@@ -143,11 +89,10 @@
 
 <style lang="postcss">
 	.nav-bar-selected {
-		@apply bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium;
+		@apply bg-purple-100 text-purple-700 rounded-lg px-3 py-2 text-sm font-medium;
 	}
 
 	.nav-bar-default {
-		@apply text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium;
+		@apply text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg px-3 py-2 text-sm font-medium transition-colors;
 	}
-
 </style>

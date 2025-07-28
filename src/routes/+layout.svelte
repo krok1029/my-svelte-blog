@@ -7,14 +7,18 @@
 
 <div class="root min-h-screen flex flex-col">
 	<Navbar />
-	<div>
+	<main class="flex-1">
 		<slot />
-	</div>
+	</main>
 	<Footer />
 </div>
 
 <style lang="postcss">
 	:global(html) {
-		/* background-color: theme(colors.orange.100); */
+		scroll-behavior: smooth;
+	}
+	
+	:global(body) {
+		@apply bg-white text-gray-900;
 	}
 </style>
