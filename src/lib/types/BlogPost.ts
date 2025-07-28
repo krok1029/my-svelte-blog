@@ -5,6 +5,7 @@ export type BlogPost = {
 	tags?: string[];
 	brief?: string;
 	content?: string;
-	createdAt?: Timestamp;
-	updatedAt?: Timestamp;
+	image?: string; // 文章封面圖片
+	createdAt?: Timestamp | string;
+	updatedAt?: Timestamp | string;
 };
