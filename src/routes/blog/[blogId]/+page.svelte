@@ -207,6 +207,10 @@
 		@apply border-l-4 border-purple-300 bg-purple-50 pl-4 py-2 my-6 italic;
 	}
 	
+	:global(.prose code) {
+		@apply text-gray-200 bg-transparent px-0;
+	}
+	
 	:global(.prose ul) {
 		@apply my-4;
 	}
