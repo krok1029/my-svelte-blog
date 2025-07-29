@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PracticeLayout from '$components/PracticeLayout.svelte';
+	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { fileRepo } from '$lib/repositoryFactory/RepositoryFactory';
 	import { onMount } from 'svelte';
 	import { Upload, Copy, Check, Image, Trash2, Download, Eye } from 'lucide-svelte';

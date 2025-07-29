@@ -20,7 +20,6 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 					'X-GitHub-Api-Version': '2022-11-28'
 				}
 			});
-			console.log(result);
 			return true;
 		} catch (e) {
 			console.error('Error adding document: ', e);
@@ -46,10 +45,9 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 				createdAt: data.created_at,
 				updatedAt: data.updated_at
 			}));
-			console.log(posts);
 			return posts;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error getting all documents: ', e);
 			throw e;
 		}
 	}
@@ -74,7 +72,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			};
 			return blogPost;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error getting document: ', e);
 			throw e;
 		}
 	}
@@ -102,7 +100,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			};
 			return blogPost;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error updating document: ', e);
 			throw e;
 		}
 	}
@@ -127,7 +125,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			};
 			return blogPost;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error deleting document: ', e);
 			throw e;
 		}
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PracticeLayout from '$components/PracticeLayout.svelte';
+	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	
 	let value1 = 10;
 	let value2 = 65;

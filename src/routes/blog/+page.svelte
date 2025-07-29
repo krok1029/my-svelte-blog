@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Card from '$components/card/BlogCard.svelte';
+  import Card from './components/BlogCard.svelte';
   import { Search, Filter, Calendar, Tag } from 'lucide-svelte';
   import type { PageData } from './$types';
 

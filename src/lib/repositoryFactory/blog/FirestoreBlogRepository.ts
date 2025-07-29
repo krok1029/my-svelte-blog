@@ -23,7 +23,7 @@ export default class FirestoreBlogRepository extends BlogRepository {
 			console.log('Document written with ID: ', docRef.id);
 			return true;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error getting document: ', e);
 			throw e;
 		}
 	}
@@ -40,7 +40,7 @@ export default class FirestoreBlogRepository extends BlogRepository {
 			console.log('Blog posts', blogPosts);
 			return blogPosts;
 		} catch (e) {
-			console.error('Error adding document: ', e);
+			console.error('Error getting all documents: ', e);
 			throw e;
 		}
 	}

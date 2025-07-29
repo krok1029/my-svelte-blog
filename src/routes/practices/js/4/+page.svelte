@@ -1,6 +1,6 @@
 <script lang="ts">
   import Metronome from './Metronome.svelte';
-  import PracticeLayout from '$components/PracticeLayout.svelte';
+  import PracticeLayout from '../../components/PracticeLayout.svelte';
 
   const practiceInfo = {
     id: 4,

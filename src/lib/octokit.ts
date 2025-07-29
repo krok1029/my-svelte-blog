@@ -6,9 +6,7 @@ import {
 	PUBLIC_GIT_FILE_PATH
 } from '$env/static/public';
 
-const octokit = new Octokit({
-	auth: PUBLIC_CLASS_GITHUB_TOKEN
-});
+const octokit = new Octokit();
 
 const fixPath = `/repos/${PUBLIC_GITHUB_OWNER}/${PUBLIC_GITHUB_REPO}`;
 export const octokitPath = {

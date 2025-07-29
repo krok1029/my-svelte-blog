@@ -14,7 +14,7 @@ export default class GithubFileContentRepository extends FileContentRepository {
 	async createFileContent(fileName: string, fileContent: string): Promise<void> {
 		const regex = /data:.*base64,/;
 
-		const result = await octokit
+		await octokit
 			.request(octokitPath.createOrUpdateFile(fileName), {
 				owner: 'krok1029',
 				repo: 'my-svelte-blog',
@@ -28,13 +28,9 @@ export default class GithubFileContentRepository extends FileContentRepository {
 					'X-GitHub-Api-Version': '2022-11-28'
 				}
 			})
-			.then((response) => {
-				console.log(`Image uploaded to branch ${PUBLIC_GIT_TARGET_BRANCH}. URL: ${response}`);
-			})
 			.catch((error) => {
 				console.error('Error uploading image:', error);
 			});
-		console.log(result);
 	}
 	async getAllFileContents(
 		path = 'src/assets/image'
@@ -58,7 +54,6 @@ export default class GithubFileContentRepository extends FileContentRepository {
 					type: string;
 					url: string;
 				}>;
-				console.log(`response. URL:`, imgArr);
 				return imgArr.map(({ name, path }) => ({ name, path }));
 			})
 			.catch((error) => {

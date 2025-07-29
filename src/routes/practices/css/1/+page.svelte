@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Box from './Box.svelte';
-	import PracticeLayout from '$components/PracticeLayout.svelte';
+	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	
 	const boxesArray = new Array(60);
 	

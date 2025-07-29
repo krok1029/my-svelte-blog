@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PracticeLayout from '$components/PracticeLayout.svelte';
+	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { Share2, Copy, Check, Smartphone, Globe, Link } from 'lucide-svelte';
 	
 	let shareStatus = '';

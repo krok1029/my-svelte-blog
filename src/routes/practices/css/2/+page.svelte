@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PracticeLayout from '$components/PracticeLayout.svelte';
+	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import inagea from '$asset/image/pokemon/001_妙蛙種子.png';
 	import inageb from '$asset/image/pokemon/004_小火龍.png';
 	import inagec from '$asset/image/pokemon/007_傑尼龜.png';

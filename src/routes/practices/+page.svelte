@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Card from '$components/card/PracticeCard.svelte';
+	import Card from './components/PracticeCard.svelte';
 	import { Search, Filter, Code, Palette, Zap } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
