@@ -1,17 +1,11 @@
 <script lang="ts">
-	import { blogRepo } from '$lib/repositoryFactory/RepositoryFactory';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
-	import { 
-		Save, 
-		ArrowLeft, 
-		Eye, 
-		EyeOff, 
-		FileText, 
-		Tag, 
-		AlignLeft,
-		Loader2
-	} from 'lucide-svelte';
+	import { enhance } from '$app/forms';
+	import { Save, ArrowLeft, Eye, EyeOff, FileText, Tag, AlignLeft, Loader2 } from 'lucide-svelte';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 
 	let content = `# 我的新文章
 
@@ -40,44 +34,15 @@ console.log('Hello, World!');
 	let inputTags: string = '';
 	let brief: string = '';
 	let showPreview = true;
-	let isSaving = false;
-	let saveMessage = '';
+	let isSubmitting = false;
 
-	const handleSave = async () => {
-		if (!title.trim()) {
-			saveMessage = '請輸入文章標題';
-			return;
-		}
-
-		if (!content.trim()) {
-			saveMessage = '請輸入文章內容';
-			return;
-		}
-
-		isSaving = true;
-		saveMessage = '';
-
-		try {
-			const res = await blogRepo.createBlogPost({
-				title: title.trim(),
-				tags: inputTags ? inputTags.split(',').map(tag => tag.trim()).filter(tag => tag) : [],
-				brief: brief.trim(),
-				content: content.trim()
-			});
-
-			if (res) {
-				saveMessage = '文章建立成功！';
-				setTimeout(() => {
-					goto('/admin');
-				}, 1500);
-			}
-		} catch (error) {
-			console.error('建立文章失敗:', error);
-			saveMessage = '建立失敗，請稍後再試';
-		} finally {
-			isSaving = false;
-		}
-	};
+	// 如果有 form 數據，恢復表單狀態
+	$: if (form) {
+		title = form.title || title;
+		inputTags = form.tags || inputTags;
+		brief = form.brief || brief;
+		content = form.content || content;
+	}
 
 	const togglePreview = () => {
 		showPreview = !showPreview;
@@ -87,46 +52,14 @@ console.log('Hello, World!');
 		goto('/admin');
 	};
 
-	// 自動儲存草稿功能 (可選)
-	let draftTimer: NodeJS.Timeout;
-	const saveDraft = () => {
-		// 這裡可以實作自動儲存草稿的功能
-		localStorage.setItem('blog-draft', JSON.stringify({
-			title,
-			inputTags,
-			brief,
-			content,
-			timestamp: Date.now()
-		}));
+	// Form enhancement
+	const handleSubmit = () => {
+		isSubmitting = true;
+		return async ({ result, update }) => {
+			isSubmitting = false;
+			await update();
+		};
 	};
-
-	// 載入草稿
-	const loadDraft = () => {
-		const draft = localStorage.getItem('blog-draft');
-		if (draft) {
-			try {
-				const parsed = JSON.parse(draft);
-				title = parsed.title || '';
-				inputTags = parsed.inputTags || '';
-				brief = parsed.brief || '';
-				content = parsed.content || content;
-			} catch (error) {
-				console.error('載入草稿失敗:', error);
-			}
-		}
-	};
-
-	// 監聽內容變化，自動儲存草稿
-	$: if (title || inputTags || brief || content) {
-		clearTimeout(draftTimer);
-		draftTimer = setTimeout(saveDraft, 2000);
-	}
-
-	// 頁面載入時嘗試載入草稿
-	import { onMount } from 'svelte';
-	onMount(() => {
-		loadDraft();
-	});
 </script>
 
 <svelte:head>
@@ -147,7 +80,7 @@ console.log('Hello, World!');
 				<p class="page-subtitle">撰寫並發布您的部落格文章</p>
 			</div>
 		</div>
-		
+
 		<div class="header-actions">
 			<button class="preview-toggle" on:click={togglePreview}>
 				{#if showPreview}
@@ -158,152 +91,178 @@ console.log('Hello, World!');
 					<span>顯示預覽</span>
 				{/if}
 			</button>
-			
-			<button 
-				class="save-btn" 
-				on:click={handleSave}
-				disabled={isSaving || !title.trim() || !content.trim()}
-			>
-				{#if isSaving}
-					<Loader2 size={18} class="animate-spin" />
-					<span>儲存中...</span>
-				{:else}
-					<Save size={18} />
-					<span>發布文章</span>
-				{/if}
-			</button>
 		</div>
 	</header>
 
-	<!-- Form Fields -->
-	<div class="form-section">
-		<div class="form-grid">
-			<!-- Title -->
-			<div class="form-group full-width">
-				<label for="title" class="form-label">
-					<FileText size={16} />
-					<span>文章標題</span>
-					<span class="required">*</span>
-				</label>
-				<input
-					id="title"
-					type="text"
-					placeholder="輸入吸引人的文章標題..."
-					class="form-input"
-					bind:value={title}
-					required
-				/>
-			</div>
-
-			<!-- Tags -->
-			<div class="form-group">
-				<label for="tags" class="form-label">
-					<Tag size={16} />
-					<span>標籤</span>
-				</label>
-				<input
-					id="tags"
-					type="text"
-					placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
-					class="form-input"
-					bind:value={inputTags}
-				/>
-				<div class="form-hint">
-					{#if inputTags}
-						<div class="tags-preview">
-							{#each inputTags.split(',').map(tag => tag.trim()).filter(tag => tag) as tag}
-								<span class="tag-preview">{tag}</span>
-							{/each}
-						</div>
-					{/if}
+	<!-- Form -->
+	<form method="POST" action="?/create" use:enhance={handleSubmit}>
+		<!-- Form Fields -->
+		<div class="form-section">
+			<div class="form-grid">
+				<!-- Title -->
+				<div class="form-group full-width">
+					<label for="title" class="form-label">
+						<FileText size={16} />
+						<span>文章標題</span>
+						<span class="required">*</span>
+					</label>
+					<input
+						id="title"
+						name="title"
+						type="text"
+						placeholder="輸入吸引人的文章標題..."
+						class="form-input"
+						bind:value={title}
+						required
+					/>
 				</div>
-			</div>
 
-			<!-- Brief -->
-			<div class="form-group">
-				<label for="brief" class="form-label">
-					<AlignLeft size={16} />
-					<span>文章摘要</span>
-				</label>
-				<textarea
-					id="brief"
-					placeholder="簡短描述文章內容，將顯示在文章列表中..."
-					class="form-textarea"
-					rows="3"
-					bind:value={brief}
-				></textarea>
-				<div class="char-count">
-					{brief.length} / 200 字符
-				</div>
-			</div>
-		</div>
-
-		<!-- Status Message -->
-		{#if saveMessage}
-			<div class="status-message" class:success={saveMessage.includes('成功')} class:error={saveMessage.includes('失敗')}>
-				{saveMessage}
-			</div>
-		{/if}
-	</div>
-
-	<!-- Editor -->
-	<div class="editor-section">
-		<div class="editor-header">
-			<h2 class="editor-title">文章內容</h2>
-			<div class="editor-info">
-				<span class="word-count">{content.length} 字符</span>
-				<span class="format-hint">支援 Markdown 語法</span>
-			</div>
-		</div>
-
-		<div class="editor-container" class:preview-mode={showPreview}>
-			<!-- Editor Panel -->
-			<div class="editor-panel">
-				<div class="editor-toolbar">
-					<span class="toolbar-title">編輯器</span>
-					<div class="toolbar-actions">
-						<button class="toolbar-btn" title="粗體" on:click={() => {
-							const textarea = document.querySelector('.editor-textarea');
-							const start = textarea.selectionStart;
-							const end = textarea.selectionEnd;
-							const selectedText = content.substring(start, end);
-							const newText = content.substring(0, start) + `**${selectedText}**` + content.substring(end);
-							content = newText;
-						}}>
-							<strong>B</strong>
-						</button>
-						<button class="toolbar-btn" title="斜體" on:click={() => {
-							const textarea = document.querySelector('.editor-textarea');
-							const start = textarea.selectionStart;
-							const end = textarea.selectionEnd;
-							const selectedText = content.substring(start, end);
-							const newText = content.substring(0, start) + `*${selectedText}*` + content.substring(end);
-							content = newText;
-						}}>
-							<em>I</em>
-						</button>
+				<!-- Tags -->
+				<div class="form-group">
+					<label for="tags" class="form-label">
+						<Tag size={16} />
+						<span>標籤</span>
+					</label>
+					<input
+						id="tags"
+						name="tags"
+						type="text"
+						placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
+						class="form-input"
+						bind:value={inputTags}
+					/>
+					<div class="form-hint">
+						{#if inputTags}
+							<div class="tags-preview">
+								{#each inputTags
+									.split(',')
+									.map((tag) => tag.trim())
+									.filter((tag) => tag) as tag}
+									<span class="tag-preview">{tag}</span>
+								{/each}
+							</div>
+						{/if}
 					</div>
 				</div>
-				<textarea
-					class="editor-textarea"
-					bind:value={content}
-					placeholder="開始撰寫您的文章內容..."
-				></textarea>
+
+				<!-- Brief -->
+				<div class="form-group">
+					<label for="brief" class="form-label">
+						<AlignLeft size={16} />
+						<span>文章摘要</span>
+					</label>
+					<textarea
+						id="brief"
+						name="brief"
+						placeholder="簡短描述文章內容，將顯示在文章列表中..."
+						class="form-textarea"
+						rows="3"
+						bind:value={brief}
+					/>
+					<div class="char-count">
+						{brief.length} / 200 字符
+					</div>
+				</div>
 			</div>
 
-			<!-- Preview Panel -->
-			{#if showPreview}
-				<div class="preview-panel">
-					<div class="preview-header">
-						<span class="toolbar-title">預覽</span>
-					</div>
-					<div class="preview-content prose">
-						{@html marked(content, { mangle: false, headerIds: false })}
-					</div>
+			<!-- Status Message -->
+			{#if form?.error}
+				<div class="status-message error">
+					{form.error}
 				</div>
 			{/if}
+
+			<!-- Submit Button -->
+			<div class="submit-section">
+				<button
+					type="submit"
+					class="save-btn"
+					disabled={isSubmitting || !title.trim() || !content.trim()}
+				>
+					{#if isSubmitting}
+						<Loader2 size={18} class="animate-spin" />
+						<span>發布中...</span>
+					{:else}
+						<Save size={18} />
+						<span>發布文章</span>
+					{/if}
+				</button>
+			</div>
 		</div>
-	</div>
+
+		<!-- Editor -->
+		<div class="editor-section">
+			<div class="editor-header">
+				<h2 class="editor-title">文章內容</h2>
+				<div class="editor-info">
+					<span class="word-count">{content.length} 字符</span>
+					<span class="format-hint">支援 Markdown 語法</span>
+				</div>
+			</div>
+
+			<div class="editor-container" class:preview-mode={showPreview}>
+				<!-- Editor Panel -->
+				<div class="editor-panel">
+					<div class="editor-toolbar">
+						<span class="toolbar-title">編輯器</span>
+						<div class="toolbar-actions">
+							<button
+								type="button"
+								class="toolbar-btn"
+								title="粗體"
+								on:click={() => {
+									const textarea = document.querySelector('.editor-textarea');
+									const start = textarea.selectionStart;
+									const end = textarea.selectionEnd;
+									const selectedText = content.substring(start, end);
+									const newText =
+										content.substring(0, start) + `**${selectedText}**` + content.substring(end);
+									content = newText;
+								}}
+							>
+								<strong>B</strong>
+							</button>
+							<button
+								type="button"
+								class="toolbar-btn"
+								title="斜體"
+								on:click={() => {
+									const textarea = document.querySelector('.editor-textarea');
+									const start = textarea.selectionStart;
+									const end = textarea.selectionEnd;
+									const selectedText = content.substring(start, end);
+									const newText =
+										content.substring(0, start) + `*${selectedText}*` + content.substring(end);
+									content = newText;
+								}}
+							>
+								<em>I</em>
+							</button>
+						</div>
+					</div>
+					<textarea
+						name="content"
+						class="editor-textarea"
+						bind:value={content}
+						placeholder="開始撰寫您的文章內容..."
+						required
+					/>
+				</div>
+
+				<!-- Preview Panel -->
+				{#if showPreview}
+					<div class="preview-panel">
+						<div class="preview-header">
+							<span class="toolbar-title">預覽</span>
+						</div>
+						<div class="preview-content prose">
+							{@html marked(content, { mangle: false, headerIds: false })}
+						</div>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</form>
 </div>
 
 <style>
@@ -387,32 +346,6 @@ console.log('Hello, World!');
 		border-color: #cbd5e0;
 	}
 
-	.save-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: linear-gradient(45deg, #10b981, #059669);
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 6px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-	}
-
-	.save-btn:hover:not(:disabled) {
-		transform: translateY(-1px);
-		box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-	}
-
-	.save-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-		transform: none;
-	}
-
 	/* Form Section */
 	.form-section {
 		padding: 32px;
@@ -450,7 +383,8 @@ console.log('Hello, World!');
 		color: #dc2626;
 	}
 
-	.form-input, .form-textarea {
+	.form-input,
+	.form-textarea {
 		padding: 12px 16px;
 		border: 2px solid #e5e7eb;
 		border-radius: 8px;
@@ -459,7 +393,8 @@ console.log('Hello, World!');
 		background: white;
 	}
 
-	.form-input:focus, .form-textarea:focus {
+	.form-input:focus,
+	.form-textarea:focus {
 		outline: none;
 		border-color: #10b981;
 		box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
@@ -501,18 +436,44 @@ console.log('Hello, World!');
 		border-radius: 8px;
 		font-size: 0.9rem;
 		text-align: center;
-	}
-
-	.status-message.success {
-		background: #f0fdf4;
-		color: #16a34a;
-		border: 1px solid #bbf7d0;
+		margin-bottom: 16px;
 	}
 
 	.status-message.error {
 		background: #fef2f2;
 		color: #dc2626;
 		border: 1px solid #fecaca;
+	}
+
+	.submit-section {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.save-btn {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		background: linear-gradient(45deg, #10b981, #059669);
+		color: white;
+		border: none;
+		padding: 12px 24px;
+		border-radius: 6px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+	}
+
+	.save-btn:hover:not(:disabled) {
+		transform: translateY(-1px);
+		box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+	}
+
+	.save-btn:disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
+		transform: none;
 	}
 
 	/* Editor Section */
@@ -564,7 +525,8 @@ console.log('Hello, World!');
 		grid-template-columns: 1fr 1fr;
 	}
 
-	.editor-panel, .preview-panel {
+	.editor-panel,
+	.preview-panel {
 		display: flex;
 		flex-direction: column;
 		border-right: 1px solid #f1f5f9;
@@ -575,7 +537,8 @@ console.log('Hello, World!');
 		border-left: 1px solid #f1f5f9;
 	}
 
-	.editor-toolbar, .preview-header {
+	.editor-toolbar,
+	.preview-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -672,7 +635,8 @@ console.log('Hello, World!');
 		margin-bottom: 1rem;
 	}
 
-	.prose ul, .prose ol {
+	.prose ul,
+	.prose ol {
 		margin: 1rem 0;
 		padding-left: 1.5rem;
 	}
@@ -726,8 +690,12 @@ console.log('Hello, World!');
 	}
 
 	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	@media (max-width: 768px) {

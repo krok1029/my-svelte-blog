@@ -1,17 +1,19 @@
 <script lang="ts">
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
-	import { fileRepo } from '$lib/repositoryFactory/RepositoryFactory';
-	import { onMount } from 'svelte';
-	import { Upload, Copy, Check, Image, Trash2, Download, Eye } from 'lucide-svelte';
+	import { Upload, Copy, Check, Image, Eye } from 'lucide-svelte';
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
 
-	let files: FileList;
+	export let data: PageData;
+	export let form: ActionData;
+
+	let files: FileList | undefined;
 	let imgSrc: string;
 	let uploading = false;
-	let uploadStatus = '';
 	let copiedIndex = -1;
-	
+
 	const reader = new FileReader();
-	
+
 	$: if (files) {
 		for (const file of files) {
 			console.log(`${file.name}: ${file.size} bytes`);
@@ -20,49 +22,17 @@
 			reader.readAsDataURL(files[0]);
 		}
 	}
-	
+
 	reader.onload = (e) => {
 		const base64 = e.target?.result;
 		if (typeof base64 === 'string') {
 			imgSrc = base64;
 		}
 	};
-	
-	const nameTrimer = (name: string): string => name.replace(/\s+/g, '_');
-	
-	const uploadImgToGithub = async (name: string, content: string) => {
-		if (!name || !content) {
-			uploadStatus = '請選擇要上傳的圖片';
-			return;
-		}
-		
-		uploading = true;
-		uploadStatus = '上傳中...';
-		
-		try {
-			await fileRepo.createFileContent(nameTrimer(name), content);
-			uploadStatus = '上傳成功！';
-			setTimeout(() => {
-				window.location.reload();
-			}, 1000);
-		} catch (error) {
-			uploadStatus = '上傳失敗：' + error.message;
-		} finally {
-			uploading = false;
-		}
-	};
-	
-	let imgArr: Array<{ name: string; path: string }> = [];
 
-	onMount(async () => {
-		try {
-			const result = await fileRepo.getAllFileContents();
-			imgArr = result;
-		} catch (error) {
-			console.error('載入圖片失敗:', error);
-		}
-	});
-	
+	// 從 server load 函數獲取圖片列表
+	$: imgArr = data.images || [];
+
 	const copyImageUrl = async (path: string, index: number) => {
 		const url = `https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`;
 		try {
@@ -75,7 +45,7 @@
 			console.error('複製失敗:', error);
 		}
 	};
-	
+
 	const formatFileSize = (bytes: number): string => {
 		if (bytes === 0) return '0 Bytes';
 		const k = 1024;
@@ -91,12 +61,7 @@
 		type: 'js' as const,
 		difficulty: 'hard' as const,
 		tags: ['file-upload', 'api', 'image-processing', 'github-api'],
-		concepts: [
-			'FileReader API 檔案讀取',
-			'Base64 編碼轉換',
-			'GitHub API 整合',
-			'拖放上傳功能'
-		],
+		concepts: ['FileReader API 檔案讀取', 'Base64 編碼轉換', 'GitHub API 整合', '拖放上傳功能'],
 		codeExamples: [
 			{
 				title: '檔案讀取',
@@ -176,66 +141,80 @@ const handleDragOver = (e) => {
 					<Upload size={24} />
 					圖片上傳
 				</h2>
-				
-				<div class="upload-area">
-					<div class="file-input-wrapper">
-						<input 
-							bind:files 
-							type="file" 
-							name="image" 
-							id="image_input"
-							accept="image/*"
-							class="file-input"
-						/>
-						<label for="image_input" class="file-label">
-							<Image size={32} />
-							<span>點擊選擇圖片</span>
-							<span class="file-hint">支援 JPG, PNG, GIF 格式</span>
-						</label>
-					</div>
-					
-					{#if imgSrc}
-						<div class="preview-section">
-							<div class="preview-image">
-								<img src={imgSrc} alt="預覽" />
-							</div>
-							<div class="file-info">
-								{#if files && files[0]}
-									<div class="file-details">
-										<div class="file-name">{files[0].name}</div>
-										<div class="file-size">{formatFileSize(files[0].size)}</div>
-									</div>
-								{/if}
-								
-								<button
-									type="button"
-									class="upload-btn"
-									class:loading={uploading}
-									disabled={uploading}
-									on:click={() => uploadImgToGithub(files[0].name, imgSrc)}
-								>
-									{#if uploading}
-										<div class="spinner"></div>
-										上傳中...
-									{:else}
-										<Upload size={16} />
-										上傳圖片
+				<form
+					method="POST"
+					action="?/upload"
+					enctype="multipart/form-data"
+					use:enhance={() => {
+						uploading = true;
+						return async ({ update }) => {
+							await update();
+							uploading = false;
+							// 清除預覽
+							files = undefined;
+							imgSrc = '';
+						};
+					}}
+				>
+					<div class="upload-area">
+						<div class="file-input-wrapper">
+							<input
+								bind:files
+								type="file"
+								name="image"
+								id="image_input"
+								accept="image/*"
+								class="file-input"
+							/>
+							<label for="image_input" class="file-label">
+								<Image size={32} />
+								<span>點擊選擇圖片</span>
+								<span class="file-hint">支援 JPG, PNG, GIF 格式</span>
+							</label>
+						</div>
+
+						{#if imgSrc}
+							<div class="preview-section">
+								<div class="preview-image">
+									<img src={imgSrc} alt="預覽" />
+								</div>
+								<div class="file-info">
+									{#if files && files[0]}
+										<div class="file-details">
+											<div class="file-name">{files[0].name}</div>
+											<div class="file-size">{formatFileSize(files[0].size)}</div>
+										</div>
 									{/if}
-								</button>
+
+									<button
+										type="submit"
+										class="upload-btn"
+										class:loading={uploading}
+										disabled={uploading || !files || !files[0]}
+									>
+										{#if uploading}
+											<div class="spinner" />
+											上傳中...
+										{:else}
+											<Upload size={16} />
+											上傳圖片
+										{/if}
+									</button>
+								</div>
 							</div>
-						</div>
-					{/if}
-					
-					{#if uploadStatus}
-						<div 
-							class="status-message" 
-							class:success={uploadStatus.includes('成功')}
-							class:error={uploadStatus.includes('失敗')}
-						>
-							{uploadStatus}
-						</div>
-					{/if}
-				</div>
+						{/if}
+
+						{#if form?.error || form?.success || data.error}
+							<div
+								class="status-message"
+								class:success={form?.success}
+								class:error={form?.error || data.error}
+							>
+								{form?.success || form?.error || data.error}
+							</div>
+						{/if}
+					</div>
+				</form>
 			</div>
 
 			<!-- Gallery Section -->
@@ -245,9 +224,9 @@ const handleDragOver = (e) => {
 					圖片庫
 					<span class="image-count">({imgArr.length} 張圖片)</span>
 				</h2>
-				
+
 				<div class="gallery-hint">點擊圖片複製連結</div>
-				
+
 				<div class="image-grid">
 					{#each imgArr as { name, path }, i}
 						<div class="image-card">
@@ -259,10 +238,7 @@ const handleDragOver = (e) => {
 									loading="lazy"
 								/>
 								<div class="image-overlay">
-									<button
-										class="overlay-btn copy-btn"
-										on:click={() => copyImageUrl(path, i)}
-									>
+									<button class="overlay-btn copy-btn" on:click={() => copyImageUrl(path, i)}>
 										{#if copiedIndex === i}
 											<Check size={16} />
 										{:else}
@@ -285,7 +261,7 @@ const handleDragOver = (e) => {
 						</div>
 					{/each}
 				</div>
-				
+
 				{#if imgArr.length === 0}
 					<div class="empty-state">
 						<Image size={48} />
@@ -296,11 +272,12 @@ const handleDragOver = (e) => {
 			</div>
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
-				這個圖片託管工具展示了如何整合多個 Web API 來創建完整的檔案上傳功能，包括檔案讀取、編碼轉換和遠端儲存。
+				這個圖片託管工具展示了如何整合多個 Web API
+				來創建完整的檔案上傳功能，包括檔案讀取、編碼轉換和遠端儲存。
 			</p>
 			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
 				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
@@ -331,7 +308,8 @@ const handleDragOver = (e) => {
 		height: 100%;
 	}
 
-	.upload-section, .gallery-section {
+	.upload-section,
+	.gallery-section {
 		background: rgba(255, 255, 255, 0.95);
 		backdrop-filter: blur(20px);
 		border: 1px solid rgba(255, 255, 255, 0.2);
@@ -480,8 +458,12 @@ const handleDragOver = (e) => {
 	}
 
 	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	.status-message {
@@ -633,7 +615,8 @@ const handleDragOver = (e) => {
 			gap: 20px;
 		}
 
-		.upload-section, .gallery-section {
+		.upload-section,
+		.gallery-section {
 			padding: 20px;
 		}
 

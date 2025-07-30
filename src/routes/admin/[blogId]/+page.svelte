@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { blogRepo } from '$lib/repositoryFactory/RepositoryFactory';
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { marked } from 'marked';
-	import { onMount } from 'svelte';
 	import {
 		Save,
 		ArrowLeft,
@@ -19,13 +17,16 @@
 		Calendar,
 		User
 	} from 'lucide-svelte';
+	import type { ActionData } from './$types';
+
+	export let form: ActionData;
 
 	export let data;
 
 	let { id, content = '', title = '', tags, brief = '', createdAt, updatedAt } = data.blogPost;
 	let inputTags: string = tags?.join(',') || '';
 	let showPreview = true;
-	let isSaving = false;
+	let isSubmitting = false;
 	let isDeleting = false;
 	let saveMessage = '';
 	let showDeleteModal = false;
@@ -46,69 +47,21 @@
 		brief !== originalData.brief ||
 		content !== originalData.content;
 
-	const handleSave = async () => {
-		if (!title.trim()) {
-			saveMessage = '請輸入文章標題';
-			return;
-		}
-
-		if (!content.trim()) {
-			saveMessage = '請輸入文章內容';
-			return;
-		}
-
-		isSaving = true;
-		saveMessage = '';
-
-		try {
-			const res = await blogRepo.updateBlogPost(
-				id,
-				title.trim(),
-				inputTags
-					? inputTags
-							.split(',')
-							.map((tag) => tag.trim())
-							.filter((tag) => tag)
-					: [],
-				content.trim()
-			);
-
-			if (res) {
-				saveMessage = '文章更新成功！';
-				// 更新原始資料
-				originalData = {
-					title: title.trim(),
-					inputTags: inputTags,
-					brief: brief.trim(),
-					content: content.trim()
-				};
-
-				// 清除未儲存變更標記
-				hasUnsavedChanges = false;
-
-				setTimeout(() => {
-					saveMessage = '';
-				}, 3000);
-			}
-		} catch (error) {
-			console.error('更新文章失敗:', error);
-			saveMessage = '更新失敗，請稍後再試';
-		} finally {
-			isSaving = false;
-		}
-	};
-
 	const handleDelete = () => {
 		showDeleteModal = true;
+	};
+
+	const cancelDelete = () => {
+		showDeleteModal = false;
 	};
 
 	const confirmDelete = async () => {
 		isDeleting = true;
 		try {
-			const res = await blogRepo.deleteBlogPost(Number(id));
-			if (res) {
-				goto('/admin');
-			}
+			// const res = await blogRepo.deleteBlogPost(Number(id));
+			// if (res) {
+			// 	goto('/admin');
+			// }
 		} catch (error) {
 			console.error('刪除失敗:', error);
 			saveMessage = '刪除失敗，請稍後再試';
@@ -116,14 +69,6 @@
 			isDeleting = false;
 			showDeleteModal = false;
 		}
-	};
-
-	const cancelDelete = () => {
-		showDeleteModal = false;
-	};
-
-	const togglePreview = () => {
-		showPreview = !showPreview;
 	};
 
 	const goBack = () => {
@@ -148,6 +93,27 @@
 			minute: '2-digit'
 		});
 	};
+
+	const handleSubmit = () => {
+		isSubmitting = true;
+		return async ({ update, result }) => {
+			await update();
+			isSubmitting = false;
+
+			if (result?.type === 'failure') {
+				saveMessage = result.status === 400 ? '表單驗證失敗' : '儲存失敗';
+			} else {
+				saveMessage = '儲存成功！';
+				// 更新原始資料狀態，避免 hasUnsavedChanges 卡住
+				originalData = {
+					title,
+					inputTags,
+					brief,
+					content
+				};
+			}
+		};
+	};
 </script>
 
 <svelte:head>
@@ -156,278 +122,237 @@
 </svelte:head>
 
 <div class="edit-container">
-	<!-- Header -->
-	<header class="edit-header">
-		<div class="header-left">
-			<button class="back-btn" on:click={goBack}>
-				<ArrowLeft size={20} />
-				<span>返回列表</span>
-			</button>
-			<div class="header-info">
-				<h1 class="page-title">編輯文章</h1>
-				<div class="page-meta">
-					<span class="meta-item">
-						<User size={14} />
-						文章 ID: {id}
-					</span>
-					{#if hasUnsavedChanges}
-						<span class="unsaved-indicator">
-							<div class="unsaved-dot" />
-							有未儲存的變更
+	<form method="POST" action="?/update" use:enhance={handleSubmit}>
+		<!-- Header -->
+		<header class="edit-header">
+			<div class="header-left">
+				<button class="back-btn" on:click={goBack}>
+					<ArrowLeft size={20} />
+					<span>返回列表</span>
+				</button>
+				<div class="header-info">
+					<h1 class="page-title">編輯文章</h1>
+					<div class="page-meta">
+						<span class="meta-item">
+							<User size={14} />
+							文章 ID: {id}
 						</span>
-					{/if}
-				</div>
-			</div>
-		</div>
-
-		<div class="header-actions">
-			<button class="preview-toggle" on:click={togglePreview}>
-				{#if showPreview}
-					<EyeOff size={18} />
-					<span>隱藏預覽</span>
-				{:else}
-					<Eye size={18} />
-					<span>顯示預覽</span>
-				{/if}
-			</button>
-
-			<button class="delete-btn" on:click={handleDelete} disabled={isDeleting}>
-				<Trash2 size={18} />
-				<span>刪除</span>
-			</button>
-
-			<button
-				class="save-btn"
-				class:has-changes={hasUnsavedChanges}
-				on:click={handleSave}
-				disabled={isSaving || !title.trim() || !content.trim()}
-			>
-				{#if isSaving}
-					<Loader2 size={18} class="animate-spin" />
-					<span>儲存中...</span>
-				{:else}
-					<Save size={18} />
-					<span>儲存變更</span>
-				{/if}
-			</button>
-		</div>
-	</header>
-
-	<!-- Article Info -->
-	<div class="article-info">
-		<div class="info-grid">
-			<div class="info-item">
-				<Calendar size={16} />
-				<div class="info-content">
-					<span class="info-label">建立時間</span>
-					<span class="info-value">{formatDate(createdAt)}</span>
-				</div>
-			</div>
-			<div class="info-item">
-				<Clock size={16} />
-				<div class="info-content">
-					<span class="info-label">最後更新</span>
-					<span class="info-value">{formatDate(updatedAt)}</span>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Form Fields -->
-	<div class="form-section">
-		<div class="form-grid">
-			<!-- Title -->
-			<div class="form-group full-width">
-				<label for="title" class="form-label">
-					<FileText size={16} />
-					<span>文章標題</span>
-					<span class="required">*</span>
-				</label>
-				<input
-					id="title"
-					type="text"
-					placeholder="輸入吸引人的文章標題..."
-					class="form-input"
-					bind:value={title}
-					required
-				/>
-			</div>
-
-			<!-- Tags -->
-			<div class="form-group">
-				<label for="tags" class="form-label">
-					<Tag size={16} />
-					<span>標籤</span>
-				</label>
-				<input
-					id="tags"
-					type="text"
-					placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
-					class="form-input"
-					bind:value={inputTags}
-				/>
-				<div class="form-hint">
-					{#if inputTags}
-						<div class="tags-preview">
-							{#each inputTags
-								.split(',')
-								.map((tag) => tag.trim())
-								.filter((tag) => tag) as tag}
-								<span class="tag-preview">{tag}</span>
-							{/each}
-						</div>
-					{/if}
-				</div>
-			</div>
-
-			<!-- Brief -->
-			<div class="form-group">
-				<label for="brief" class="form-label">
-					<AlignLeft size={16} />
-					<span>文章摘要</span>
-				</label>
-				<textarea
-					id="brief"
-					placeholder="簡短描述文章內容，將顯示在文章列表中..."
-					class="form-textarea"
-					rows="3"
-					bind:value={brief}
-				/>
-				<div class="char-count">
-					{brief.length} / 200 字符
-				</div>
-			</div>
-		</div>
-
-		<!-- Status Message -->
-		{#if saveMessage}
-			<div
-				class="status-message"
-				class:success={saveMessage.includes('成功')}
-				class:error={saveMessage.includes('失敗')}
-			>
-				{saveMessage}
-			</div>
-		{/if}
-	</div>
-
-	<!-- Editor -->
-	<div class="editor-section">
-		<div class="editor-header">
-			<h2 class="editor-title">文章內容</h2>
-			<div class="editor-info">
-				<span class="word-count">{content.length} 字符</span>
-				<span class="format-hint">支援 Markdown 語法</span>
-			</div>
-		</div>
-
-		<div class="editor-container" class:preview-mode={showPreview}>
-			<!-- Editor Panel -->
-			<div class="editor-panel">
-				<div class="editor-toolbar">
-					<span class="toolbar-title">編輯器</span>
-					<div class="toolbar-actions">
-						<button
-							class="toolbar-btn"
-							title="粗體"
-							on:click={() => {
-								const textarea = document.querySelector('.editor-textarea');
-								const start = textarea.selectionStart;
-								const end = textarea.selectionEnd;
-								const selectedText = content.substring(start, end);
-								const newText =
-									content.substring(0, start) + `**${selectedText}**` + content.substring(end);
-								content = newText;
-							}}
-						>
-							<strong>B</strong>
-						</button>
-						<button
-							class="toolbar-btn"
-							title="斜體"
-							on:click={() => {
-								const textarea = document.querySelector('.editor-textarea');
-								const start = textarea.selectionStart;
-								const end = textarea.selectionEnd;
-								const selectedText = content.substring(start, end);
-								const newText =
-									content.substring(0, start) + `*${selectedText}*` + content.substring(end);
-								content = newText;
-							}}
-						>
-							<em>I</em>
-						</button>
-						<button
-							class="toolbar-btn"
-							title="程式碼"
-							on:click={() => {
-								const textarea = document.querySelector('.editor-textarea');
-								const start = textarea.selectionStart;
-								const end = textarea.selectionEnd;
-								const selectedText = content.substring(start, end);
-								const newText =
-									content.substring(0, start) + `\`${selectedText}\`` + content.substring(end);
-								content = newText;
-							}}
-						>
-							<code>&lt;/&gt;</code>
-						</button>
+						{#if hasUnsavedChanges}
+							<span class="unsaved-indicator">
+								<div class="unsaved-dot" />
+								有未儲存的變更
+							</span>
+						{/if}
 					</div>
 				</div>
-				<textarea
-					class="editor-textarea"
-					bind:value={content}
-					placeholder="開始撰寫您的文章內容..."
-				/>
 			</div>
 
-			<!-- Preview Panel -->
-			{#if showPreview}
+			<div class="header-actions">
+				<button class="delete-btn" type="button" on:click={handleDelete} disabled={isDeleting}>
+					<Trash2 size={18} />
+					<span>刪除</span>
+				</button>
+
+				<button
+					class:has-changes={hasUnsavedChanges}
+					type="submit"
+					class="save-btn"
+					disabled={isSubmitting || !title.trim() || !content.trim()}
+				>
+					{#if isSubmitting}
+						<Loader2 size={18} class="animate-spin" />
+						<span>儲存中...</span>
+					{:else}
+						<Save size={18} />
+						<span>儲存變更</span>
+					{/if}
+				</button>
+			</div>
+		</header>
+
+		<!-- Article Info -->
+		<div class="article-info">
+			<div class="info-grid">
+				<div class="info-item">
+					<Calendar size={16} />
+					<div class="info-content">
+						<span class="info-label">建立時間</span>
+						<span class="info-value">{formatDate(createdAt)}</span>
+					</div>
+				</div>
+				<div class="info-item">
+					<Clock size={16} />
+					<div class="info-content">
+						<span class="info-label">最後更新</span>
+						<span class="info-value">{formatDate(updatedAt)}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Form Fields -->
+		<div class="form-section">
+			<div class="form-grid">
+				<!-- Title -->
+				<div class="form-group full-width">
+					<label for="title" class="form-label">
+						<FileText size={16} />
+						<span>文章標題</span>
+						<span class="required">*</span>
+					</label>
+					<input
+						id="title"
+						name="title"
+						type="text"
+						placeholder="輸入吸引人的文章標題..."
+						class="form-input"
+						bind:value={title}
+						required
+					/>
+				</div>
+
+				<!-- Tags -->
+				<div class="form-group">
+					<label for="tags" class="form-label">
+						<Tag size={16} />
+						<span>標籤</span>
+					</label>
+					<input
+						id="tags"
+						name="tags"
+						type="text"
+						placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
+						class="form-input"
+						bind:value={inputTags}
+					/>
+					<div class="form-hint">
+						{#if inputTags}
+							<div class="tags-preview">
+								{#each inputTags
+									.split(',')
+									.map((tag) => tag.trim())
+									.filter((tag) => tag) as tag}
+									<span class="tag-preview">{tag}</span>
+								{/each}
+							</div>
+						{/if}
+					</div>
+				</div>
+
+				<!-- Brief -->
+				<div class="form-group">
+					<label for="brief" class="form-label">
+						<AlignLeft size={16} />
+						<span>文章摘要</span>
+					</label>
+					<textarea
+						id="brief"
+						name="brief"
+						placeholder="簡短描述文章內容，將顯示在文章列表中..."
+						class="form-textarea"
+						rows="3"
+						bind:value={brief}
+					/>
+					<div class="char-count">
+						{brief.length} / 200 字符
+					</div>
+				</div>
+			</div>
+			<!-- Status Message -->
+			{#if form?.error}
+				<div class="status-message error">
+					{form.error}
+				</div>
+			{/if}
+
+			<!-- Status Message -->
+			{#if saveMessage}
+				<div
+					class="status-message"
+					class:success={saveMessage.includes('成功')}
+					class:error={saveMessage.includes('失敗')}
+				>
+					{saveMessage}
+				</div>
+			{/if}
+		</div>
+
+		<!-- Editor -->
+		<div class="editor-section">
+			<div class="editor-header">
+				<h2 class="editor-title">文章內容</h2>
+				<div class="editor-info">
+					<span class="word-count">{content.length} 字符</span>
+					<span class="format-hint">支援 Markdown 語法</span>
+				</div>
+			</div>
+
+			<div class="editor-container" class:preview-mode={showPreview}>
+				<!-- Editor Panel -->
+				<div class="editor-panel">
+					<div class="editor-toolbar">
+						<span class="toolbar-title">編輯器</span>
+					</div>
+					<textarea
+						name="content"
+						class="editor-textarea"
+						bind:value={content}
+						placeholder="開始撰寫您的文章內容..."
+					/>
+				</div>
+
 				<div class="preview-panel">
 					<div class="preview-header">
 						<span class="toolbar-title">預覽</span>
-						<a href={`/blog/${id}`} target="_blank" class="preview-link">
-							<Eye size={14} />
-							<span>前台預覽</span>
-						</a>
 					</div>
 					<div class="preview-content prose">
 						{@html marked(content, { mangle: false, headerIds: false })}
 					</div>
 				</div>
-			{/if}
+			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
+
 <!-- Delete Confirmation Modal -->
-{#if showDeleteModal}
+{#if showDeleteModal }
 	<div class="modal-overlay" on:click={cancelDelete}>
 		<div class="modal-content" on:click|stopPropagation>
 			<div class="modal-header">
 				<AlertTriangle class="modal-icon" size={24} />
-				<h3 class="modal-title">確認刪除文章</h3>
+				<h3 class="modal-title">確認刪除</h3>
 			</div>
 			<div class="modal-body">
-				<p>您確定要刪除文章「<strong>{title}</strong>」嗎？</p>
-				<p class="modal-warning">此操作無法復原，文章將永久刪除。</p>
+				<p>您確定要刪除文章「{title}」嗎？</p>
+				<p class="modal-warning">此操作無法復原。</p>
 			</div>
 			<div class="modal-actions">
-				<button class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
+				<button type="button" class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
 					取消
 				</button>
-				<button class="modal-btn confirm-btn" on:click={confirmDelete} disabled={isDeleting}>
-					{#if isDeleting}
-						<div class="btn-spinner" />
-						刪除中...
-					{:else}
-						確認刪除
-					{/if}
-				</button>
+				<form method="POST" action="?/delete" use:enhance={() => {
+					isDeleting = true;
+					return async ({ update }) => {
+						isDeleting = false;
+						await update();
+					};
+				}}>
+					<input type="hidden" name="id" value={id || ''} />
+					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
+						{#if isDeleting}
+							<div class="btn-spinner"></div>
+							刪除中...
+						{:else}
+							確認刪除
+						{/if}
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
 {/if}
+
 
 <style>
 	.edit-container {

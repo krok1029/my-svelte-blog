@@ -11,7 +11,7 @@ export default class GithubFileContentRepository extends FileContentRepository {
 	constructor() {
 		super();
 	}
-	async createFileContent(fileName: string, fileContent: string): Promise<void> {
+	async createFileContent(fileName: string, fileContent: string, token: string): Promise<void> {
 		const regex = /data:.*base64,/;
 
 		await octokit
@@ -25,7 +25,8 @@ export default class GithubFileContentRepository extends FileContentRepository {
 				committer: { name: 'krok1029', email: 'krok1029@gmail.com' },
 				author: { name: 'krok1029', email: 'krok1029@gmail.com' },
 				headers: {
-					'X-GitHub-Api-Version': '2022-11-28'
+					'X-GitHub-Api-Version': '2022-11-28',
+					authorization: `Bearer ${token}`
 				}
 			})
 			.catch((error) => {

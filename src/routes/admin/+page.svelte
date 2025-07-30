@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { blogRepo } from '$lib/repositoryFactory/RepositoryFactory';
+	import { page } from '$app/stores';
 	import { authUser } from '$lib/authStore';
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 	import type { BlogPost } from '$lib/types/BlogPost';
+	import type { PageData, ActionData } from './$types';
 	import { 
 		Plus, 
 		Edit, 
@@ -21,14 +23,31 @@
 		AlertTriangle
 	} from 'lucide-svelte';
 
-	let blogPosts: BlogPost[] = [];
+	export let data: PageData;
+	export let form: ActionData;
+
+	let blogPosts: BlogPost[] = data.blogPosts || [];
 	let filteredPosts: BlogPost[] = [];
 	let searchQuery = '';
 	let selectedTag = '';
-	let isLoading = true;
+	let isLoading = false;
 	let showDeleteModal = false;
 	let postToDelete: BlogPost | null = null;
 	let isDeleting = false;
+	let successMessage = '';
+
+	// 檢查 URL 參數中的成功訊息
+	$: if ($page.url.searchParams.get('success')) {
+		successMessage = $page.url.searchParams.get('success') || '';
+		// 3秒後清除訊息
+		setTimeout(() => {
+			successMessage = '';
+			// 清除 URL 參數
+			const url = new URL($page.url);
+			url.searchParams.delete('success');
+			goto(url.pathname, { replaceState: true });
+		}, 3000);
+	}
 
 	// 統計資料
 	$: totalPosts = blogPosts.length;
@@ -46,43 +65,25 @@
 		});
 	}
 
-	onMount(async () => {
-		try {
-			blogPosts = await blogRepo.getAllBlogPosts();
-		} catch (error) {
-			console.error('載入文章失敗:', error);
-		} finally {
-			isLoading = false;
-		}
-	});
-
 	const handleDelete = async (post: BlogPost) => {
 		postToDelete = post;
 		showDeleteModal = true;
-	};
-
-	const confirmDelete = async () => {
-		if (!postToDelete) return;
-		
-		isDeleting = true;
-		try {
-			const res = await blogRepo.deleteBlogPost(Number(postToDelete.id));
-			if (res) {
-				blogPosts = blogPosts.filter(p => p.id !== postToDelete.id);
-				showDeleteModal = false;
-				postToDelete = null;
-			}
-		} catch (error) {
-			console.error('刪除失敗:', error);
-		} finally {
-			isDeleting = false;
-		}
 	};
 
 	const cancelDelete = () => {
 		showDeleteModal = false;
 		postToDelete = null;
 	};
+
+	// 處理刪除成功後的更新
+	$: if (form?.success) {
+		// 重新載入頁面數據或從列表中移除已刪除的項目
+		if (postToDelete) {
+			blogPosts = blogPosts.filter(p => p.id !== postToDelete.id);
+			showDeleteModal = false;
+			postToDelete = null;
+		}
+	}
 
 	const logout = () => {
 		$authUser = null;
@@ -153,6 +154,13 @@
 				</a>
 			</div>
 		</header>
+
+		<!-- Success Message -->
+		{#if successMessage}
+			<div class="success-message">
+				{successMessage}
+			</div>
+		{/if}
 
 		<!-- Stats Cards -->
 		<div class="stats-grid">
@@ -310,17 +318,26 @@
 				<p class="modal-warning">此操作無法復原。</p>
 			</div>
 			<div class="modal-actions">
-				<button class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
+				<button type="button" class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
 					取消
 				</button>
-				<button class="modal-btn confirm-btn" on:click={confirmDelete} disabled={isDeleting}>
-					{#if isDeleting}
-						<div class="btn-spinner"></div>
-						刪除中...
-					{:else}
-						確認刪除
-					{/if}
-				</button>
+				<form method="POST" action="?/delete" use:enhance={() => {
+					isDeleting = true;
+					return async ({ update }) => {
+						isDeleting = false;
+						await update();
+					};
+				}}>
+					<input type="hidden" name="id" value={postToDelete?.id || ''} />
+					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
+						{#if isDeleting}
+							<div class="btn-spinner"></div>
+							刪除中...
+						{:else}
+							確認刪除
+						{/if}
+					</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -420,6 +437,29 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		margin-bottom: 32px;
+	}
+
+	.success-message {
+		background: #f0fdf4;
+		color: #16a34a;
+		border: 1px solid #bbf7d0;
+		padding: 12px 16px;
+		border-radius: 8px;
+		margin-bottom: 24px;
+		font-size: 0.9rem;
+		text-align: center;
+		animation: slideIn 0.3s ease-out;
+	}
+
+	@keyframes slideIn {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.page-title {
@@ -787,6 +827,10 @@
 		display: flex;
 		gap: 12px;
 		justify-content: flex-end;
+	}
+
+	.modal-actions form {
+		display: contents;
 	}
 
 	.modal-btn {

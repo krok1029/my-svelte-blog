@@ -1,21 +1,10 @@
-import { BlogService } from '$lib/server/repositoryFactory/blog/blogService';
-import { blogRepo } from '$lib/server/repositoryFactory/RepositoryFactory';
-import type { BlogPost } from '$lib/types/BlogPost';
-import type { Actions } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
-
-export async function load({ params }) {
-	const res = await blogRepo.getBlogPost(params.blogId);
-	return {
-		blogPost: res as BlogPost
-	};
-}
+import { BlogService } from '$lib/server/repositoryFactory/blog/blogService';
+import type { Actions } from './$types';
 
 export const actions: Actions = {
-	update: async ({ request, params }) => {
-		const id = params.blogId;
+	create: async ({ request }) => {
 		const data = await request.formData();
-		console.log(id);
 
 		const title = data.get('title') as string;
 		const tags = data.get('tags') as string;
@@ -52,17 +41,17 @@ export const actions: Actions = {
 						.filter((tag) => tag)
 				: [];
 
-			// 更新部落格文章
-			const result = await BlogService.updateBlogPost(
-				Number(id),
-				title.trim(),
-				tagArray,
-				content.trim()
-			);
+			// 創建部落格文章
+			const result = await BlogService.createBlogPost({
+				title: title.trim(),
+				tags: tagArray,
+				brief: brief?.trim() || '',
+				content: content.trim()
+			});
 
 			if (!result) {
 				return fail(500, {
-					error: '更新文章失敗，請稍後再試',
+					error: '建立文章失敗，請稍後再試',
 					title,
 					tags,
 					brief,
@@ -87,7 +76,7 @@ export const actions: Actions = {
 			}
 
 			return fail(500, {
-				error: '更新文章失敗，請稍後再試',
+				error: '建立文章失敗，請稍後再試',
 				title,
 				tags,
 				brief,
@@ -95,31 +84,6 @@ export const actions: Actions = {
 			});
 		}
 
-		redirect(303, '/admin?success=文章更新成功');
-	},
-	delete: async ({ params }) => {
-		const id = params.blogId;
-
-		if (!id) {
-			return fail(400, {
-				error: '缺少文章 ID'
-			});
-		}
-
-		try {
-			const result = await BlogService.deleteBlogPost(Number(id));
-			if (!result) {
-				return fail(500, {
-					error: '刪除文章失敗'
-				});
-			}
-		} catch (error) {
-			console.error('刪除文章失敗:', error);
-			return fail(500, {
-				error: '刪除文章失敗，請稍後再試'
-			});
-		}
-
-		redirect(303, '/admin?success=文章刪除成功');
+		redirect(303, '/admin?success=文章建立成功');
 	}
 };

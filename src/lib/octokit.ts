@@ -1,6 +1,5 @@
 import { Octokit } from 'octokit';
 import {
-	PUBLIC_CLASS_GITHUB_TOKEN,
 	PUBLIC_GITHUB_OWNER,
 	PUBLIC_GITHUB_REPO,
 	PUBLIC_GIT_FILE_PATH
