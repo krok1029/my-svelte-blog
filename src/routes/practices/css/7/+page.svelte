@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { onMount } from 'svelte';
-	
+
 	let date = new Date();
 	let mounted = false;
 
@@ -10,10 +10,10 @@
 		const interval = setInterval(() => {
 			date = new Date();
 		}, 1000);
-		
+
 		return () => clearInterval(interval);
 	});
-	
+
 	// 格式化時間，確保兩位數
 	const formatTime = (time: number) => time.toString().padStart(2, '0');
 
@@ -24,12 +24,7 @@
 		type: 'css' as const,
 		difficulty: 'easy' as const,
 		tags: ['clock', 'time', 'digital', 'javascript'],
-		concepts: [
-			'JavaScript Date 物件',
-			'setInterval 定時器',
-			'CSS Flexbox 佈局',
-			'響應式設計'
-		],
+		concepts: ['JavaScript Date 物件', 'setInterval 定時器', 'CSS Flexbox 佈局', '響應式設計'],
 		codeExamples: [
 			{
 				title: 'HTML 結構',
@@ -116,16 +111,16 @@ const seconds = formatTime(date.getSeconds());`,
 			<div class="date-display">
 				<div class="date-text">
 					{#if mounted}
-						{date.toLocaleDateString('zh-TW', { 
-							year: 'numeric', 
-							month: 'long', 
+						{date.toLocaleDateString('zh-TW', {
+							year: 'numeric',
+							month: 'long',
 							day: 'numeric',
 							weekday: 'long'
 						})}
 					{/if}
 				</div>
 			</div>
-			
+
 			<!-- 時鐘主體 -->
 			<div class="time-display">
 				<div class="time-section">
@@ -143,7 +138,7 @@ const seconds = formatTime(date.getSeconds());`,
 					<span class="label">Seconds</span>
 				</div>
 			</div>
-			
+
 			<!-- 時區顯示 -->
 			<div class="timezone-display">
 				<span class="timezone-text">
@@ -154,7 +149,7 @@ const seconds = formatTime(date.getSeconds());`,
 			</div>
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
@@ -182,7 +177,7 @@ const seconds = formatTime(date.getSeconds());`,
 		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		padding: 40px 20px;
 	}
-	
+
 	.clock-container {
 		display: flex;
 		flex-direction: column;
@@ -195,11 +190,11 @@ const seconds = formatTime(date.getSeconds());`,
 		padding: 60px 40px;
 		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 	}
-	
+
 	.date-display {
 		text-align: center;
 	}
-	
+
 	.date-text {
 		color: white;
 		font-size: 1.2rem;
@@ -207,13 +202,13 @@ const seconds = formatTime(date.getSeconds());`,
 		letter-spacing: 1px;
 		opacity: 0.9;
 	}
-	
+
 	.time-display {
 		display: flex;
 		align-items: center;
 		gap: 30px;
 	}
-	
+
 	.time-section {
 		width: 120px;
 		background: linear-gradient(145deg, #0ea5e9, #0284c7);
@@ -229,17 +224,17 @@ const seconds = formatTime(date.getSeconds());`,
 		box-shadow: 0 8px 32px rgba(14, 165, 233, 0.3);
 		transition: transform 0.3s ease;
 	}
-	
+
 	.time-section:hover {
 		transform: translateY(-5px);
 	}
-	
+
 	.time {
 		font-size: 3rem;
 		padding: 8px;
 		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 	}
-	
+
 	.label {
 		font-size: 1rem;
 		background: #059669;
@@ -249,7 +244,7 @@ const seconds = formatTime(date.getSeconds());`,
 		text-transform: uppercase;
 		letter-spacing: 1px;
 	}
-	
+
 	.separator {
 		color: white;
 		font-size: 3rem;
@@ -257,47 +252,53 @@ const seconds = formatTime(date.getSeconds());`,
 		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 		animation: blink 2s infinite;
 	}
-	
+
 	.timezone-display {
 		text-align: center;
 	}
-	
+
 	.timezone-text {
 		color: rgba(255, 255, 255, 0.8);
 		font-size: 0.9rem;
 		font-weight: 300;
 		letter-spacing: 0.5px;
 	}
-	
+
 	@keyframes blink {
-		0%, 50% { opacity: 1; }
-		51%, 100% { opacity: 0.3; }
+		0%,
+		50% {
+			opacity: 1;
+		}
+		51%,
+		100% {
+			opacity: 0.3;
+		}
 	}
-	
+
 	@media (max-width: 768px) {
 		.clock-container {
 			padding: 40px 20px;
 			gap: 30px;
 		}
-		
+
 		.time-display {
 			flex-direction: column;
 			gap: 20px;
 		}
-		
+
 		.time-section {
 			width: 100px;
 		}
-		
+
 		.time {
 			font-size: 2.5rem;
 		}
-		
+
 		.separator {
 			font-size: 2rem;
 			transform: rotate(90deg);
 		}
-		
+
 		.date-text {
 			font-size: 1rem;
 		}

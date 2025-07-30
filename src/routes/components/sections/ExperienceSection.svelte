@@ -1,9 +1,9 @@
 <script>
 	import { Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
-	
+
 	let showAllExperience = false;
-	
+
 	const experiences = [
 		{
 			id: 'cyberbiz',
@@ -49,33 +49,33 @@
 			isLatest: false
 		}
 	];
-	
+
 	const education = {
 		title: '國立成功大學工程科學系',
 		subtitle: '資訊工程組',
 		period: '2013 - 2018',
 		logo: 'https://www.ncku.edu.tw/var/file/0/1000/plugin/mobile/title/hln_4480_3767086_48566.png'
 	};
-	
+
 	function toggleExperience() {
 		showAllExperience = !showAllExperience;
 	}
-	
+
 	function getSkillColor(skill) {
 		const colors = {
-			'React': 'bg-blue-100 text-blue-800',
-			'Redux': 'bg-purple-100 text-purple-800',
-			'Vue': 'bg-green-100 text-green-800',
-			'TypeScript': 'bg-yellow-100 text-yellow-800',
-			'Electron': 'bg-red-100 text-red-800',
-			'Storybook': 'bg-indigo-100 text-indigo-800',
-			'HTML': 'bg-orange-100 text-orange-800',
-			'CSS': 'bg-blue-100 text-blue-800',
-			'JavaScript': 'bg-yellow-100 text-yellow-800',
-			'PHP': 'bg-green-100 text-green-800',
+			React: 'bg-blue-100 text-blue-800',
+			Redux: 'bg-purple-100 text-purple-800',
+			Vue: 'bg-green-100 text-green-800',
+			TypeScript: 'bg-yellow-100 text-yellow-800',
+			Electron: 'bg-red-100 text-red-800',
+			Storybook: 'bg-indigo-100 text-indigo-800',
+			HTML: 'bg-orange-100 text-orange-800',
+			CSS: 'bg-blue-100 text-blue-800',
+			JavaScript: 'bg-yellow-100 text-yellow-800',
+			PHP: 'bg-green-100 text-green-800',
 			'C#': 'bg-blue-100 text-blue-800',
-			'MSSQL': 'bg-green-100 text-green-800',
-			'ROS': 'bg-red-100 text-red-800'
+			MSSQL: 'bg-green-100 text-green-800',
+			ROS: 'bg-red-100 text-red-800'
 		};
 		return colors[skill] || 'bg-gray-100 text-gray-800';
 	}
@@ -88,9 +88,9 @@
 				<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">工作經歷</h2>
 				<p class="text-lg text-gray-600">我的職業發展歷程</p>
 			</div>
-			
+
 			<!-- Latest Experience (Always Visible) -->
-			{#each experiences.filter(exp => exp.isLatest) as experience}
+			{#each experiences.filter((exp) => exp.isLatest) as experience}
 				<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 mb-8">
 					<div class="flex flex-col lg:flex-row gap-6">
 						<div class="flex-shrink-0">
@@ -121,7 +121,9 @@
 								<div class="mt-4 lg:mt-0">
 									<div class="flex flex-wrap gap-2">
 										{#each experience.skills as skill}
-											<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full">{skill}</span>
+											<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full"
+												>{skill}</span
+											>
 										{/each}
 									</div>
 								</div>
@@ -135,7 +137,7 @@
 					</div>
 				</div>
 			{/each}
-			
+
 			<!-- Toggle Button -->
 			<div class="text-center mb-8">
 				<button
@@ -150,12 +152,12 @@
 					{/if}
 				</button>
 			</div>
-			
+
 			<!-- Additional Experiences (Collapsible) -->
 			{#if showAllExperience}
 				<div transition:slide={{ duration: 300 }}>
 					<div class="space-y-8">
-						{#each experiences.filter(exp => !exp.isLatest) as experience}
+						{#each experiences.filter((exp) => !exp.isLatest) as experience}
 							<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
 								<div class="flex flex-col lg:flex-row gap-6">
 									<div class="flex-shrink-0">
@@ -186,7 +188,9 @@
 											<div class="mt-4 lg:mt-0">
 												<div class="flex flex-wrap gap-2">
 													{#each experience.skills as skill}
-														<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full">{skill}</span>
+														<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full"
+															>{skill}</span
+														>
 													{/each}
 												</div>
 											</div>
@@ -200,7 +204,7 @@
 								</div>
 							</div>
 						{/each}
-						
+
 						<!-- Education Section -->
 						<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
 							<div class="text-center mb-6">
@@ -209,11 +213,7 @@
 							<div class="flex flex-col lg:flex-row gap-6">
 								<div class="flex-shrink-0">
 									<div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-										<img
-											src={education.logo}
-											alt="NCKU"
-											class="w-12 h-12 object-contain"
-										/>
+										<img src={education.logo} alt="NCKU" class="w-12 h-12 object-contain" />
 									</div>
 								</div>
 								<div class="flex-1">

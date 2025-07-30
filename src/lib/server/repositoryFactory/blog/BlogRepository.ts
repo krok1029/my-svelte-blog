@@ -1,4 +1,4 @@
-import type { BlogPost } from "$lib/types/BlogPost";
+import type { BlogPost } from '$lib/types/BlogPost';
 
 export default class BlogRepository {
 	constructor() {
@@ -26,7 +26,13 @@ export default class BlogRepository {
 	}
 
 	// Update - 更新部落格文章
-	updateBlogPost(id: number, title: string, tags: string[], content: string, token?: string): Promise<BlogPost | null> {
+	updateBlogPost(
+		id: number,
+		title: string,
+		tags: string[],
+		content: string,
+		token?: string
+	): Promise<BlogPost | null> {
 		return Promise.resolve(null);
 	}
 

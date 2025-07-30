@@ -42,9 +42,9 @@ export class BlogService {
 	 * 更新部落格文章
 	 */
 	static async updateBlogPost(
-		id: number, 
-		title: string, 
-		tags: string[], 
+		id: number,
+		title: string,
+		tags: string[],
 		content: string
 	): Promise<BlogPost | null> {
 		const token = this.getToken();

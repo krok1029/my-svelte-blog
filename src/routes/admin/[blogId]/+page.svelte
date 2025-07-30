@@ -314,9 +314,8 @@
 	</form>
 </div>
 
-
 <!-- Delete Confirmation Modal -->
-{#if showDeleteModal }
+{#if showDeleteModal}
 	<div class="modal-overlay" on:click={cancelDelete}>
 		<div class="modal-content" on:click|stopPropagation>
 			<div class="modal-header">
@@ -328,20 +327,29 @@
 				<p class="modal-warning">此操作無法復原。</p>
 			</div>
 			<div class="modal-actions">
-				<button type="button" class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
+				<button
+					type="button"
+					class="modal-btn cancel-btn"
+					on:click={cancelDelete}
+					disabled={isDeleting}
+				>
 					取消
 				</button>
-				<form method="POST" action="?/delete" use:enhance={() => {
-					isDeleting = true;
-					return async ({ update }) => {
-						isDeleting = false;
-						await update();
-					};
-				}}>
+				<form
+					method="POST"
+					action="?/delete"
+					use:enhance={() => {
+						isDeleting = true;
+						return async ({ update }) => {
+							isDeleting = false;
+							await update();
+						};
+					}}
+				>
 					<input type="hidden" name="id" value={id || ''} />
 					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
 						{#if isDeleting}
-							<div class="btn-spinner"></div>
+							<div class="btn-spinner" />
 							刪除中...
 						{:else}
 							確認刪除
@@ -352,7 +360,6 @@
 		</div>
 	</div>
 {/if}
-
 
 <style>
 	.edit-container {

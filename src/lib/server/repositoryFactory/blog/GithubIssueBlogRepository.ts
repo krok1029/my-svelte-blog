@@ -97,7 +97,13 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 		}
 	}
 
-	async updateBlogPost(id: number, title: string, tags: string[], content: string, token?: string): Promise<BlogPost | null> {
+	async updateBlogPost(
+		id: number,
+		title: string,
+		tags: string[],
+		content: string,
+		token?: string
+	): Promise<BlogPost | null> {
 		if (!token) {
 			throw new Error('GitHub token is required for updating blog posts');
 		}

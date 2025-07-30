@@ -17,7 +17,7 @@
 	:global(html) {
 		scroll-behavior: smooth;
 	}
-	
+
 	:global(body) {
 		@apply bg-white text-gray-900;
 	}

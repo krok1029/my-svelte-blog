@@ -8,21 +8,21 @@ interface ClickOutsideProps {
 export function clickOutside({ node, dispatch }: ClickOutsideProps) {
 	const handleClick = (event: MouseEvent) => {
 		if (!node.contains(event.target as Node)) {
-			dispatch(new CustomEvent("outclick"));
+			dispatch(new CustomEvent('outclick'));
 		}
 	};
 
 	onMount(() => {
-		document.addEventListener("click", handleClick, true);
+		document.addEventListener('click', handleClick, true);
 	});
 
 	onDestroy(() => {
-		document.removeEventListener("click", handleClick, true);
+		document.removeEventListener('click', handleClick, true);
 	});
 
 	return {
 		destroy() {
-			document.removeEventListener("click", handleClick, true);
+			document.removeEventListener('click', handleClick, true);
 		}
 	};
 }

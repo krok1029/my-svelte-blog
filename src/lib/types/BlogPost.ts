@@ -1,4 +1,4 @@
-import type {Timestamp} from  'firebase/firestore'
+import type { Timestamp } from 'firebase/firestore';
 export type BlogPost = {
 	id?: string;
 	title: string;

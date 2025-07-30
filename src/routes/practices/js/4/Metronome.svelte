@@ -22,7 +22,7 @@
 	function playSound() {
 		beatCount++;
 		currentBeat = (currentBeat % 4) + 1; // 視覺節拍指示 1-4
-		
+
 		if (beatCount % BEAT === 0) {
 			subBeat.pause();
 			subBeat.currentTime = 0;
@@ -92,22 +92,18 @@
 		<!-- Visual Beat Indicator -->
 		<div class="beat-indicator">
 			{#each Array(4) as _, i}
-				<div 
-					class="beat-dot" 
+				<div
+					class="beat-dot"
 					class:active={currentBeat === i + 1}
 					class:main={i === 0 || i === 2}
-				></div>
+				/>
 			{/each}
 		</div>
 
 		<!-- Controls -->
 		<div class="controls-section">
 			<!-- Play/Pause Button -->
-			<button 
-				class="play-button" 
-				class:playing={isPlaying}
-				on:click={toggleMetronome}
-			>
+			<button class="play-button" class:playing={isPlaying} on:click={toggleMetronome}>
 				{#if isPlaying}
 					<Pause size={24} />
 					<span>停止</span>
@@ -123,17 +119,17 @@
 					<span>節拍速度</span>
 				</label>
 				<div class="tempo-controls">
-					<input 
-						type="number" 
-						bind:value={tempo} 
-						min={MIN_TEMPO} 
+					<input
+						type="number"
+						bind:value={tempo}
+						min={MIN_TEMPO}
 						max={MAX_TEMPO}
 						class="tempo-input"
 					/>
-					<input 
-						type="range" 
-						bind:value={tempo} 
-						min={MIN_TEMPO} 
+					<input
+						type="range"
+						bind:value={tempo}
+						min={MIN_TEMPO}
 						max={MAX_TEMPO}
 						class="tempo-slider"
 					/>
@@ -147,19 +143,19 @@
 					<span>音量</span>
 				</label>
 				<div class="volume-controls">
-					<input 
-						type="number" 
-						bind:value={volume} 
-						min={0} 
-						max={1} 
+					<input
+						type="number"
+						bind:value={volume}
+						min={0}
+						max={1}
 						step="0.01"
 						class="volume-input"
 					/>
-					<input 
-						type="range" 
-						bind:value={volume} 
-						min={0} 
-						max={1} 
+					<input
+						type="range"
+						bind:value={volume}
+						min={0}
+						max={1}
 						step="0.01"
 						class="volume-slider"
 					/>
@@ -171,10 +167,10 @@
 		<div class="preset-section">
 			<h3 class="preset-title">快速設定</h3>
 			<div class="preset-buttons">
-				<button class="preset-btn" on:click={() => tempo = 60}>60 BPM</button>
-				<button class="preset-btn" on:click={() => tempo = 80}>80 BPM</button>
-				<button class="preset-btn" on:click={() => tempo = 120}>120 BPM</button>
-				<button class="preset-btn" on:click={() => tempo = 140}>140 BPM</button>
+				<button class="preset-btn" on:click={() => (tempo = 60)}>60 BPM</button>
+				<button class="preset-btn" on:click={() => (tempo = 80)}>80 BPM</button>
+				<button class="preset-btn" on:click={() => (tempo = 120)}>120 BPM</button>
+				<button class="preset-btn" on:click={() => (tempo = 140)}>140 BPM</button>
 			</div>
 		</div>
 	</div>
@@ -330,13 +326,15 @@
 		font-size: 0.9rem;
 	}
 
-	.tempo-controls, .volume-controls {
+	.tempo-controls,
+	.volume-controls {
 		display: flex;
 		gap: 12px;
 		align-items: center;
 	}
 
-	.tempo-input, .volume-input {
+	.tempo-input,
+	.volume-input {
 		width: 80px;
 		padding: 8px 12px;
 		border: 2px solid #e5e7eb;
@@ -345,13 +343,15 @@
 		text-align: center;
 	}
 
-	.tempo-input:focus, .volume-input:focus {
+	.tempo-input:focus,
+	.volume-input:focus {
 		outline: none;
 		border-color: #3730a3;
 		box-shadow: 0 0 0 3px rgba(55, 48, 163, 0.1);
 	}
 
-	.tempo-slider, .volume-slider {
+	.tempo-slider,
+	.volume-slider {
 		flex: 1;
 		height: 6px;
 		border-radius: 3px;
@@ -360,7 +360,8 @@
 		-webkit-appearance: none;
 	}
 
-	.tempo-slider::-webkit-slider-thumb, .volume-slider::-webkit-slider-thumb {
+	.tempo-slider::-webkit-slider-thumb,
+	.volume-slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
 		width: 20px;
@@ -417,12 +418,14 @@
 			font-size: 3rem;
 		}
 
-		.tempo-controls, .volume-controls {
+		.tempo-controls,
+		.volume-controls {
 			flex-direction: column;
 			gap: 8px;
 		}
 
-		.tempo-input, .volume-input {
+		.tempo-input,
+		.volume-input {
 			width: 100%;
 		}
 

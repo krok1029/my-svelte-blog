@@ -4,4 +4,3 @@ export const blogBriefBuilder = (brief: string) => {
 	const h4Briefs = matches.map((match) => match[1].trim())[0];
 	return h4Briefs;
 };
-

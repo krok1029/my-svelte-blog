@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ArrowLeft, Code, Palette, Github, ExternalLink, Info, Lightbulb } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
-	
+
 	export let practiceInfo: {
 		id: number;
 		title: string;
@@ -17,53 +17,70 @@
 			language: string;
 		}>;
 	};
-	
+
 	// 類型圖示映射
 	const getTypeIcon = (type: string) => {
 		switch (type) {
-			case 'css': return Palette;
-			case 'js': return Code;
-			default: return Code;
+			case 'css':
+				return Palette;
+			case 'js':
+				return Code;
+			default:
+				return Code;
 		}
 	};
 
-		const Icon = getTypeIcon(practiceInfo.type);
-	
+	const Icon = getTypeIcon(practiceInfo.type);
+
 	// 類型顏色映射
 	const getTypeColor = (type: string) => {
 		switch (type) {
-			case 'css': return 'bg-blue-100 text-blue-800 border-blue-200';
-			case 'js': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-			default: return 'bg-gray-100 text-gray-800 border-gray-200';
+			case 'css':
+				return 'bg-blue-100 text-blue-800 border-blue-200';
+			case 'js':
+				return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+			default:
+				return 'bg-gray-100 text-gray-800 border-gray-200';
 		}
 	};
-	
+
 	// 難度顏色映射
 	const getDifficultyColor = (difficulty: string) => {
 		switch (difficulty) {
-			case 'easy': return 'bg-green-100 text-green-800';
-			case 'medium': return 'bg-yellow-100 text-yellow-800';
-			case 'hard': return 'bg-red-100 text-red-800';
-			default: return 'bg-gray-100 text-gray-800';
+			case 'easy':
+				return 'bg-green-100 text-green-800';
+			case 'medium':
+				return 'bg-yellow-100 text-yellow-800';
+			case 'hard':
+				return 'bg-red-100 text-red-800';
+			default:
+				return 'bg-gray-100 text-gray-800';
 		}
 	};
-	
+
 	// 難度名稱映射
 	const getDifficultyName = (difficulty: string) => {
 		switch (difficulty) {
-			case 'easy': return '簡單';
-			case 'medium': return '中等';
-			case 'hard': return '困難';
-			default: return difficulty;
+			case 'easy':
+				return '簡單';
+			case 'medium':
+				return '中等';
+			case 'hard':
+				return '困難';
+			default:
+				return difficulty;
 		}
 	};
-	
+
 	// 類型名稱映射
 	const getTypeName = (type: string) => {
 		switch (type) {
-			case 'css': return 'CSS';
-			case 'js': return 'JavaScript';
-			default: return type.toUpperCase();
+			case 'css':
+				return 'CSS';
+			case 'js':
+				return 'JavaScript';
+			default:
+				return type.toUpperCase();
 		}
 	};
 </script>
@@ -84,13 +101,21 @@
 				<ArrowLeft size={18} />
 				回到練習列表
 			</button>
-			
+
 			<div class="flex items-center gap-3">
-				<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium border {getTypeColor(practiceInfo.type)}">
+				<span
+					class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium border {getTypeColor(
+						practiceInfo.type
+					)}"
+				>
 					<Icon size={14} />
 					{getTypeName(practiceInfo.type)}
 				</span>
-				<span class="px-2 py-1 rounded-full text-xs font-medium {getDifficultyColor(practiceInfo.difficulty)}">
+				<span
+					class="px-2 py-1 rounded-full text-xs font-medium {getDifficultyColor(
+						practiceInfo.difficulty
+					)}"
+				>
 					{getDifficultyName(practiceInfo.difficulty)}
 				</span>
 			</div>
@@ -107,23 +132,25 @@
 				<span>•</span>
 				<span>{getTypeName(practiceInfo.type)} 練習</span>
 			</div>
-			
+
 			<h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
 				{practiceInfo.title}
 			</h1>
 			<p class="text-lg text-gray-600 mb-6">
 				{practiceInfo.description}
 			</p>
-			
+
 			<!-- Tags -->
 			<div class="flex flex-wrap gap-2 mb-6">
 				{#each practiceInfo.tags as tag}
-					<span class="bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full text-sm border border-gray-200">
+					<span
+						class="bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full text-sm border border-gray-200"
+					>
 						#{tag}
 					</span>
 				{/each}
 			</div>
-			
+
 			<!-- Key Concepts -->
 			<div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
 				<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -133,7 +160,7 @@
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 					{#each practiceInfo.concepts as concept}
 						<div class="flex items-center gap-2 text-gray-700">
-							<div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+							<div class="w-2 h-2 bg-blue-500 rounded-full" />
 							{concept}
 						</div>
 					{/each}
@@ -159,7 +186,7 @@
 					<Code size={24} />
 					實作說明
 				</h2>
-				
+
 				<div class="space-y-8">
 					{#each practiceInfo.codeExamples as example, index}
 						<div class="bg-gray-50 rounded-xl p-6">
@@ -169,7 +196,9 @@
 							<p class="text-gray-700 mb-4">
 								{example.description}
 							</p>
-							<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code>{example.code}</code></pre>
+							<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code
+									>{example.code}</code
+								></pre>
 						</div>
 					{/each}
 				</div>
@@ -201,11 +230,11 @@
 	.practice-demo-section {
 		@apply min-h-screen bg-gray-900;
 	}
-	
+
 	.demo-container {
 		@apply w-full h-full;
 	}
-	
+
 	/* 響應式設計 */
 	@media (max-width: 768px) {
 		.practice-demo-section {

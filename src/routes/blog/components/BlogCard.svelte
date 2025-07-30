@@ -2,9 +2,9 @@
 	import defaultImageUrl from '$asset/card-top.jpg';
 	import { Calendar, Clock, ArrowRight, Tag } from 'lucide-svelte';
 	import type { BlogCard } from '$type/Card';
-	
+
 	export let card: BlogCard;
-	
+
 	// 格式化日期
 	const formatDate = (dateString: string) => {
 		if (!dateString) return '';
@@ -15,7 +15,7 @@
 			day: 'numeric'
 		});
 	};
-	
+
 	// 估算閱讀時間
 	const estimateReadingTime = (content: string) => {
 		const wordsPerMinute = 200;
@@ -27,13 +27,15 @@
 <article class="blog-card group">
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl">
-		<img 
-			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" 
-			src={card?.image || defaultImageUrl} 
+		<img
+			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+			src={card?.image || defaultImageUrl}
 			alt={card.title}
 			loading="lazy"
 		/>
-		<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+		/>
 	</div>
 
 	<!-- Content Container -->
@@ -55,7 +57,9 @@
 		</div>
 
 		<!-- Title -->
-		<h2 class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors">
+		<h2
+			class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors"
+		>
 			<a href={`/blog/${card.id}`} class="hover:underline">
 				{card.title}
 			</a>
@@ -83,8 +87,8 @@
 
 		<!-- Read More Button -->
 		<div class="mt-auto">
-			<a 
-				href={`/blog/${card.id}`} 
+			<a
+				href={`/blog/${card.id}`}
 				class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-sm group-hover:gap-3 transition-all"
 			>
 				閱讀更多
@@ -102,14 +106,14 @@
 	.card-tag {
 		@apply inline-flex items-center gap-1 bg-purple-50 text-purple-700 rounded-full px-2 py-1 text-xs font-medium;
 	}
-	
+
 	.line-clamp-2 {
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
-	
+
 	.line-clamp-3 {
 		display: -webkit-box;
 		-webkit-line-clamp: 3;

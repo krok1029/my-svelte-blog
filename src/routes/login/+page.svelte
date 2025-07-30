@@ -22,7 +22,7 @@
 
 		try {
 			const userCredentials = await signInWithEmailAndPassword(firebaseAuth, email, password);
-			
+
 			$authUser = {
 				uid: userCredentials.user.uid,
 				email: userCredentials.user.email || ''
@@ -32,7 +32,7 @@
 			await goto('/admin');
 		} catch (error: any) {
 			console.error('Login error:', error);
-			
+
 			// 根據錯誤代碼顯示友善的錯誤訊息
 			switch (error.code) {
 				case 'auth/user-not-found':
@@ -84,14 +84,12 @@
 					<h1 class="brand-title">李明峯</h1>
 					<p class="brand-subtitle">Frontend Developer</p>
 				</div>
-				
+
 				<div class="welcome-text">
 					<h2 class="welcome-title">歡迎回來</h2>
-					<p class="welcome-description">
-						登入您的帳號以管理部落格內容和查看統計資料
-					</p>
+					<p class="welcome-description">登入您的帳號以管理部落格內容和查看統計資料</p>
 				</div>
-				
+
 				<div class="features-list">
 					<div class="feature-item">
 						<div class="feature-icon">✨</div>
@@ -142,7 +140,7 @@
 							<Lock class="input-icon" size={20} />
 							<input
 								id="password"
-								type='password'
+								type="password"
 								placeholder="請輸入您的密碼"
 								class="form-input"
 								bind:value={password}
@@ -173,13 +171,9 @@
 					{/if}
 
 					<!-- Submit Button -->
-					<button
-						type="submit"
-						class="submit-button"
-						disabled={isLoading || !email || !password}
-					>
+					<button type="submit" class="submit-button" disabled={isLoading || !email || !password}>
 						{#if isLoading}
-							<div class="loading-spinner"></div>
+							<div class="loading-spinner" />
 							<span>登入中...</span>
 						{:else}
 							<LogIn size={20} />
@@ -469,8 +463,12 @@
 	}
 
 	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	.form-footer {

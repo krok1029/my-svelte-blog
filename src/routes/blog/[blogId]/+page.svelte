@@ -6,7 +6,7 @@
 
 	export let data: PageData;
 	const { title, content, createdAt, tags, image, brief } = data.blogPost;
-	
+
 	// 格式化日期
 	const formatDate = (dateString: string) => {
 		if (!dateString) return '';
@@ -17,14 +17,14 @@
 			day: 'numeric'
 		});
 	};
-	
+
 	// 估算閱讀時間
 	const estimateReadingTime = (content: string) => {
 		const wordsPerMinute = 200;
 		const wordCount = content.length / 2;
 		return Math.ceil(wordCount / wordsPerMinute);
 	};
-	
+
 	// 分享功能
 	const shareArticle = async () => {
 		if (navigator.share) {
@@ -89,31 +89,33 @@
 					<span>{estimateReadingTime(content)} 分鐘閱讀</span>
 				</div>
 			</div>
-			
+
 			<!-- Title -->
 			<h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
 				{title}
 			</h1>
-			
+
 			<!-- Brief -->
 			{#if brief}
 				<p class="text-xl text-gray-600 mb-8 leading-relaxed">
 					{brief}
 				</p>
 			{/if}
-			
+
 			<!-- Tags -->
 			{#if tags && tags.length > 0}
 				<div class="flex flex-wrap gap-2 mb-8">
 					{#each tags as tag}
-						<span class="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full px-3 py-1 text-sm font-medium border border-purple-200">
+						<span
+							class="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm text-purple-700 rounded-full px-3 py-1 text-sm font-medium border border-purple-200"
+						>
 							<Tag size={12} />
 							{tag}
 						</span>
 					{/each}
 				</div>
 			{/if}
-			
+
 			<!-- Share Button -->
 			<div class="flex items-center gap-4">
 				<button
@@ -133,11 +135,7 @@
 	<div class="container mx-auto px-4 -mt-8 mb-12">
 		<div class="max-w-4xl mx-auto">
 			<div class="relative rounded-xl overflow-hidden shadow-lg">
-				<img 
-					src={image} 
-					alt={title}
-					class="w-full h-64 lg:h-96 object-cover"
-				/>
+				<img src={image} alt={title} class="w-full h-64 lg:h-96 object-cover" />
 			</div>
 		</div>
 	</div>
@@ -146,7 +144,9 @@
 <!-- Article Content -->
 <main class="container mx-auto px-4 pb-16">
 	<article class="max-w-4xl mx-auto">
-		<div class="prose prose-lg lg:prose-xl mx-auto prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-purple-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-purple-600 prose-code:bg-purple-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
+		<div
+			class="prose prose-lg lg:prose-xl mx-auto prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-purple-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-purple-600 prose-code:bg-purple-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100"
+		>
 			{@html marked(content, { mangle: false, headerIds: false })}
 		</div>
 	</article>
@@ -158,7 +158,9 @@
 		<div class="max-w-4xl mx-auto">
 			<div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
 				<div class="flex items-center gap-4 mb-4">
-					<div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-xl font-bold">
+					<div
+						class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-xl font-bold"
+					>
 						李
 					</div>
 					<div>
@@ -170,19 +172,11 @@
 					熱愛前端技術的工程師，專注於創造優質的使用者體驗。喜歡分享技術心得與學習過程。
 				</p>
 				<div class="flex gap-4">
-					<button
-						on:click={shareArticle}
-						class="btn-primary"
-					>
+					<button on:click={shareArticle} class="btn-primary">
 						<Share2 size={16} />
 						分享這篇文章
 					</button>
-					<button
-						on:click={() => goto('/blog')}
-						class="btn-secondary"
-					>
-						查看更多文章
-					</button>
+					<button on:click={() => goto('/blog')} class="btn-secondary"> 查看更多文章 </button>
 				</div>
 			</div>
 		</div>
@@ -194,43 +188,43 @@
 	:global(.prose h1) {
 		@apply text-3xl font-bold mt-8 mb-4;
 	}
-	
+
 	:global(.prose h2) {
 		@apply text-2xl font-semibold mt-8 mb-4 border-b border-gray-200 pb-2;
 	}
-	
+
 	:global(.prose h3) {
 		@apply text-xl font-semibold mt-6 mb-3;
 	}
-	
+
 	:global(.prose blockquote) {
 		@apply border-l-4 border-purple-300 bg-purple-50 pl-4 py-2 my-6 italic;
 	}
-	
+
 	:global(.prose code) {
 		@apply text-gray-200 bg-transparent px-0;
 	}
-	
+
 	:global(.prose ul) {
 		@apply my-4;
 	}
-	
+
 	:global(.prose li) {
 		@apply my-2;
 	}
-	
+
 	:global(.prose img) {
 		@apply rounded-lg shadow-md my-8;
 	}
-	
+
 	:global(.prose table) {
 		@apply border-collapse border border-gray-300 my-6;
 	}
-	
+
 	:global(.prose th) {
 		@apply bg-gray-50 border border-gray-300 px-4 py-2 font-semibold;
 	}
-	
+
 	:global(.prose td) {
 		@apply border border-gray-300 px-4 py-2;
 	}

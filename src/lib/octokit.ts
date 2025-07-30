@@ -1,9 +1,5 @@
 import { Octokit } from 'octokit';
-import {
-	PUBLIC_GITHUB_OWNER,
-	PUBLIC_GITHUB_REPO,
-	PUBLIC_GIT_FILE_PATH
-} from '$env/static/public';
+import { PUBLIC_GITHUB_OWNER, PUBLIC_GITHUB_REPO, PUBLIC_GIT_FILE_PATH } from '$env/static/public';
 
 const octokit = new Octokit();
 

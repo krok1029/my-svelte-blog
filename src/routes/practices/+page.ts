@@ -1,9 +1,8 @@
 import type { PracticeCard } from '$lib/types/Card';
-import data from './practice'
+import data from './practice';
 
 export const load = async () => {
+	const practice = data as PracticeCard[];
 
-  const practice = data as PracticeCard[]
-
-	return {practice};
+	return { practice };
 };

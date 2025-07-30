@@ -1,10 +1,10 @@
 <script lang="ts">
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
-	
+
 	let value1 = 10;
 	let value2 = 65;
 	let value3 = 90;
-	
+
 	const level = (value: number) => {
 		if (value > 80) {
 			return `#fd0a54`;
@@ -14,7 +14,7 @@
 			return `#0de5a8`;
 		}
 	};
-	
+
 	const label = (value: number) => `${value}%`;
 	const items = ['HTML', 'CSS', 'JavaScript'];
 	const values = [value1, value2, value3];
@@ -99,31 +99,30 @@ function updateProgress(element, value) {
 	<div slot="demo" class="demo-wrapper">
 		<div class="demo-container">
 			{#each items as item, index}
-				<div class="progress-box" style:--i={label(values[index])} style:--clr={level(values[index])}>
+				<div
+					class="progress-box"
+					style:--i={label(values[index])}
+					style:--clr={level(values[index])}
+				>
 					<div class="circle">
 						<h2 class="progress-text">{values[index]}<small>%</small></h2>
 					</div>
 					<h3 class="skill-name">{item}</h3>
-					
+
 					<!-- 控制滑桿 -->
 					<div class="control-slider">
-						<input 
-							type="range" 
-							min="0" 
-							max="100" 
-							bind:value={values[index]}
-							class="slider"
-						/>
+						<input type="range" min="0" max="100" bind:value={values[index]} class="slider" />
 					</div>
 				</div>
 			{/each}
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
-				這個練習展示了 CSS conic-gradient() 的強大功能，可以創建各種圓形漸層效果，特別適合製作進度條和圖表。
+				這個練習展示了 CSS conic-gradient()
+				的強大功能，可以創建各種圓形漸層效果，特別適合製作進度條和圖表。
 			</p>
 			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
 				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
@@ -147,7 +146,7 @@ function updateProgress(element, value) {
 		background-color: #1a252c;
 		padding: 40px 20px;
 	}
-	
+
 	.demo-container {
 		position: relative;
 		display: flex;
@@ -156,7 +155,7 @@ function updateProgress(element, value) {
 		align-items: center;
 		flex-wrap: wrap;
 	}
-	
+
 	.progress-box {
 		position: relative;
 		width: 240px;
@@ -169,7 +168,7 @@ function updateProgress(element, value) {
 		border-radius: 20px;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 	}
-	
+
 	.circle {
 		position: relative;
 		width: 150px;
@@ -187,7 +186,7 @@ function updateProgress(element, value) {
 		align-items: center;
 		margin-bottom: 20px;
 	}
-	
+
 	.circle::before {
 		content: '';
 		position: absolute;
@@ -195,7 +194,7 @@ function updateProgress(element, value) {
 		background-color: #1a252c;
 		border-radius: 50%;
 	}
-	
+
 	.progress-text {
 		position: relative;
 		text-align: center;
@@ -204,12 +203,12 @@ function updateProgress(element, value) {
 		font-weight: 600;
 		z-index: 1;
 	}
-	
+
 	.progress-text small {
 		font-size: 0.5em;
 		font-weight: 300;
 	}
-	
+
 	.skill-name {
 		color: #fff;
 		text-transform: uppercase;
@@ -217,11 +216,11 @@ function updateProgress(element, value) {
 		letter-spacing: 0.1em;
 		margin-bottom: 20px;
 	}
-	
+
 	.control-slider {
 		width: 80%;
 	}
-	
+
 	.slider {
 		width: 100%;
 		height: 4px;
@@ -230,7 +229,7 @@ function updateProgress(element, value) {
 		outline: none;
 		-webkit-appearance: none;
 	}
-	
+
 	.slider::-webkit-slider-thumb {
 		-webkit-appearance: none;
 		appearance: none;
@@ -240,7 +239,7 @@ function updateProgress(element, value) {
 		background: var(--clr);
 		cursor: pointer;
 	}
-	
+
 	.slider::-moz-range-thumb {
 		width: 16px;
 		height: 16px;
@@ -249,23 +248,23 @@ function updateProgress(element, value) {
 		cursor: pointer;
 		border: none;
 	}
-	
+
 	@media (max-width: 768px) {
 		.demo-container {
 			flex-direction: column;
 			gap: 30px;
 		}
-		
+
 		.progress-box {
 			width: 200px;
 			padding: 30px 0;
 		}
-		
+
 		.circle {
 			width: 120px;
 			height: 120px;
 		}
-		
+
 		.progress-text {
 			font-size: 2em;
 		}

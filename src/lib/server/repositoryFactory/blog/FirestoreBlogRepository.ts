@@ -57,7 +57,7 @@ export default class FirestoreBlogRepository extends BlogRepository {
 	// 			blogPost = {...doc.data()} as BlogPost;
 	// 			return
 	// 		});
-			
+
 	// 		return blogPost;
 	// 	} catch (e) {
 	// 		console.error('Error adding document: ', e);

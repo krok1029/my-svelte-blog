@@ -30,7 +30,7 @@
 				<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">技術技能</h2>
 				<p class="text-lg text-gray-600">我熟悉的前端技術與工具</p>
 			</div>
-			
+
 			<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
 				{#each skills as skill}
 					<div class="skill-item group">
@@ -47,7 +47,7 @@
 	.skill-item {
 		@apply flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1;
 	}
-	
+
 	.skill-label {
 		@apply mt-3 text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors;
 	}

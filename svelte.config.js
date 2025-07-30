@@ -17,7 +17,7 @@ const config = {
 			$actions: 'src/actions',
 			$lib: 'src/lib',
 			$asset: 'src/assets',
-			$type: 'src/lib/types',
+			$type: 'src/lib/types'
 		}
 	}
 };

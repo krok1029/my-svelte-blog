@@ -75,48 +75,30 @@
 			<h2 class="form-title">聯絡表單</h2>
 			<form class="demo-form">
 				<div class="inputBox">
-					<input
-						class="form-input"
-						type="text"
-						required
-					/>
+					<input class="form-input" type="text" required />
 					<span class="input_span style1">First Name</span>
 				</div>
-				
+
 				<div class="inputBox">
-					<input
-						class="form-input"
-						type="text"
-						required
-					/>
+					<input class="form-input" type="text" required />
 					<span class="input_span style2">Last Name</span>
 				</div>
-				
+
 				<div class="inputBox">
-					<input
-						class="form-input"
-						type="email"
-						required
-					/>
+					<input class="form-input" type="email" required />
 					<span class="input_span style3">Email Address</span>
 				</div>
-				
+
 				<div class="inputBox">
-					<textarea
-						class="form-input"
-						rows="4"
-						required
-					></textarea>
+					<textarea class="form-input" rows="4" required />
 					<span class="input_span style4">Message</span>
 				</div>
-				
-				<button type="submit" class="submit-btn">
-					Send Message
-				</button>
+
+				<button type="submit" class="submit-btn"> Send Message </button>
 			</form>
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
@@ -144,7 +126,7 @@
 		background: linear-gradient(135deg, #1d2b3a 0%, #2d3748 100%);
 		padding: 40px 20px;
 	}
-	
+
 	.form-container {
 		background: rgba(255, 255, 255, 0.05);
 		backdrop-filter: blur(10px);
@@ -154,7 +136,7 @@
 		width: 100%;
 		max-width: 500px;
 	}
-	
+
 	.form-title {
 		color: white;
 		font-size: 2rem;
@@ -162,18 +144,18 @@
 		text-align: center;
 		margin-bottom: 30px;
 	}
-	
+
 	.demo-form {
 		display: flex;
 		flex-direction: column;
 		gap: 25px;
 	}
-	
+
 	.inputBox {
 		position: relative;
 		width: 100%;
 	}
-	
+
 	.form-input {
 		width: 100%;
 		padding: 15px;
@@ -186,16 +168,16 @@
 		transition: all 0.3s ease;
 		resize: vertical;
 	}
-	
+
 	.form-input:focus {
 		border-color: #03a9f4;
 		box-shadow: 0 0 20px rgba(3, 169, 244, 0.3);
 	}
-	
+
 	.form-input:valid {
 		border-color: #4caf50;
 	}
-	
+
 	.input_span {
 		position: absolute;
 		left: 15px;
@@ -207,7 +189,7 @@
 		transition: all 0.3s ease;
 		letter-spacing: 0.5px;
 	}
-	
+
 	/* 不同樣式的標籤動畫 */
 	.form-input:focus ~ .input_span.style1,
 	.form-input:valid ~ .input_span.style1 {
@@ -218,7 +200,7 @@
 		background: #1d2b3a;
 		border-radius: 4px;
 	}
-	
+
 	.form-input:focus ~ .input_span.style2,
 	.form-input:valid ~ .input_span.style2 {
 		color: #e91e63;
@@ -230,7 +212,7 @@
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 	}
-	
+
 	.form-input:focus ~ .input_span.style3,
 	.form-input:valid ~ .input_span.style3 {
 		color: #4caf50;
@@ -241,7 +223,7 @@
 		border-radius: 4px;
 		box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
 	}
-	
+
 	.form-input:focus ~ .input_span.style4,
 	.form-input:valid ~ .input_span.style4 {
 		color: #ff9800;
@@ -251,7 +233,7 @@
 		background: #1d2b3a;
 		border-radius: 4px;
 	}
-	
+
 	.submit-btn {
 		background: linear-gradient(45deg, #03a9f4, #0288d1);
 		color: white;
@@ -266,31 +248,31 @@
 		letter-spacing: 1px;
 		margin-top: 10px;
 	}
-	
+
 	.submit-btn:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 10px 30px rgba(3, 169, 244, 0.4);
 	}
-	
+
 	.submit-btn:active {
 		transform: translateY(0);
 	}
-	
+
 	@media (max-width: 768px) {
 		.form-container {
 			padding: 30px 20px;
 			margin: 20px;
 		}
-		
+
 		.form-title {
 			font-size: 1.5rem;
 		}
-		
+
 		.form-input {
 			padding: 12px;
 			font-size: 14px;
 		}
-		
+
 		.input_span {
 			font-size: 14px;
 			left: 12px;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ExternalLink, Github } from 'lucide-svelte';
-	
+
 	export let path: string;
 	export let imgPath: string;
 	export let projecName: string;
@@ -12,17 +12,19 @@
 <div class="project-card group">
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl bg-gray-100">
-		<img 
-			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105" 
-			src={imgPath} 
+		<img
+			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+			src={imgPath}
 			alt={projecName}
 			loading="lazy"
 		/>
-		<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+		<div
+			class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+		>
 			<div class="absolute bottom-4 left-4 right-4 flex gap-2">
-				<a 
-					href={path} 
-					target="_blank" 
+				<a
+					href={path}
+					target="_blank"
 					rel="noopener noreferrer"
 					class="flex-1 bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-white transition-colors"
 				>
@@ -30,9 +32,9 @@
 					查看專案
 				</a>
 				{#if githubUrl}
-					<a 
-						href={githubUrl} 
-						target="_blank" 
+					<a
+						href={githubUrl}
+						target="_blank"
 						rel="noopener noreferrer"
 						class="bg-gray-900/90 backdrop-blur-sm text-white px-3 py-2 rounded-lg hover:bg-gray-900 transition-colors"
 					>
@@ -72,9 +74,9 @@
 
 		<!-- Action Buttons -->
 		<div class="flex gap-2 mt-auto">
-			<a 
-				href={path} 
-				target="_blank" 
+			<a
+				href={path}
+				target="_blank"
 				rel="noopener noreferrer"
 				class="flex-1 inline-flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
 			>
@@ -82,9 +84,9 @@
 				查看專案
 			</a>
 			{#if githubUrl}
-				<a 
-					href={githubUrl} 
-					target="_blank" 
+				<a
+					href={githubUrl}
+					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors"
 				>

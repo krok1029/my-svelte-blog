@@ -1,13 +1,14 @@
 <script lang="ts">
 	import Box from './Box.svelte';
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
-	
+
 	const boxesArray = new Array(60);
-	
+
 	const practiceInfo = {
 		id: 1,
 		title: 'Reveal Elements on Page Scroll with Animation using Vanilla Javascript',
-		description: '使用純 JavaScript 實現滾動時元素顯示動畫效果，結合 CSS 過渡動畫創造流暢的視覺體驗。',
+		description:
+			'使用純 JavaScript 實現滾動時元素顯示動畫效果，結合 CSS 過渡動畫創造流暢的視覺體驗。',
 		type: 'css' as const,
 		difficulty: 'medium' as const,
 		tags: ['animation', 'scroll', 'vanilla-js', 'intersection-observer'],
@@ -75,11 +76,12 @@ document.querySelectorAll('.box').forEach(box => {
 			{/each}
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
-				這個練習展示了如何使用現代的 Intersection Observer API 來創建滾動動畫效果，相比傳統的 scroll 事件監聽，具有更好的性能表現。
+				這個練習展示了如何使用現代的 Intersection Observer API 來創建滾動動畫效果，相比傳統的 scroll
+				事件監聽，具有更好的性能表現。
 			</p>
 			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
 				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
@@ -104,14 +106,14 @@ document.querySelectorAll('.box').forEach(box => {
 		overflow: hidden;
 		min-height: 100vh;
 	}
-	
+
 	.hero-section {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		min-height: 100vh;
 	}
-	
+
 	.hero-title {
 		position: relative;
 		color: white;
@@ -119,7 +121,7 @@ document.querySelectorAll('.box').forEach(box => {
 		font-weight: 500;
 		text-align: center;
 	}
-	
+
 	.boxes-container {
 		position: relative;
 		display: grid;
@@ -130,13 +132,13 @@ document.querySelectorAll('.box').forEach(box => {
 		top: -200px;
 		padding-bottom: 200px;
 	}
-	
+
 	@media (max-width: 768px) {
 		.boxes-container {
 			grid-template-columns: 1fr;
 			width: 90%;
 		}
-		
+
 		.hero-title {
 			font-size: 12vw;
 		}

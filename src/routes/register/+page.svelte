@@ -2,7 +2,17 @@
 	import { goto } from '$app/navigation';
 	import { createUserWithEmailAndPassword } from 'firebase/auth';
 	import { firebaseAuth } from '$lib/firebase';
-	import { Mail, Lock, Eye, EyeOff, UserPlus, ArrowLeft, Shield, AlertCircle, CheckCircle } from 'lucide-svelte';
+	import {
+		Mail,
+		Lock,
+		Eye,
+		EyeOff,
+		UserPlus,
+		ArrowLeft,
+		Shield,
+		AlertCircle,
+		CheckCircle
+	} from 'lucide-svelte';
 
 	let email: string = '';
 	let password: string = '';
@@ -19,22 +29,22 @@
 
 	function checkPasswordStrength(pwd: string) {
 		if (!pwd) return { score: 0, text: '', color: '' };
-		
+
 		let score = 0;
 		let feedback = [];
-		
+
 		if (pwd.length >= 8) score += 1;
 		else feedback.push('至少 8 個字符');
-		
+
 		if (/[a-z]/.test(pwd)) score += 1;
 		else feedback.push('包含小寫字母');
-		
+
 		if (/[A-Z]/.test(pwd)) score += 1;
 		else feedback.push('包含大寫字母');
-		
+
 		if (/\d/.test(pwd)) score += 1;
 		else feedback.push('包含數字');
-		
+
 		if (/[!@#$%^&*(),.?":{}|<>]/.test(pwd)) score += 1;
 		else feedback.push('包含特殊字符');
 
@@ -78,17 +88,16 @@
 		try {
 			const userCredentials = await createUserWithEmailAndPassword(firebaseAuth, email, password);
 			console.log('Registration successful:', userCredentials);
-			
+
 			successMessage = '註冊成功！正在跳轉到登入頁面...';
-			
+
 			// 延遲跳轉讓使用者看到成功訊息
 			setTimeout(() => {
 				goto('/login');
 			}, 2000);
-			
 		} catch (error: any) {
 			console.error('Registration error:', error);
-			
+
 			// 根據錯誤代碼顯示友善的錯誤訊息
 			switch (error.code) {
 				case 'auth/email-already-in-use':
@@ -146,14 +155,12 @@
 					<h1 class="brand-title">加入我們</h1>
 					<p class="brand-subtitle">創建您的專屬帳號</p>
 				</div>
-				
+
 				<div class="welcome-text">
 					<h2 class="welcome-title">開始您的旅程</h2>
-					<p class="welcome-description">
-						註冊帳號以獲得完整的部落格管理功能和個人化體驗
-					</p>
+					<p class="welcome-description">註冊帳號以獲得完整的部落格管理功能和個人化體驗</p>
 				</div>
-				
+
 				<div class="benefits-list">
 					<div class="benefit-item">
 						<div class="benefit-icon">
@@ -210,7 +217,7 @@
 							<Lock class="input-icon" size={20} />
 							<input
 								id="password"
-								type='password'
+								type="password"
 								placeholder="請輸入密碼"
 								class="form-input"
 								bind:value={password}
@@ -230,15 +237,16 @@
 								{/if}
 							</button>
 						</div>
-						
+
 						<!-- Password Strength Indicator -->
 						{#if password}
 							<div class="password-strength">
 								<div class="strength-bar">
-									<div 
-										class="strength-fill" 
-										style="width: {(passwordStrength.score / 5) * 100}%; background-color: {passwordStrength.color}"
-									></div>
+									<div
+										class="strength-fill"
+										style="width: {(passwordStrength.score / 5) *
+											100}%; background-color: {passwordStrength.color}"
+									/>
 								</div>
 								<div class="strength-text" style="color: {passwordStrength.color}">
 									密碼強度: {passwordStrength.text}
@@ -264,7 +272,7 @@
 							<Lock class="input-icon" size={20} />
 							<input
 								id="confirmPassword"
-								type='password'
+								type="password"
 								placeholder="請再次輸入密碼"
 								class="form-input"
 								class:error={confirmPassword && !passwordsMatch}
@@ -286,7 +294,7 @@
 								{/if}
 							</button>
 						</div>
-						
+
 						{#if confirmPassword}
 							<div class="password-match">
 								{#if passwordsMatch}
@@ -324,10 +332,15 @@
 					<button
 						type="submit"
 						class="submit-button"
-						disabled={isLoading || !email || !password || !confirmPassword || !passwordsMatch || passwordStrength.score < 3}
+						disabled={isLoading ||
+							!email ||
+							!password ||
+							!confirmPassword ||
+							!passwordsMatch ||
+							passwordStrength.score < 3}
 					>
 						{#if isLoading}
-							<div class="loading-spinner"></div>
+							<div class="loading-spinner" />
 							<span>註冊中...</span>
 						{:else}
 							<UserPlus size={20} />
@@ -339,12 +352,7 @@
 					<div class="form-footer">
 						<p class="login-prompt">
 							已經有帳號了？
-							<button
-								type="button"
-								class="login-link"
-								on:click={goToLogin}
-								disabled={isLoading}
-							>
+							<button type="button" class="login-link" on:click={goToLogin} disabled={isLoading}>
 								<ArrowLeft size={16} />
 								返回登入
 							</button>
@@ -639,7 +647,8 @@
 		margin-top: 8px;
 	}
 
-	.match-success, .match-error {
+	.match-success,
+	.match-error {
 		display: flex;
 		align-items: center;
 		gap: 6px;
@@ -717,8 +726,12 @@
 	}
 
 	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	.form-footer {

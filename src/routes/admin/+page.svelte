@@ -6,14 +6,14 @@
 	import { enhance } from '$app/forms';
 	import type { BlogPost } from '$lib/types/BlogPost';
 	import type { PageData, ActionData } from './$types';
-	import { 
-		Plus, 
-		Edit, 
-		Trash2, 
-		Search, 
-		Filter, 
-		Calendar, 
-		Tag, 
+	import {
+		Plus,
+		Edit,
+		Trash2,
+		Search,
+		Filter,
+		Calendar,
+		Tag,
 		FileText,
 		LogOut,
 		User,
@@ -51,13 +51,14 @@
 
 	// 統計資料
 	$: totalPosts = blogPosts.length;
-	$: allTags = [...new Set(blogPosts.flatMap(post => post.tags || []))];
+	$: allTags = [...new Set(blogPosts.flatMap((post) => post.tags || []))];
 	$: recentPosts = blogPosts.slice(0, 5);
 
 	// 過濾邏輯
 	$: {
-		filteredPosts = blogPosts.filter(post => {
-			const matchesSearch = !searchQuery || 
+		filteredPosts = blogPosts.filter((post) => {
+			const matchesSearch =
+				!searchQuery ||
 				post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				post.brief?.toLowerCase().includes(searchQuery.toLowerCase());
 			const matchesTag = !selectedTag || post.tags?.includes(selectedTag);
@@ -79,7 +80,7 @@
 	$: if (form?.success) {
 		// 重新載入頁面數據或從列表中移除已刪除的項目
 		if (postToDelete) {
-			blogPosts = blogPosts.filter(p => p.id !== postToDelete.id);
+			blogPosts = blogPosts.filter((p) => p.id !== postToDelete.id);
 			showDeleteModal = false;
 			postToDelete = null;
 		}
@@ -115,7 +116,7 @@
 				<span class="logo-text">Admin Panel</span>
 			</div>
 		</div>
-		
+
 		<nav class="sidebar-nav">
 			<a href="/admin" class="nav-item active">
 				<FileText size={20} />
@@ -130,7 +131,7 @@
 				<span>系統設定</span>
 			</a>
 		</nav>
-		
+
 		<div class="sidebar-footer">
 			<button class="logout-btn" on:click={logout}>
 				<LogOut size={18} />
@@ -204,7 +205,7 @@
 					class="search-input"
 				/>
 			</div>
-			
+
 			<div class="filter-group">
 				<Filter size={16} />
 				<select bind:value={selectedTag} class="tag-filter">
@@ -220,7 +221,7 @@
 		<div class="table-container">
 			{#if isLoading}
 				<div class="loading-state">
-					<div class="loading-spinner"></div>
+					<div class="loading-spinner" />
 					<p>載入中...</p>
 				</div>
 			{:else if filteredPosts.length === 0}
@@ -287,10 +288,7 @@
 											<a href={`/admin/${post.id}`} class="action-btn edit-btn">
 												<Edit size={16} />
 											</a>
-											<button 
-												class="action-btn delete-btn" 
-												on:click={() => handleDelete(post)}
-											>
+											<button class="action-btn delete-btn" on:click={() => handleDelete(post)}>
 												<Trash2 size={16} />
 											</button>
 										</div>
@@ -318,20 +316,29 @@
 				<p class="modal-warning">此操作無法復原。</p>
 			</div>
 			<div class="modal-actions">
-				<button type="button" class="modal-btn cancel-btn" on:click={cancelDelete} disabled={isDeleting}>
+				<button
+					type="button"
+					class="modal-btn cancel-btn"
+					on:click={cancelDelete}
+					disabled={isDeleting}
+				>
 					取消
 				</button>
-				<form method="POST" action="?/delete" use:enhance={() => {
-					isDeleting = true;
-					return async ({ update }) => {
-						isDeleting = false;
-						await update();
-					};
-				}}>
+				<form
+					method="POST"
+					action="?/delete"
+					use:enhance={() => {
+						isDeleting = true;
+						return async ({ update }) => {
+							isDeleting = false;
+							await update();
+						};
+					}}
+				>
 					<input type="hidden" name="id" value={postToDelete?.id || ''} />
 					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
 						{#if isDeleting}
-							<div class="btn-spinner"></div>
+							<div class="btn-spinner" />
 							刪除中...
 						{:else}
 							確認刪除
@@ -601,7 +608,8 @@
 		overflow: hidden;
 	}
 
-	.loading-state, .empty-state {
+	.loading-state,
+	.empty-state {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -878,8 +886,12 @@
 	}
 
 	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 
 	@media (max-width: 768px) {

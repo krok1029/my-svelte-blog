@@ -40,10 +40,13 @@
 					{/if}
 				</button>
 			</div>
-			
+
 			<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 				<div class="flex flex-shrink-0 items-center">
-					<a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+					<a
+						href="/"
+						class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+					>
 						李明峯
 					</a>
 				</div>
@@ -55,8 +58,10 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+			<div
+				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+			>
 				<!-- Profile dropdown -->
 				<div class="relative ml-3">
 					<div>
@@ -69,7 +74,7 @@
 							aria-haspopup="true"
 						>
 							<span class="sr-only">Open user menu</span>
-							<User2 class="h-6 w-6"/>
+							<User2 class="h-6 w-6" />
 						</button>
 					</div>
 

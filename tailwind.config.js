@@ -14,18 +14,18 @@ export default {
 					600: '#7c3aed',
 					700: '#6d28d9',
 					800: '#5b21b6',
-					900: '#4c1d95',
-				},
+					900: '#4c1d95'
+				}
 			},
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
+				sans: ['Inter', 'system-ui', 'sans-serif']
 			},
 			animation: {
 				'fade-in-up': 'fadeInUp 0.6s ease-out',
-				'bounce-slow': 'bounce 2s infinite',
+				'bounce-slow': 'bounce 2s infinite'
 			},
 			backdropBlur: {
-				xs: '2px',
+				xs: '2px'
 			}
 		}
 	},

@@ -13,12 +13,7 @@
 		type: 'css' as const,
 		difficulty: 'easy' as const,
 		tags: ['pseudo-class', 'hover', 'effects', 'css-selectors'],
-		concepts: [
-			':not() 偽類選擇器',
-			':hover 偽類狀態',
-			'CSS 選擇器組合',
-			'視覺互動效果'
-		],
+		concepts: [':not() 偽類選擇器', ':hover 偽類狀態', 'CSS 選擇器組合', '視覺互動效果'],
 		codeExamples: [
 			{
 				title: 'HTML 結構',
@@ -88,7 +83,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div slot="tips">
 		<div class="space-y-4">
 			<p class="text-gray-700">
@@ -115,7 +110,7 @@
 		min-height: 100vh;
 		background-color: #1a252c;
 	}
-	
+
 	.demo-container {
 		position: relative;
 		display: flex;
@@ -124,7 +119,7 @@
 		transform-style: preserve-3d;
 		gap: 10px;
 	}
-	
+
 	.demo-container .box {
 		position: relative;
 		width: 120px;
@@ -132,7 +127,7 @@
 		transition: 0.5s;
 		-webkit-box-reflect: below 1px linear-gradient(transparent, #0002);
 	}
-	
+
 	.pokemon-img {
 		position: absolute;
 		top: 0;
@@ -143,38 +138,38 @@
 		border: 1px solid rgba(255, 255, 255, 0.1);
 		border-radius: 8px;
 	}
-	
+
 	.demo-container:hover > :not(:hover) {
 		margin: 0 -20px;
 		filter: drop-shadow(0 0 25px #000) drop-shadow(0 0 45px #000);
 		transform: perspective(500px) rotateY(45deg) scale(0.95);
 	}
-	
+
 	.demo-container .box:hover ~ .box {
 		transform: perspective(500px) rotateY(-45deg) scale(0.95);
 	}
-	
+
 	.demo-container .box:hover {
 		transform: perspective(500px) rotateY(0) scale(1.5);
 		z-index: 10;
 	}
-	
+
 	@media (max-width: 768px) {
 		.demo-container {
 			flex-wrap: wrap;
 			gap: 20px;
 		}
-		
+
 		.demo-container .box {
 			width: 100px;
 			height: 100px;
 		}
-		
+
 		.demo-container:hover > :not(:hover) {
 			margin: 0;
 			transform: scale(0.8);
 		}
-		
+
 		.demo-container .box:hover {
 			transform: scale(1.2);
 		}
