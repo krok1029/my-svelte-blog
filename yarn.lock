@@ -1890,11 +1890,6 @@ chownr@^3.0.0:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-3.0.0.tgz#9855e64ecd240a9cc4267ce8a4aa5d24a1da15e4"
   integrity sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==
 
-cl-editor@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/cl-editor/-/cl-editor-2.3.0.tgz#010403ed49e64caf4c0f36614663a391cefe1440"
-  integrity sha512-TxTzuL3529Cmnxy4Q9djcKkZUZJLxuFvFomh6pfbAv72nTB4FCZUE7JhEF5PXeAWRstU+u6BD9ZTif9w0hGQfw==
-
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/clean-stack/-/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
