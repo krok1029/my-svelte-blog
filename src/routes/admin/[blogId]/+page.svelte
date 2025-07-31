@@ -459,7 +459,6 @@
 		align-items: center;
 	}
 
-
 	.delete-btn {
 		display: flex;
 		align-items: center;

@@ -66,8 +66,8 @@
 					<p class="form-subtitle">請輸入您的登入資訊</p>
 				</div>
 
-				<form 
-					class="login-form" 
+				<form
+					class="login-form"
 					method="POST"
 					use:enhance={() => {
 						isLoading = true;

@@ -6,7 +6,7 @@ import type { PageServerLoad, Actions } from './$types';
 export const load: PageServerLoad = async ({ setHeaders, cookies }) => {
 	// 确保用户已登录
 	const user = requireAuth(cookies);
-	
+
 	setHeaders({
 		'cache-control': 'no-store'
 	});
@@ -30,7 +30,7 @@ export const actions: Actions = {
 	delete: async ({ request, cookies }) => {
 		// 确保用户已登录
 		requireAuth(cookies);
-		
+
 		const data = await request.formData();
 		const id = data.get('id') as string;
 
