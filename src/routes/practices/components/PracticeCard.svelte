@@ -84,16 +84,16 @@
 	<div class="flex h-full">
 		<!-- Image Container -->
 		<div class="relative w-1/3 flex-shrink-0">
-			<div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 z-10"></div>
+			<div class="absolute inset-0 z-10 bg-gradient-to-r from-transparent to-black/10"></div>
 			<img
-				class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+				class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 				src={card?.image || defaultImageUrl}
 				alt={card.title}
 				loading="lazy"
 			/>
 			{#if !card.image}
 				<div
-					class="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center"
+					class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
 				>
 					<Icon class="text-gray-400" size={48} />
 				</div>
@@ -101,12 +101,12 @@
 		</div>
 
 		<!-- Content Container -->
-		<div class="flex-1 p-6 flex flex-col justify-between">
+		<div class="flex flex-1 flex-col justify-between p-6">
 			<div>
 				<!-- Type Badge and Difficulty -->
-				<div class="flex items-center gap-2 mb-3">
+				<div class="mb-3 flex items-center gap-2">
 					<span
-						class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium border {getTypeColor(
+						class="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium {getTypeColor(
 							card.type
 						)}"
 					>
@@ -116,7 +116,7 @@
 
 					{#if card.difficulty}
 						<span
-							class="px-2 py-1 rounded-full text-xs font-medium {getDifficultyColor(
+							class="rounded-full px-2 py-1 text-xs font-medium {getDifficultyColor(
 								card.difficulty
 							)}"
 						>
@@ -127,7 +127,7 @@
 
 				<!-- Title -->
 				<h3
-					class="font-bold text-lg text-gray-900 mb-3 line-clamp-2 group-hover:text-emerald-600 transition-colors"
+					class="mb-3 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-emerald-600"
 				>
 					<a href={path} class="hover:underline">
 						{card.title}
@@ -136,16 +136,16 @@
 
 				<!-- Description (if available) -->
 				{#if card.description}
-					<p class="text-gray-600 text-sm mb-4 line-clamp-2">
+					<p class="mb-4 line-clamp-2 text-sm text-gray-600">
 						{card.description}
 					</p>
 				{/if}
 
 				<!-- Tags -->
 				{#if card.tags && card.tags.length > 0}
-					<div class="flex flex-wrap gap-1 mb-4">
+					<div class="mb-4 flex flex-wrap gap-1">
 						{#each card.tags.slice(0, 3) as tag}
-							<span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
+							<span class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600">
 								#{tag}
 							</span>
 						{/each}
@@ -165,7 +165,7 @@
 				<div class="flex items-center gap-2">
 					<a
 						href={path}
-						class="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium text-sm group-hover:gap-3 transition-all"
+						class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition-all group-hover:gap-3 hover:text-emerald-700"
 					>
 						查看練習
 						<ArrowRight size={16} class="transition-transform group-hover:translate-x-1" />
@@ -178,7 +178,7 @@
 
 <style lang="postcss">
 	.practice-card {
-		@apply bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 cursor-pointer;
+		@apply cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg;
 	}
 
 	.line-clamp-2 {

@@ -17,10 +17,12 @@
 		showUserMenu = !showUserMenu;
 	};
 	const checkCurrentUrl = (current: Page, url: string) =>
-		current.url.pathname === url ? 'bg-purple-100 text-purple-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900';
+		current.url.pathname === url
+			? 'bg-purple-100 text-purple-700'
+			: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900';
 </script>
 
-<nav class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 items-center justify-between">
 			<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -28,7 +30,7 @@
 				<button
 					onclick={handleMainIconClick}
 					type="button"
-					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
+					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-purple-500 focus:outline-none focus:ring-inset"
 					aria-controls="mobile-menu"
 					aria-expanded="false"
 				>
@@ -45,7 +47,7 @@
 				<div class="flex flex-shrink-0 items-center">
 					<a
 						href="/"
-						class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+						class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent"
 					>
 						李明峯
 					</a>
@@ -53,7 +55,13 @@
 				<div class="hidden sm:ml-8 sm:block">
 					<div class="flex space-x-1">
 						{#each navbarList as navbar}
-							<a href={navbar.link} class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {checkCurrentUrl(page, navbar.link)}">{navbar.text}</a>
+							<a
+								href={navbar.link}
+								class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {checkCurrentUrl(
+									page,
+									navbar.link
+								)}">{navbar.text}</a
+							>
 						{/each}
 					</div>
 				</div>
@@ -68,7 +76,7 @@
 						<button
 							onclick={handleUserIconClick}
 							type="button"
-							class="flex rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+							class="flex rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none"
 							id="user-menu-button"
 							aria-expanded="false"
 							aria-haspopup="true"

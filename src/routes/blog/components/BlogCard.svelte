@@ -28,24 +28,26 @@
 	};
 </script>
 
-<article class="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full group">
+<article
+	class="group flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
+>
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl">
 		<img
-			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+			class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
 			src={card?.image || defaultImageUrl}
 			alt={card.title}
 			loading="lazy"
 		/>
 		<div
-			class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+			class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 		></div>
 	</div>
 
 	<!-- Content Container -->
-	<div class="p-6 flex-1 flex flex-col">
+	<div class="flex flex-1 flex-col p-6">
 		<!-- Meta Information -->
-		<div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+		<div class="mb-3 flex items-center gap-4 text-sm text-gray-500">
 			{#if card.createdAt}
 				<div class="flex items-center gap-1">
 					<Calendar size={14} />
@@ -62,7 +64,7 @@
 
 		<!-- Title -->
 		<h2
-			class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors"
+			class="mb-3 line-clamp-2 text-xl font-bold text-gray-900 transition-colors group-hover:text-purple-600"
 		>
 			<a href={`/blog/${card.id}`} class="hover:underline">
 				{card.title}
@@ -70,15 +72,17 @@
 		</h2>
 
 		<!-- Brief -->
-		<p class="text-gray-600 text-base mb-4 line-clamp-3 flex-1">
+		<p class="mb-4 line-clamp-3 flex-1 text-base text-gray-600">
 			{card.brief}
 		</p>
 
 		<!-- Tags -->
 		{#if card.tags && card.tags.length > 0}
-			<div class="flex flex-wrap gap-2 mb-4">
+			<div class="mb-4 flex flex-wrap gap-2">
 				{#each card.tags.slice(0, 3) as tag}
-					<span class="inline-flex items-center gap-1 bg-purple-50 text-purple-700 rounded-full px-2 py-1 text-xs font-medium">
+					<span
+						class="inline-flex items-center gap-1 rounded-full bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700"
+					>
 						<Tag size={12} />
 						{tag}
 					</span>
@@ -93,7 +97,7 @@
 		<div class="mt-auto">
 			<a
 				href={`/blog/${card.id}`}
-				class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-sm group-hover:gap-3 transition-all"
+				class="inline-flex items-center gap-2 text-sm font-medium text-purple-600 transition-all group-hover:gap-3 hover:text-purple-700"
 			>
 				閱讀更多
 				<ArrowRight size={16} class="transition-transform group-hover:translate-x-1" />

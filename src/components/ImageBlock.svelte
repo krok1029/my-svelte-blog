@@ -11,13 +11,8 @@
 	const sizeClasses = {
 		lg: 'w-24 h-24', // 100px -> w-24 (96px)
 		md: 'w-12 h-12', // 50px -> w-12 (48px)
-		sm: 'w-6 h-6'    // 25px -> w-6 (24px)
+		sm: 'w-6 h-6' // 25px -> w-6 (24px)
 	};
 </script>
 
-<img 
-	class="object-cover rounded {sizeClasses[size]}" 
-	{src} 
-	{alt} 
-	title={alt} 
-/>
+<img class="rounded object-cover {sizeClasses[size]}" {src} {alt} title={alt} />

@@ -23,19 +23,24 @@
 	];
 </script>
 
-<section class="py-20 bg-white">
+<section class="bg-white py-20">
 	<div class="container mx-auto px-4">
-		<div class="max-w-6xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">技術技能</h2>
+		<div class="mx-auto max-w-6xl">
+			<div class="mb-16 text-center">
+				<h2 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">技術技能</h2>
 				<p class="text-lg text-gray-600">我熟悉的前端技術與工具</p>
 			</div>
 
-			<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+			<div class="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-8">
 				{#each skills as skill}
-					<div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+					<div
+						class="group flex flex-col items-center rounded-xl bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+					>
 						<ImageBlock src={skill.src} alt={skill.alt} />
-						<span class="mt-3 text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors">{skill.name}</span>
+						<span
+							class="mt-3 text-sm font-medium text-gray-700 transition-colors group-hover:text-purple-600"
+							>{skill.name}</span
+						>
 					</div>
 				{/each}
 			</div>

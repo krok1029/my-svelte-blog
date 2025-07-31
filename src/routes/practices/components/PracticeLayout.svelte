@@ -4,20 +4,20 @@
 
 	interface Props {
 		practiceInfo: {
-		id: number;
-		title: string;
-		description: string;
-		type: 'css' | 'js';
-		difficulty: 'easy' | 'medium' | 'hard';
-		tags: string[];
-		concepts: string[];
-		codeExamples?: Array<{
+			id: number;
 			title: string;
 			description: string;
-			code: string;
-			language: string;
-		}>;
-	};
+			type: 'css' | 'js';
+			difficulty: 'easy' | 'medium' | 'hard';
+			tags: string[];
+			concepts: string[];
+			codeExamples?: Array<{
+				title: string;
+				description: string;
+				code: string;
+				language: string;
+			}>;
+		};
 		demo?: import('svelte').Snippet;
 		tips?: import('svelte').Snippet;
 	}
@@ -97,12 +97,12 @@
 </svelte:head>
 
 <!-- Header -->
-<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<header class="sticky top-0 z-50 border-b border-gray-200 bg-white">
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex items-center justify-between">
 			<button
 				onclick={() => goto('/practices')}
-				class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+				class="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900"
 			>
 				<ArrowLeft size={18} />
 				回到練習列表
@@ -110,7 +110,7 @@
 
 			<div class="flex items-center gap-3">
 				<span
-					class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium border {getTypeColor(
+					class="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium {getTypeColor(
 						practiceInfo.type
 					)}"
 				>
@@ -118,7 +118,7 @@
 					{getTypeName(practiceInfo.type)}
 				</span>
 				<span
-					class="px-2 py-1 rounded-full text-xs font-medium {getDifficultyColor(
+					class="rounded-full px-2 py-1 text-xs font-medium {getDifficultyColor(
 						practiceInfo.difficulty
 					)}"
 				>
@@ -132,25 +132,25 @@
 <!-- Practice Info -->
 <section class="bg-gradient-to-br from-gray-50 to-blue-50 py-12">
 	<div class="container mx-auto px-4">
-		<div class="max-w-4xl mx-auto">
-			<div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+		<div class="mx-auto max-w-4xl">
+			<div class="mb-4 flex items-center gap-2 text-sm text-gray-600">
 				<span>練習 #{practiceInfo.id}</span>
 				<span>•</span>
 				<span>{getTypeName(practiceInfo.type)} 練習</span>
 			</div>
 
-			<h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+			<h1 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
 				{practiceInfo.title}
 			</h1>
-			<p class="text-lg text-gray-600 mb-6">
+			<p class="mb-6 text-lg text-gray-600">
 				{practiceInfo.description}
 			</p>
 
 			<!-- Tags -->
-			<div class="flex flex-wrap gap-2 mb-6">
+			<div class="mb-6 flex flex-wrap gap-2">
 				{#each practiceInfo.tags as tag}
 					<span
-						class="bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full text-sm border border-gray-200"
+						class="rounded-full border border-gray-200 bg-white/80 px-3 py-1 text-sm text-gray-700 backdrop-blur-sm"
 					>
 						#{tag}
 					</span>
@@ -158,15 +158,15 @@
 			</div>
 
 			<!-- Key Concepts -->
-			<div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
-				<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+			<div class="rounded-xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm">
+				<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
 					<Lightbulb size={20} />
 					主要概念
 				</h3>
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 					{#each practiceInfo.concepts as concept}
 						<div class="flex items-center gap-2 text-gray-700">
-							<div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+							<div class="h-2 w-2 rounded-full bg-blue-500"></div>
 							{concept}
 						</div>
 					{/each}
@@ -185,24 +185,24 @@
 
 <!-- Code Explanation -->
 {#if practiceInfo.codeExamples && practiceInfo.codeExamples.length > 0}
-	<section class="py-16 bg-white">
+	<section class="bg-white py-16">
 		<div class="container mx-auto px-4">
-			<div class="max-w-4xl mx-auto">
-				<h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
+			<div class="mx-auto max-w-4xl">
+				<h2 class="mb-8 flex items-center gap-2 text-2xl font-bold text-gray-900">
 					<Code size={24} />
 					實作說明
 				</h2>
 
 				<div class="space-y-8">
 					{#each practiceInfo.codeExamples as example, index}
-						<div class="bg-gray-50 rounded-xl p-6">
-							<h3 class="text-lg font-semibold text-gray-900 mb-4">
+						<div class="rounded-xl bg-gray-50 p-6">
+							<h3 class="mb-4 text-lg font-semibold text-gray-900">
 								{index + 1}. {example.title}
 							</h3>
-							<p class="text-gray-700 mb-4">
+							<p class="mb-4 text-gray-700">
 								{example.description}
 							</p>
-							<pre class="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm"><code
+							<pre class="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100"><code
 									>{example.code}</code
 								></pre>
 						</div>
@@ -214,11 +214,11 @@
 {/if}
 
 <!-- Tips Section -->
-<section class="py-12 bg-gradient-to-br from-blue-50 to-indigo-50">
+<section class="bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
 	<div class="container mx-auto px-4">
-		<div class="max-w-4xl mx-auto">
-			<div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-blue-200">
-				<h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+		<div class="mx-auto max-w-4xl">
+			<div class="rounded-xl border border-blue-200 bg-white/80 p-6 backdrop-blur-sm">
+				<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
 					<Info size={20} />
 					學習重點
 				</h3>
@@ -238,7 +238,7 @@
 	}
 
 	.demo-container {
-		@apply w-full h-full;
+		@apply h-full w-full;
 	}
 
 	/* 響應式設計 */

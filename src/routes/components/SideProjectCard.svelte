@@ -20,24 +20,26 @@
 	}: Props = $props();
 </script>
 
-<div class="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full group">
+<div
+	class="group flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
+>
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl bg-gray-100">
 		<img
-			class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+			class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
 			src={imgPath}
 			alt={projecName}
 			loading="lazy"
 		/>
 		<div
-			class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+			class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 		>
-			<div class="absolute bottom-4 left-4 right-4 flex gap-2">
+			<div class="absolute right-4 bottom-4 left-4 flex gap-2">
 				<a
 					href={path}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="flex-1 bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-white transition-colors"
+					class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-white/90 px-3 py-2 text-sm font-medium text-gray-900 backdrop-blur-sm transition-colors hover:bg-white"
 				>
 					<ExternalLink size={16} />
 					查看專案
@@ -47,7 +49,7 @@
 						href={githubUrl}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="bg-gray-900/90 backdrop-blur-sm text-white px-3 py-2 rounded-lg hover:bg-gray-900 transition-colors"
+						class="rounded-lg bg-gray-900/90 px-3 py-2 text-white backdrop-blur-sm transition-colors hover:bg-gray-900"
 					>
 						<Github size={16} />
 					</a>
@@ -57,9 +59,9 @@
 	</div>
 
 	<!-- Content Container -->
-	<div class="p-6 flex-1 flex flex-col">
+	<div class="flex flex-1 flex-col p-6">
 		<!-- Title -->
-		<h3 class="font-bold text-lg text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+		<h3 class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-purple-600">
 			<a href={path} target="_blank" rel="noopener noreferrer" class="hover:underline">
 				{projecName}
 			</a>
@@ -67,16 +69,16 @@
 
 		<!-- Description -->
 		{#if description}
-			<p class="text-gray-600 text-sm mb-4 flex-1">
+			<p class="mb-4 flex-1 text-sm text-gray-600">
 				{description}
 			</p>
 		{/if}
 
 		<!-- Technologies -->
 		{#if technologies.length > 0}
-			<div class="flex flex-wrap gap-2 mb-4">
+			<div class="mb-4 flex flex-wrap gap-2">
 				{#each technologies as tech}
-					<span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">
+					<span class="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
 						{tech}
 					</span>
 				{/each}
@@ -84,12 +86,12 @@
 		{/if}
 
 		<!-- Action Buttons -->
-		<div class="flex gap-2 mt-auto">
+		<div class="mt-auto flex gap-2">
 			<a
 				href={path}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="flex-1 inline-flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+				class="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-purple-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-purple-700"
 			>
 				<ExternalLink size={16} />
 				查看專案
@@ -99,7 +101,7 @@
 					href={githubUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 rounded-lg transition-colors"
+					class="inline-flex items-center justify-center rounded-lg bg-gray-100 px-3 py-2 text-gray-700 transition-colors hover:bg-gray-200"
 				>
 					<Github size={16} />
 				</a>

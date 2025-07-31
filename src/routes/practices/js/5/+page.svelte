@@ -142,7 +142,7 @@ const handleDragOver = (e) => {
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div  class="demo-wrapper">
+		<div class="demo-wrapper">
 			<div class="image-hosting-container">
 				<!-- Upload Section -->
 				<div class="upload-section">
@@ -284,15 +284,15 @@ const handleDragOver = (e) => {
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					這個圖片託管工具展示了如何整合多個 Web API
 					來創建完整的檔案上傳功能，包括檔案讀取、編碼轉換和遠端儲存。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• FileReader.readAsDataURL() 將檔案轉為 Base64</li>
 						<li>• GitHub API 可以作為簡單的檔案儲存服務</li>
 						<li>• 適當的錯誤處理和載入狀態很重要</li>

@@ -80,21 +80,21 @@ function toggleMetronome() {
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div >
+		<div>
 			<Metronome />
 		</div>
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					這個節拍器展示了如何使用 Web Audio API
 					和定時器創建音樂工具。重點在於精確的時間控制和音頻同步。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• Audio 物件的 preload 屬性可以提升播放性能</li>
 						<li>• 重置 currentTime 確保音頻從頭播放</li>
 						<li>• BPM 轉換公式：60000ms ÷ BPM = 間隔毫秒數</li>

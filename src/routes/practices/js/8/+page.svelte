@@ -134,7 +134,7 @@ const shareFile = async (file) => {
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div  class="demo-wrapper">
+		<div class="demo-wrapper">
 			<div class="share-container">
 				<div class="content-card">
 					<div class="card-header">
@@ -223,14 +223,14 @@ const shareFile = async (file) => {
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					Web Share API 讓網頁可以使用裝置的原生分享功能，提供更好的使用者體驗，特別是在行動裝置上。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• Web Share API 主要在行動裝置上支援</li>
 						<li>• 需要 HTTPS 環境才能使用</li>
 						<li>• 總是要提供備用方案（如複製到剪貼簿）</li>

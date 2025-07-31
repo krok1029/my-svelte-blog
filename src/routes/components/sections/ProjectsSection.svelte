@@ -51,17 +51,17 @@
 	];
 </script>
 
-<section class="py-20 bg-gray-50">
+<section class="bg-gray-50 py-20">
 	<div class="container mx-auto px-4">
-		<div class="max-w-6xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">精選專案</h2>
+		<div class="mx-auto max-w-6xl">
+			<div class="mb-16 text-center">
+				<h2 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">精選專案</h2>
 				<p class="text-lg text-gray-600">我開發的一些有趣的 Side Projects</p>
 			</div>
 
-			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{#each projects as project}
-					<div class="transform transition-all duration-300 hover:-translate-y-2 group">
+					<div class="group transform transition-all duration-300 hover:-translate-y-2">
 						<SideProjectCard
 							projecName={project.name}
 							path={project.path}
@@ -74,10 +74,10 @@
 				{/each}
 			</div>
 
-			<div class="text-center mt-12">
+			<div class="mt-12 text-center">
 				<a
 					href="/blog"
-					class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
+					class="inline-flex items-center gap-2 font-medium text-purple-600 hover:text-purple-700"
 				>
 					查看更多專案
 					<ExternalLink size={16} />

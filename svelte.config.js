@@ -18,7 +18,7 @@ const config = {
 			$lib: 'src/lib',
 			$asset: 'src/assets',
 			$type: 'src/lib/types',
-			"@/*": "src/lib",
+			'@/*': 'src/lib'
 		}
 	}
 };

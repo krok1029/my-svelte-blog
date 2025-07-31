@@ -65,7 +65,7 @@
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div  class="demo-wrapper">
+		<div class="demo-wrapper">
 			<div class="demo-container">
 				<div class="box">
 					<img class="pokemon-img" src={inagea} alt="001_妙蛙種子" />
@@ -87,14 +87,14 @@
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					這個練習展示了 CSS :not() 偽類選擇器的強大功能，通過組合 :hover 狀態創造出獨特的互動效果。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• :not() 選擇器可以排除特定狀態的元素</li>
 						<li>• 組合偽類選擇器創造複雜的互動效果</li>
 						<li>• CSS transform 和 transition 的配合使用</li>

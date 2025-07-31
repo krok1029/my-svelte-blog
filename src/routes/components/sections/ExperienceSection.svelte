@@ -81,33 +81,33 @@
 	}
 </script>
 
-<section class="py-20 bg-gray-50">
+<section class="bg-gray-50 py-20">
 	<div class="container mx-auto px-4">
-		<div class="max-w-6xl mx-auto">
-			<div class="text-center mb-16">
-				<h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">工作經歷</h2>
+		<div class="mx-auto max-w-6xl">
+			<div class="mb-16 text-center">
+				<h2 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">工作經歷</h2>
 				<p class="text-lg text-gray-600">我的職業發展歷程</p>
 			</div>
 
 			<!-- Latest Experience (Always Visible) -->
 			{#each experiences.filter((exp) => exp.isLatest) as experience}
-				<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100 mb-8">
-					<div class="flex flex-col lg:flex-row gap-6">
+				<div class="mb-8 rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+					<div class="flex flex-col gap-6 lg:flex-row">
 						<div class="flex-shrink-0">
-							<div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+							<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
 								<img
 									src={experience.logo}
 									alt={experience.company}
-									class="w-12 h-12 object-contain"
+									class="h-12 w-12 object-contain"
 								/>
 							</div>
 						</div>
 						<div class="flex-1">
-							<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+							<div class="mb-4 flex flex-col lg:flex-row lg:items-start lg:justify-between">
 								<div>
 									<h3 class="text-xl font-semibold text-gray-900">{experience.title}</h3>
-									<h4 class="text-lg text-purple-600 font-medium">{experience.company}</h4>
-									<div class="flex items-center gap-4 mt-2 text-gray-600">
+									<h4 class="text-lg font-medium text-purple-600">{experience.company}</h4>
+									<div class="mt-2 flex items-center gap-4 text-gray-600">
 										<div class="flex items-center gap-1">
 											<Calendar size={16} />
 											<span>{experience.period}</span>
@@ -121,7 +121,7 @@
 								<div class="mt-4 lg:mt-0">
 									<div class="flex flex-wrap gap-2">
 										{#each experience.skills as skill}
-											<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full"
+											<span class="px-3 py-1 {getSkillColor(skill)} rounded-full text-sm"
 												>{skill}</span
 											>
 										{/each}
@@ -139,10 +139,10 @@
 			{/each}
 
 			<!-- Toggle Button -->
-			<div class="text-center mb-8">
+			<div class="mb-8 text-center">
 				<button
 					onclick={toggleExperience}
-					class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+					class="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-3 font-medium text-white transition-colors hover:bg-purple-700"
 				>
 					{showAllExperience ? '收合更多經歷' : '查看更多經歷'}
 					{#if showAllExperience}
@@ -158,23 +158,23 @@
 				<div transition:slide={{ duration: 300 }}>
 					<div class="space-y-8">
 						{#each experiences.filter((exp) => !exp.isLatest) as experience}
-							<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-								<div class="flex flex-col lg:flex-row gap-6">
+							<div class="rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+								<div class="flex flex-col gap-6 lg:flex-row">
 									<div class="flex-shrink-0">
-										<div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+										<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
 											<img
 												src={experience.logo}
 												alt={experience.company}
-												class="w-12 h-12 object-contain"
+												class="h-12 w-12 object-contain"
 											/>
 										</div>
 									</div>
 									<div class="flex-1">
-										<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
+										<div class="mb-4 flex flex-col lg:flex-row lg:items-start lg:justify-between">
 											<div>
 												<h3 class="text-xl font-semibold text-gray-900">{experience.title}</h3>
-												<h4 class="text-lg text-purple-600 font-medium">{experience.company}</h4>
-												<div class="flex items-center gap-4 mt-2 text-gray-600">
+												<h4 class="text-lg font-medium text-purple-600">{experience.company}</h4>
+												<div class="mt-2 flex items-center gap-4 text-gray-600">
 													<div class="flex items-center gap-1">
 														<Calendar size={16} />
 														<span>{experience.period}</span>
@@ -188,7 +188,7 @@
 											<div class="mt-4 lg:mt-0">
 												<div class="flex flex-wrap gap-2">
 													{#each experience.skills as skill}
-														<span class="px-3 py-1 {getSkillColor(skill)} text-sm rounded-full"
+														<span class="px-3 py-1 {getSkillColor(skill)} rounded-full text-sm"
 															>{skill}</span
 														>
 													{/each}
@@ -206,22 +206,22 @@
 						{/each}
 
 						<!-- Education Section -->
-						<div class="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
-							<div class="text-center mb-6">
+						<div class="rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+							<div class="mb-6 text-center">
 								<h3 class="text-2xl font-bold text-gray-900">教育背景</h3>
 							</div>
-							<div class="flex flex-col lg:flex-row gap-6">
+							<div class="flex flex-col gap-6 lg:flex-row">
 								<div class="flex-shrink-0">
-									<div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-										<img src={education.logo} alt="NCKU" class="w-12 h-12 object-contain" />
+									<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
+										<img src={education.logo} alt="NCKU" class="h-12 w-12 object-contain" />
 									</div>
 								</div>
 								<div class="flex-1">
 									<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between">
 										<div>
 											<h4 class="text-xl font-semibold text-gray-900">{education.title}</h4>
-											<h5 class="text-lg text-purple-600 font-medium">{education.subtitle}</h5>
-											<div class="flex items-center gap-1 mt-2 text-gray-600">
+											<h5 class="text-lg font-medium text-purple-600">{education.subtitle}</h5>
+											<div class="mt-2 flex items-center gap-1 text-gray-600">
 												<Calendar size={16} />
 												<span>{education.period}</span>
 											</div>

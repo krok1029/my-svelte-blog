@@ -97,7 +97,7 @@ function updateProgress(element, value) {
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div  class="demo-wrapper">
+		<div class="demo-wrapper">
 			<div class="demo-container">
 				{#each items as item, index}
 					<div
@@ -121,15 +121,15 @@ function updateProgress(element, value) {
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					這個練習展示了 CSS conic-gradient()
 					的強大功能，可以創建各種圓形漸層效果，特別適合製作進度條和圖表。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• conic-gradient() 從中心點開始的圓錐漸層</li>
 						<li>• CSS 自定義屬性讓樣式更靈活</li>
 						<li>• ::before 偽元素創造內圓效果</li>

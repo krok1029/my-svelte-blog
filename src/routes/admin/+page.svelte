@@ -24,13 +24,19 @@
 		AlertTriangle
 	} from 'lucide-svelte';
 	import type { Timestamp } from 'firebase/firestore';
-	
+
 	// shadcn/ui components
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert';
-	import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import {
+		Card,
+		CardContent,
+		CardDescription,
+		CardHeader,
+		CardTitle
+	} from '$lib/components/ui/card';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import {
 		Dialog,
@@ -192,9 +198,9 @@
 
 		<!-- Stats Cards -->
 		<div class="stats-grid">
-			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+			<Card class="transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
 				<CardContent class="flex items-center gap-4 p-6">
-					<div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+					<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
 						<FileText size={24} class="text-blue-600" />
 					</div>
 					<div>
@@ -203,10 +209,10 @@
 					</div>
 				</CardContent>
 			</Card>
-			
-			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+
+			<Card class="transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
 				<CardContent class="flex items-center gap-4 p-6">
-					<div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+					<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
 						<Tag size={24} class="text-green-600" />
 					</div>
 					<div>
@@ -215,10 +221,10 @@
 					</div>
 				</CardContent>
 			</Card>
-			
-			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+
+			<Card class="transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
 				<CardContent class="flex items-center gap-4 p-6">
-					<div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+					<div class="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
 						<Calendar size={24} class="text-purple-600" />
 					</div>
 					<div>
@@ -233,7 +239,10 @@
 		<div class="filters-section">
 			<div class="search-box">
 				<div class="relative">
-					<Search size={20} class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+					<Search
+						size={20}
+						class="absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400"
+					/>
 					<Input
 						type="text"
 						placeholder="搜尋文章標題或內容..."
@@ -267,9 +276,9 @@
 				</CardContent>
 			{:else if filteredPosts.length === 0}
 				<CardContent class="flex flex-col items-center justify-center py-16">
-					<FileText size={48} class="text-gray-400 mb-4" />
-					<h3 class="text-lg font-semibold text-gray-900 mb-2">沒有找到文章</h3>
-					<p class="text-gray-600 mb-6">試試調整搜尋條件或建立新文章</p>
+					<FileText size={48} class="mb-4 text-gray-400" />
+					<h3 class="mb-2 text-lg font-semibold text-gray-900">沒有找到文章</h3>
+					<p class="mb-6 text-gray-600">試試調整搜尋條件或建立新文章</p>
 					<Button asChild>
 						<a href="/admin/create" class="gap-2">
 							<Plus size={16} />
@@ -338,7 +347,12 @@
 													<Edit size={16} />
 												</a>
 											</Button>
-											<Button variant="ghost" size="sm" onclick={() => handleDelete(post)} class="p-2 text-red-600 hover:text-red-700 hover:bg-red-50">
+											<Button
+												variant="ghost"
+												size="sm"
+												onclick={() => handleDelete(post)}
+												class="p-2 text-red-600 hover:bg-red-50 hover:text-red-700"
+											>
 												<Trash2 size={16} />
 											</Button>
 										</div>
@@ -364,17 +378,11 @@
 			<DialogDescription>
 				您確定要刪除文章「{postToDelete?.title}」嗎？
 				<br />
-				<span class="text-red-600 font-medium">此操作無法復原。</span>
+				<span class="font-medium text-red-600">此操作無法復原。</span>
 			</DialogDescription>
 		</DialogHeader>
 		<DialogFooter class="gap-2">
-			<Button
-				variant="outline"
-				onclick={cancelDelete}
-				disabled={isDeleting}
-			>
-				取消
-			</Button>
+			<Button variant="outline" onclick={cancelDelete} disabled={isDeleting}>取消</Button>
 			<form
 				method="POST"
 				action="?/delete"
@@ -388,14 +396,11 @@
 				class="inline"
 			>
 				<input type="hidden" name="id" value={postToDelete?.id || ''} />
-				<Button 
-					type="submit" 
-					variant="destructive" 
-					disabled={isDeleting}
-					class="gap-2"
-				>
+				<Button type="submit" variant="destructive" disabled={isDeleting} class="gap-2">
 					{#if isDeleting}
-						<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+						<div
+							class="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"
+						></div>
 						刪除中...
 					{:else}
 						確認刪除
@@ -434,7 +439,7 @@
 		font-weight: 600;
 		color: #1e293b;
 	}
-	
+
 	.sidebar-nav {
 		flex: 1;
 		padding: 24px 0;

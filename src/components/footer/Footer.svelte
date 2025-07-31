@@ -1,6 +1,6 @@
 <!-- Footer.svelte -->
-<footer class="bg-gray-800 mt-auto mb-0">
-	<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<footer class="mt-auto mb-0 bg-gray-800">
+	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 		<div class="flex justify-center space-x-6">
 			<div class="text-gray-400 hover:text-white">
 				<span class="sr-only">Facebook</span>
@@ -26,6 +26,6 @@
 			<div class="text-gray-400 hover:text-white">Privacy Policy</div>
 			<div class="text-gray-400 hover:text-white">Terms of Service</div>
 		</div>
-		<p class="mt-8 text-center text-gray-400 text-sm">&copy; 2023 My Blog. All rights reserved.</p>
+		<p class="mt-8 text-center text-sm text-gray-400">&copy; 2023 My Blog. All rights reserved.</p>
 	</div>
 </footer>

@@ -72,7 +72,7 @@
 
 <div class="min-h-screen bg-gray-50">
 	<!-- Back Button -->
-	<div class="bg-white border-b">
+	<div class="border-b bg-white">
 		<div class="container mx-auto px-4 py-4">
 			<Button variant="ghost" onclick={() => goto('/blog')} class="gap-2">
 				<ArrowLeft size={18} />
@@ -84,9 +84,9 @@
 	<!-- Article Header -->
 	<header class="bg-gradient-to-br from-purple-50 to-pink-50 py-16">
 		<div class="container mx-auto px-4">
-			<div class="max-w-4xl mx-auto">
+			<div class="mx-auto max-w-4xl">
 				<!-- Meta Information -->
-				<div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+				<div class="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-600">
 					<div class="flex items-center gap-2">
 						<User size={16} />
 						<span>李明峯</span>
@@ -106,20 +106,20 @@
 				</div>
 
 				<!-- Title -->
-				<h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+				<h1 class="mb-6 text-3xl leading-tight font-bold text-gray-900 lg:text-5xl">
 					{title}
 				</h1>
 
 				<!-- Brief -->
 				{#if brief}
-					<p class="text-xl text-gray-600 mb-8 leading-relaxed">
+					<p class="mb-8 text-xl leading-relaxed text-gray-600">
 						{brief}
 					</p>
 				{/if}
 
 				<!-- Tags -->
 				{#if tags && tags.length > 0}
-					<div class="flex flex-wrap gap-2 mb-8">
+					<div class="mb-8 flex flex-wrap gap-2">
 						{#each tags as tag}
 							<Badge variant="secondary" class="gap-1">
 								<Tag size={12} />
@@ -142,10 +142,10 @@
 
 	<!-- Featured Image -->
 	{#if image}
-		<div class="container mx-auto px-4 -mt-8 mb-12">
-			<div class="max-w-4xl mx-auto">
-				<div class="relative rounded-xl overflow-hidden shadow-lg">
-					<img src={image} alt={title} class="w-full h-64 lg:h-96 object-cover" />
+		<div class="container mx-auto -mt-8 mb-12 px-4">
+			<div class="mx-auto max-w-4xl">
+				<div class="relative overflow-hidden rounded-xl shadow-lg">
+					<img src={image} alt={title} class="h-64 w-full object-cover lg:h-96" />
 				</div>
 			</div>
 		</div>
@@ -153,7 +153,7 @@
 
 	<!-- Article Content -->
 	<main class="container mx-auto px-4 pb-16">
-		<article class="max-w-4xl mx-auto">
+		<article class="mx-auto max-w-4xl">
 			<Card class="p-8">
 				<CardContent class="p-0">
 					<div class="prose prose-lg lg:prose-xl max-w-none">
@@ -167,12 +167,12 @@
 	<!-- Article Footer -->
 	<footer class="bg-gray-100 py-12">
 		<div class="container mx-auto px-4">
-			<div class="max-w-4xl mx-auto">
+			<div class="mx-auto max-w-4xl">
 				<Card>
 					<CardContent class="p-8">
-						<div class="flex items-center gap-4 mb-4">
+						<div class="mb-4 flex items-center gap-4">
 							<div
-								class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-xl font-bold"
+								class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-400 to-pink-400 text-xl font-bold text-white"
 							>
 								李
 							</div>
@@ -181,7 +181,7 @@
 								<p class="text-gray-600">Frontend Developer</p>
 							</div>
 						</div>
-						<p class="text-gray-700 mb-6">
+						<p class="mb-6 text-gray-700">
 							熱愛前端技術的工程師，專注於創造優質的使用者體驗。喜歡分享技術心得與學習過程。
 						</p>
 						<div class="flex gap-4">
@@ -189,9 +189,7 @@
 								<Share2 size={16} />
 								分享這篇文章
 							</Button>
-							<Button variant="outline" onclick={() => goto('/blog')}>
-								查看更多文章
-							</Button>
+							<Button variant="outline" onclick={() => goto('/blog')}>查看更多文章</Button>
 						</div>
 					</CardContent>
 				</Card>

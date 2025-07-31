@@ -12,7 +12,13 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
-	import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card/index.js';
+	import {
+		Card,
+		CardContent,
+		CardDescription,
+		CardHeader,
+		CardTitle
+	} from '$lib/components/ui/card/index.js';
 	import { Alert, AlertDescription } from '$lib/components/ui/alert/index.js';
 	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
@@ -74,7 +80,7 @@ console.log('Hello, World!');
 		return async ({ update, result }) => {
 			isSubmitting = false;
 			await update();
-			
+
 			if (result.type === 'success') {
 				toast.success('文章發布成功！');
 			} else if (result.type === 'failure') {
@@ -97,7 +103,7 @@ console.log('Hello, World!');
 
 <div class="min-h-screen bg-gray-50">
 	<!-- Header -->
-	<header class="sticky top-0 z-50 bg-white border-b">
+	<header class="sticky top-0 z-50 border-b bg-white">
 		<div class="flex items-center justify-between p-6">
 			<div class="flex items-center gap-6">
 				<Button variant="ghost" size="sm" onclick={goBack} class="gap-2">
@@ -112,7 +118,7 @@ console.log('Hello, World!');
 		</div>
 	</header>
 
-	<div class="container mx-auto p-6 max-w-7xl">
+	<div class="container mx-auto max-w-7xl p-6">
 		<form method="POST" action="?/create" use:enhance={handleSubmit} class="space-y-6">
 			<!-- 基本資訊卡片 -->
 			<Card>
@@ -121,14 +127,12 @@ console.log('Hello, World!');
 						<FileText size={20} />
 						文章基本資訊
 					</CardTitle>
-					<CardDescription>
-						填寫文章的標題、標籤和摘要資訊
-					</CardDescription>
+					<CardDescription>填寫文章的標題、標籤和摘要資訊</CardDescription>
 				</CardHeader>
 				<CardContent class="space-y-6">
-					<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 						<!-- 標題 -->
-						<div class="lg:col-span-2 space-y-2">
+						<div class="space-y-2 lg:col-span-2">
 							<Label for="title" class="flex items-center gap-2">
 								<FileText size={16} />
 								文章標題
@@ -157,7 +161,7 @@ console.log('Hello, World!');
 								bind:value={inputTags}
 							/>
 							{#if tagList.length > 0}
-								<div class="flex flex-wrap gap-2 mt-2">
+								<div class="mt-2 flex flex-wrap gap-2">
 									{#each tagList as tag}
 										<Badge variant="secondary">{tag}</Badge>
 									{/each}
@@ -179,7 +183,7 @@ console.log('Hello, World!');
 								rows={3}
 								class="resize-none"
 							/>
-							<div class="text-xs text-gray-500 text-right">
+							<div class="text-right text-xs text-gray-500">
 								{brief.length} / 200 字符
 							</div>
 						</div>
@@ -217,9 +221,7 @@ console.log('Hello, World!');
 					<div class="flex items-center justify-between">
 						<div>
 							<CardTitle>文章內容</CardTitle>
-							<CardDescription>
-								使用 Markdown 語法撰寫文章內容
-							</CardDescription>
+							<CardDescription>使用 Markdown 語法撰寫文章內容</CardDescription>
 						</div>
 						<div class="flex items-center gap-4 text-sm text-gray-500">
 							<span>{content.length} 字符</span>
@@ -234,7 +236,7 @@ console.log('Hello, World!');
 							<TabsTrigger value="write">編輯</TabsTrigger>
 							<TabsTrigger value="preview">預覽</TabsTrigger>
 						</TabsList>
-						
+
 						<TabsContent value="write" class="mt-4">
 							<Textarea
 								name="content"
@@ -242,12 +244,12 @@ console.log('Hello, World!');
 								placeholder="開始撰寫您的文章內容..."
 								required
 								rows={20}
-								class="font-mono text-sm resize-none"
+								class="resize-none font-mono text-sm"
 							/>
 						</TabsContent>
-						
+
 						<TabsContent value="preview" class="mt-4">
-							<div class="border rounded-lg p-6 bg-white min-h-[500px]">
+							<div class="min-h-[500px] rounded-lg border bg-white p-6">
 								<div class="prose max-w-none">
 									{@html marked(content, { mangle: false, headerIds: false })}
 								</div>

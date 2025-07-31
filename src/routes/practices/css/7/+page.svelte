@@ -106,7 +106,7 @@ const seconds = formatTime(date.getSeconds());`,
 
 <PracticeLayout {practiceInfo}>
 	{#snippet demo()}
-		<div  class="demo-wrapper">
+		<div class="demo-wrapper">
 			<div class="clock-container">
 				<!-- 日期顯示 -->
 				<div class="date-display">
@@ -153,14 +153,14 @@ const seconds = formatTime(date.getSeconds());`,
 	{/snippet}
 
 	{#snippet tips()}
-		<div >
+		<div>
 			<div class="space-y-4">
 				<p class="text-gray-700">
 					這個練習展示了如何結合 JavaScript 的 Date 物件和 CSS 樣式創建一個功能完整的數位時鐘。
 				</p>
-				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-					<ul class="text-blue-800 text-sm space-y-1">
+				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800">
 						<li>• setInterval 用於定時更新顯示</li>
 						<li>• padStart() 方法確保時間格式一致</li>
 						<li>• CSS Grid 和 Flexbox 的組合使用</li>
