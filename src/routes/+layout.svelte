@@ -1,12 +1,10 @@
 <script lang="ts">
 	import '../app.css';
-
 	import Navbar from '$components/navbar/Navbar.svelte';
 	import Footer from '$components/footer/Footer.svelte';
-	interface Props {
-		children?: import('svelte').Snippet;
-	}
-
+	
+	interface Props { children?: import('svelte').Snippet }
+	
 	let { children }: Props = $props();
 </script>
 
