@@ -248,7 +248,7 @@ console.log('Hello, World!');
 						
 						<TabsContent value="preview" class="mt-4">
 							<div class="border rounded-lg p-6 bg-white min-h-[500px]">
-								<div class="prose prose-gray max-w-none">
+								<div class="prose max-w-none">
 									{@html marked(content, { mangle: false, headerIds: false })}
 								</div>
 							</div>
@@ -259,88 +259,3 @@ console.log('Hello, World!');
 		</form>
 	</div>
 </div>
-
-<style>
-	/* Prose styles for preview */
-	:global(.prose) {
-		color: #374151;
-		line-height: 1.7;
-	}
-
-	:global(.prose h1) {
-		font-size: 2rem;
-		font-weight: 700;
-		color: #1e293b;
-		margin-bottom: 1rem;
-		border-bottom: 2px solid #e5e7eb;
-		padding-bottom: 0.5rem;
-	}
-
-	:global(.prose h2) {
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: #1e293b;
-		margin: 2rem 0 1rem;
-	}
-
-	:global(.prose h3) {
-		font-size: 1.25rem;
-		font-weight: 600;
-		color: #1e293b;
-		margin: 1.5rem 0 0.75rem;
-	}
-
-	:global(.prose p) {
-		margin-bottom: 1rem;
-	}
-
-	:global(.prose ul),
-	:global(.prose ol) {
-		margin: 1rem 0;
-		padding-left: 1.5rem;
-	}
-
-	:global(.prose li) {
-		margin-bottom: 0.5rem;
-	}
-
-	:global(.prose blockquote) {
-		border-left: 4px solid #e5e7eb;
-		padding-left: 1rem;
-		margin: 1.5rem 0;
-		font-style: italic;
-		color: #6b7280;
-	}
-
-	:global(.prose code) {
-		background: #f3f4f6;
-		padding: 0.2rem 0.4rem;
-		border-radius: 0.25rem;
-		font-size: 0.875rem;
-		color: #dc2626;
-	}
-
-	:global(.prose pre) {
-		background: #1f2937;
-		color: #f9fafb;
-		padding: 1rem;
-		border-radius: 0.5rem;
-		overflow-x: auto;
-		margin: 1.5rem 0;
-	}
-
-	:global(.prose pre code) {
-		background: none;
-		color: inherit;
-		padding: 0;
-	}
-
-	:global(.prose strong) {
-		font-weight: 600;
-		color: #1e293b;
-	}
-
-	:global(.prose em) {
-		font-style: italic;
-	}
-</style>
