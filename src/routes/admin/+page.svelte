@@ -24,6 +24,23 @@
 		AlertTriangle
 	} from 'lucide-svelte';
 	import type { Timestamp } from 'firebase/firestore';
+	
+	// shadcn/ui components
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import { Skeleton } from '$lib/components/ui/skeleton';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle,
+		DialogTrigger
+	} from '$lib/components/ui/dialog';
 
 	interface Props {
 		data: PageData;
@@ -168,56 +185,66 @@
 
 		<!-- Success Message -->
 		{#if successMessage}
-			<div class="success-message">
-				{successMessage}
-			</div>
+			<Alert class="mb-6 border-green-200 bg-green-50">
+				<AlertDescription class="text-green-800">{successMessage}</AlertDescription>
+			</Alert>
 		{/if}
 
 		<!-- Stats Cards -->
 		<div class="stats-grid">
-			<div class="stat-card">
-				<div class="stat-icon">
-					<FileText size={24} />
-				</div>
-				<div class="stat-content">
-					<div class="stat-number">{totalPosts}</div>
-					<div class="stat-label">總文章數</div>
-				</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-icon">
-					<Tag size={24} />
-				</div>
-				<div class="stat-content">
-					<div class="stat-number">{allTags.length}</div>
-					<div class="stat-label">標籤數量</div>
-				</div>
-			</div>
-			<div class="stat-card">
-				<div class="stat-icon">
-					<Calendar size={24} />
-				</div>
-				<div class="stat-content">
-					<div class="stat-number">{recentPosts.length}</div>
-					<div class="stat-label">最近文章</div>
-				</div>
-			</div>
+			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+				<CardContent class="flex items-center gap-4 p-6">
+					<div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+						<FileText size={24} class="text-blue-600" />
+					</div>
+					<div>
+						<div class="text-2xl font-bold text-gray-900">{totalPosts}</div>
+						<div class="text-sm text-gray-600">總文章數</div>
+					</div>
+				</CardContent>
+			</Card>
+			
+			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+				<CardContent class="flex items-center gap-4 p-6">
+					<div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+						<Tag size={24} class="text-green-600" />
+					</div>
+					<div>
+						<div class="text-2xl font-bold text-gray-900">{allTags.length}</div>
+						<div class="text-sm text-gray-600">標籤數量</div>
+					</div>
+				</CardContent>
+			</Card>
+			
+			<Card class="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+				<CardContent class="flex items-center gap-4 p-6">
+					<div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+						<Calendar size={24} class="text-purple-600" />
+					</div>
+					<div>
+						<div class="text-2xl font-bold text-gray-900">{recentPosts.length}</div>
+						<div class="text-sm text-gray-600">最近文章</div>
+					</div>
+				</CardContent>
+			</Card>
 		</div>
 
 		<!-- Filters -->
 		<div class="filters-section">
 			<div class="search-box">
-				<Search size={20} />
-				<input
-					type="text"
-					placeholder="搜尋文章標題或內容..."
-					bind:value={searchQuery}
-					class="search-input"
-				/>
+				<div class="relative">
+					<Search size={20} class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+					<Input
+						type="text"
+						placeholder="搜尋文章標題或內容..."
+						bind:value={searchQuery}
+						class="pl-10"
+					/>
+				</div>
 			</div>
 
 			<div class="filter-group">
-				<Filter size={16} />
+				<Filter size={16} class="text-gray-500" />
 				<select bind:value={selectedTag} class="tag-filter">
 					<option value="">所有標籤</option>
 					{#each allTags as tag}
@@ -228,22 +255,28 @@
 		</div>
 
 		<!-- Posts Table -->
-		<div class="table-container">
+		<Card>
 			{#if isLoading}
-				<div class="loading-state">
-					<div class="loading-spinner"></div>
-					<p>載入中...</p>
-				</div>
+				<CardContent class="p-6">
+					<div class="space-y-4">
+						<Skeleton class="h-4 w-full" />
+						<Skeleton class="h-4 w-3/4" />
+						<Skeleton class="h-4 w-1/2" />
+						<Skeleton class="h-4 w-2/3" />
+					</div>
+				</CardContent>
 			{:else if filteredPosts.length === 0}
-				<div class="empty-state">
-					<FileText size={48} />
-					<h3>沒有找到文章</h3>
-					<p>試試調整搜尋條件或建立新文章</p>
-					<a href="/admin/create" class="empty-action-btn">
-						<Plus size={16} />
-						建立第一篇文章
-					</a>
-				</div>
+				<CardContent class="flex flex-col items-center justify-center py-16">
+					<FileText size={48} class="text-gray-400 mb-4" />
+					<h3 class="text-lg font-semibold text-gray-900 mb-2">沒有找到文章</h3>
+					<p class="text-gray-600 mb-6">試試調整搜尋條件或建立新文章</p>
+					<Button asChild>
+						<a href="/admin/create" class="gap-2">
+							<Plus size={16} />
+							建立第一篇文章
+						</a>
+					</Button>
+				</CardContent>
 			{:else}
 				<div class="table-wrapper">
 					<table class="posts-table">
@@ -269,10 +302,10 @@
 										{#if post.tags && post.tags.length > 0}
 											<div class="tags-container">
 												{#each post.tags.slice(0, 2) as tag}
-													<span class="tag-badge">{tag}</span>
+													<Badge variant="secondary" class="text-xs">{tag}</Badge>
 												{/each}
 												{#if post.tags.length > 2}
-													<span class="tag-more">+{post.tags.length - 2}</span>
+													<Badge variant="outline" class="text-xs">+{post.tags.length - 2}</Badge>
 												{/if}
 											</div>
 										{:else}
@@ -295,15 +328,19 @@
 
 									<td class="actions-cell">
 										<div class="action-buttons">
-											<a href={`/blog/${post.id}`} class="action-btn view-btn" target="_blank">
-												<Eye size={16} />
-											</a>
-											<a href={`/admin/${post.id}`} class="action-btn edit-btn">
-												<Edit size={16} />
-											</a>
-											<button class="action-btn delete-btn" onclick={() => handleDelete(post)}>
+											<Button variant="ghost" size="sm" asChild>
+												<a href={`/blog/${post.id}`} target="_blank" class="p-2">
+													<Eye size={16} />
+												</a>
+											</Button>
+											<Button variant="ghost" size="sm" asChild>
+												<a href={`/admin/${post.id}`} class="p-2">
+													<Edit size={16} />
+												</a>
+											</Button>
+											<Button variant="ghost" size="sm" onclick={() => handleDelete(post)} class="p-2 text-red-600 hover:text-red-700 hover:bg-red-50">
 												<Trash2 size={16} />
-											</button>
+											</Button>
 										</div>
 									</td>
 								</tr>
@@ -312,56 +349,62 @@
 					</table>
 				</div>
 			{/if}
-		</div>
+		</Card>
 	</main>
 </div>
 
-<!-- Delete Confirmation Modal -->
-{#if showDeleteModal && postToDelete}
-	<div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-		<div class="modal-content" role="document">
-			<div class="modal-header">
-				<AlertTriangle size={24} />
-				<h3 id="modal-title" class="modal-title">確認刪除</h3>
-			</div>
-			<div class="modal-body">
-				<p>您確定要刪除文章「{postToDelete.title}」嗎？</p>
-				<p class="modal-warning">此操作無法復原。</p>
-			</div>
-			<div class="modal-actions">
-				<button
-					type="button"
-					class="modal-btn cancel-btn"
-					onclick={cancelDelete}
+<!-- Delete Confirmation Dialog -->
+<Dialog bind:open={showDeleteModal}>
+	<DialogContent class="sm:max-w-md">
+		<DialogHeader>
+			<DialogTitle class="flex items-center gap-2">
+				<AlertTriangle size={20} class="text-red-600" />
+				確認刪除
+			</DialogTitle>
+			<DialogDescription>
+				您確定要刪除文章「{postToDelete?.title}」嗎？
+				<br />
+				<span class="text-red-600 font-medium">此操作無法復原。</span>
+			</DialogDescription>
+		</DialogHeader>
+		<DialogFooter class="gap-2">
+			<Button
+				variant="outline"
+				onclick={cancelDelete}
+				disabled={isDeleting}
+			>
+				取消
+			</Button>
+			<form
+				method="POST"
+				action="?/delete"
+				use:enhance={() => {
+					isDeleting = true;
+					return async ({ update }) => {
+						isDeleting = false;
+						await update();
+					};
+				}}
+				class="inline"
+			>
+				<input type="hidden" name="id" value={postToDelete?.id || ''} />
+				<Button 
+					type="submit" 
+					variant="destructive" 
 					disabled={isDeleting}
+					class="gap-2"
 				>
-					取消
-				</button>
-				<form
-					method="POST"
-					action="?/delete"
-					use:enhance={() => {
-						isDeleting = true;
-						return async ({ update }) => {
-							isDeleting = false;
-							await update();
-						};
-					}}
-				>
-					<input type="hidden" name="id" value={postToDelete?.id || ''} />
-					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
-						{#if isDeleting}
-							<div class="btn-spinner"></div>
-							刪除中...
-						{:else}
-							確認刪除
-						{/if}
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
-{/if}
+					{#if isDeleting}
+						<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+						刪除中...
+					{:else}
+						確認刪除
+					{/if}
+				</Button>
+			</form>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
 
 <style>
 	.admin-container {
@@ -391,6 +434,7 @@
 		font-weight: 600;
 		color: #1e293b;
 	}
+	
 	.sidebar-nav {
 		flex: 1;
 		padding: 24px 0;
@@ -454,29 +498,6 @@
 		margin-bottom: 32px;
 	}
 
-	.success-message {
-		background: #f0fdf4;
-		color: #16a34a;
-		border: 1px solid #bbf7d0;
-		padding: 12px 16px;
-		border-radius: 8px;
-		margin-bottom: 24px;
-		font-size: 0.9rem;
-		text-align: center;
-		animation: slideIn 0.3s ease-out;
-	}
-
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.page-title {
 		font-size: 2rem;
 		font-weight: 700;
@@ -516,46 +537,6 @@
 		margin-bottom: 32px;
 	}
 
-	.stat-card {
-		background: white;
-		border-radius: 12px;
-		padding: 24px;
-		border: 1px solid #e2e8f0;
-		display: flex;
-		align-items: center;
-		gap: 16px;
-		transition: all 0.2s ease;
-	}
-
-	.stat-card:hover {
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-		transform: translateY(-2px);
-	}
-
-	.stat-icon {
-		width: 48px;
-		height: 48px;
-		background: #eff6ff;
-		border-radius: 8px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #3b82f6;
-	}
-
-	.stat-number {
-		font-size: 2rem;
-		font-weight: 700;
-		color: #1e293b;
-		line-height: 1;
-	}
-
-	.stat-label {
-		color: #64748b;
-		font-size: 0.9rem;
-		margin-top: 4px;
-	}
-
 	/* Filters */
 	.filters-section {
 		display: flex;
@@ -565,24 +546,8 @@
 	}
 
 	.search-box {
-		position: relative;
 		flex: 1;
 		max-width: 400px;
-	}
-
-	.search-input {
-		width: 100%;
-		padding: 12px 12px 12px 44px;
-		border: 1px solid #d1d5db;
-		border-radius: 8px;
-		font-size: 0.9rem;
-		transition: all 0.2s ease;
-	}
-
-	.search-input:focus {
-		outline: none;
-		border-color: #3b82f6;
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 	}
 
 	.filter-group {
@@ -601,58 +566,6 @@
 	}
 
 	/* Table */
-	.table-container {
-		background: white;
-		border-radius: 12px;
-		border: 1px solid #e2e8f0;
-		overflow: hidden;
-	}
-
-	.loading-state,
-	.empty-state {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		padding: 60px 20px;
-		color: #64748b;
-	}
-
-	.loading-spinner {
-		width: 32px;
-		height: 32px;
-		border: 3px solid #e2e8f0;
-		border-top: 3px solid #3b82f6;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
-		margin-bottom: 16px;
-	}
-
-	.empty-state h3 {
-		font-size: 1.2rem;
-		font-weight: 600;
-		color: #374151;
-		margin: 16px 0 8px;
-	}
-
-	.empty-action-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		background: #3b82f6;
-		color: white;
-		padding: 10px 16px;
-		border-radius: 6px;
-		text-decoration: none;
-		font-size: 0.9rem;
-		margin-top: 16px;
-		transition: background 0.2s ease;
-	}
-
-	.empty-action-btn:hover {
-		background: #1d4ed8;
-	}
-
 	.table-wrapper {
 		overflow-x: auto;
 	}
@@ -699,20 +612,6 @@
 		gap: 4px;
 	}
 
-	.tag-badge {
-		background: #eff6ff;
-		color: #3b82f6;
-		padding: 2px 8px;
-		border-radius: 12px;
-		font-size: 0.75rem;
-		font-weight: 500;
-	}
-
-	.tag-more {
-		color: #64748b;
-		font-size: 0.75rem;
-	}
-
 	.no-tags {
 		color: #9ca3af;
 		font-size: 0.9rem;
@@ -737,157 +636,6 @@
 	.action-buttons {
 		display: flex;
 		gap: 8px;
-	}
-
-	.action-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 6px;
-		border: none;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		text-decoration: none;
-	}
-
-	.view-btn {
-		background: #f0f9ff;
-		color: #0ea5e9;
-	}
-
-	.view-btn:hover {
-		background: #e0f2fe;
-	}
-
-	.edit-btn {
-		background: #fef3c7;
-		color: #d97706;
-	}
-
-	.edit-btn:hover {
-		background: #fde68a;
-	}
-
-	.delete-btn {
-		background: #fef2f2;
-		color: #dc2626;
-	}
-
-	.delete-btn:hover {
-		background: #fee2e2;
-	}
-
-	/* Modal */
-	.modal-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(0, 0, 0, 0.5);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 1000;
-	}
-
-	.modal-content {
-		background: white;
-		border-radius: 12px;
-		padding: 24px;
-		width: 90%;
-		max-width: 400px;
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-	}
-
-	.modal-header {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		margin-bottom: 16px;
-	}
-
-	.modal-title {
-		font-size: 1.2rem;
-		font-weight: 600;
-		color: #1e293b;
-	}
-
-	.modal-body {
-		margin-bottom: 24px;
-		color: #64748b;
-		line-height: 1.6;
-	}
-
-	.modal-warning {
-		color: #dc2626;
-		font-size: 0.9rem;
-		margin-top: 8px;
-	}
-
-	.modal-actions {
-		display: flex;
-		gap: 12px;
-		justify-content: flex-end;
-	}
-
-	.modal-actions form {
-		display: contents;
-	}
-
-	.modal-btn {
-		padding: 8px 16px;
-		border-radius: 6px;
-		border: none;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.cancel-btn {
-		background: #f1f5f9;
-		color: #64748b;
-	}
-
-	.cancel-btn:hover:not(:disabled) {
-		background: #e2e8f0;
-	}
-
-	.confirm-btn {
-		background: #dc2626;
-		color: white;
-	}
-
-	.confirm-btn:hover:not(:disabled) {
-		background: #b91c1c;
-	}
-
-	.modal-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	.btn-spinner {
-		width: 16px;
-		height: 16px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		border-top: 2px solid white;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
-	}
-
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
 	}
 
 	@media (max-width: 768px) {

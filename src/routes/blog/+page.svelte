@@ -2,6 +2,11 @@
 	import Card from './components/BlogCard.svelte';
 	import { Search, Filter, Tag } from 'lucide-svelte';
 	import type { PageData } from './$types';
+	
+	// shadcn/ui components
+	import { Input } from '$lib/components/ui/input';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
 
 	interface Props {
 		data: PageData;
@@ -44,11 +49,11 @@
 						class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
 						size={20}
 					/>
-					<input
+					<Input
 						type="text"
 						placeholder="搜尋文章..."
 						bind:value={searchQuery}
-						class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 focus:outline-none transition-all"
+						class="pl-12 py-3 text-base rounded-xl border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
 					/>
 				</div>
 			</div>
@@ -66,21 +71,25 @@
 					<span class="font-medium">篩選標籤：</span>
 				</div>
 
-				<button
+				<Button
+					variant={selectedTag === '' ? 'default' : 'outline'}
+					size="sm"
 					onclick={() => (selectedTag = '')}
-					class="filter-tag {selectedTag === '' ? 'active' : ''}"
+					class="h-8"
 				>
 					全部
-				</button>
+				</Button>
 
 				{#each allTags as tag}
-					<button
+					<Button
+						variant={selectedTag === tag ? 'default' : 'outline'}
+						size="sm"
 						onclick={() => (selectedTag = tag)}
-						class="filter-tag {selectedTag === tag ? 'active' : ''}"
+						class="h-8 gap-1"
 					>
 						<Tag size={14} />
 						{tag}
-					</button>
+					</Button>
 				{/each}
 			</div>
 
@@ -112,15 +121,15 @@
 					</div>
 					<h3 class="text-xl font-semibold text-gray-900 mb-2">找不到相關文章</h3>
 					<p class="text-gray-600 mb-6">試試調整搜尋關鍵字或選擇不同的標籤</p>
-					<button
+					<Button
 						onclick={() => {
 							searchQuery = '';
 							selectedTag = '';
 						}}
-						class="btn-primary"
+						class="mt-4"
 					>
 						清除篩選條件
-					</button>
+					</Button>
 				</div>
 			{/if}
 		</div>
@@ -128,14 +137,6 @@
 </section>
 
 <style lang="postcss">
-	.filter-tag {
-		@apply inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium border border-gray-200 text-gray-600 hover:border-purple-300 hover:text-purple-600 transition-all;
-	}
-
-	.filter-tag.active {
-		@apply bg-purple-100 border-purple-300 text-purple-700;
-	}
-
 	.blog-card-wrapper {
 		@apply transform transition-all duration-300 hover:-translate-y-2;
 	}
