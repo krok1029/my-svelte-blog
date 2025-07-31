@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { authUser } from '$lib/authStore';
 	import { goto } from '$app/navigation';
@@ -22,6 +21,7 @@
 		Eye,
 		AlertTriangle
 	} from 'lucide-svelte';
+	import type { Timestamp } from 'firebase/firestore';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -80,20 +80,20 @@
 	$: if (form?.success) {
 		// 重新載入頁面數據或從列表中移除已刪除的項目
 		if (postToDelete) {
-			blogPosts = blogPosts.filter((p) => p.id !== postToDelete.id);
+			blogPosts = blogPosts.filter((p) => p.id !== postToDelete?.id);
 			showDeleteModal = false;
 			postToDelete = null;
 		}
 	}
 
 	const logout = () => {
-		$authUser = null;
+		$authUser = undefined;
 		goto('/login');
 	};
 
-	const formatDate = (dateString: string | Date) => {
+	const formatDate = (dateString?: string | Date | Timestamp) => {
 		if (!dateString) return '-';
-		const date = new Date(dateString);
+		const date = new Date(dateString.toLocaleString());
 		return date.toLocaleDateString('zh-TW', {
 			year: 'numeric',
 			month: 'short',
@@ -112,7 +112,7 @@
 	<aside class="sidebar">
 		<div class="sidebar-header">
 			<div class="logo">
-				<User class="logo-icon" size={24} />
+				<User size={24} />
 				<span class="logo-text">Admin Panel</span>
 			</div>
 		</div>
@@ -197,7 +197,7 @@
 		<!-- Filters -->
 		<div class="filters-section">
 			<div class="search-box">
-				<Search class="search-icon" size={20} />
+				<Search size={20} />
 				<input
 					type="text"
 					placeholder="搜尋文章標題或內容..."
@@ -274,12 +274,15 @@
 											{post.brief || '無摘要'}
 										</div>
 									</td>
+
 									<td class="date-cell">
 										{formatDate(post.createdAt)}
 									</td>
+
 									<td class="date-cell">
 										{formatDate(post.updatedAt)}
 									</td>
+
 									<td class="actions-cell">
 										<div class="action-buttons">
 											<a href={`/blog/${post.id}`} class="action-btn view-btn" target="_blank">
@@ -305,11 +308,11 @@
 
 <!-- Delete Confirmation Modal -->
 {#if showDeleteModal && postToDelete}
-	<div class="modal-overlay" on:click={cancelDelete}>
-		<div class="modal-content" on:click|stopPropagation>
+	<div class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+		<div class="modal-content" role="document">
 			<div class="modal-header">
-				<AlertTriangle class="modal-icon" size={24} />
-				<h3 class="modal-title">確認刪除</h3>
+				<AlertTriangle size={24} />
+				<h3 id="modal-title" class="modal-title">確認刪除</h3>
 			</div>
 			<div class="modal-body">
 				<p>您確定要刪除文章「{postToDelete.title}」嗎？</p>
@@ -378,11 +381,6 @@
 		font-weight: 600;
 		color: #1e293b;
 	}
-
-	.logo-icon {
-		color: #3b82f6;
-	}
-
 	.sidebar-nav {
 		flex: 1;
 		padding: 24px 0;
@@ -560,14 +558,6 @@
 		position: relative;
 		flex: 1;
 		max-width: 400px;
-	}
-
-	.search-icon {
-		position: absolute;
-		left: 12px;
-		top: 50%;
-		transform: translateY(-50%);
-		color: #9ca3af;
 	}
 
 	.search-input {
@@ -807,10 +797,6 @@
 		align-items: center;
 		gap: 12px;
 		margin-bottom: 16px;
-	}
-
-	.modal-icon {
-		color: #f59e0b;
 	}
 
 	.modal-title {

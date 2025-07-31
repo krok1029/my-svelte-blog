@@ -1,6 +1,6 @@
 import BlogRepository from './BlogRepository';
 import type { Firestore, CollectionReference, DocumentData } from 'firebase/firestore';
-import { collection, addDoc, getDocs, query, serverTimestamp, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, serverTimestamp } from 'firebase/firestore';
 import type { BlogPost } from '$lib/types/BlogPost';
 
 export default class FirestoreBlogRepository extends BlogRepository {

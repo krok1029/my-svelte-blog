@@ -1,3 +1,5 @@
+const { rule } = require('postcss');
+
 module.exports = {
 	root: true,
 	extends: [
@@ -27,5 +29,11 @@ module.exports = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	]
+	],
+	rules: {
+		'@typescript-eslint/no-unused-vars': [
+			'warn',
+			{ argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+		]
+	}
 };

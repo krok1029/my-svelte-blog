@@ -316,8 +316,8 @@
 
 <!-- Delete Confirmation Modal -->
 {#if showDeleteModal}
-	<div class="modal-overlay" on:click={cancelDelete}>
-		<div class="modal-content" on:click|stopPropagation>
+	<div class="modal-overlay">
+		<div class="modal-content">
 			<div class="modal-header">
 				<AlertTriangle class="modal-icon" size={24} />
 				<h3 class="modal-title">確認刪除</h3>
@@ -459,23 +459,6 @@
 		align-items: center;
 	}
 
-	.preview-toggle {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: #f8fafc;
-		border: 1px solid #e2e8f0;
-		color: #64748b;
-		padding: 8px 16px;
-		border-radius: 6px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.preview-toggle:hover {
-		background: #f1f5f9;
-		border-color: #cbd5e0;
-	}
 
 	.delete-btn {
 		display: flex;

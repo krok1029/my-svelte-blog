@@ -44,6 +44,7 @@ setPersistence(firebaseAuth, browserLocalPersistence)
 		// Handle Errors here.
 		const errorCode = error.code;
 		const errorMessage = error.message;
+		console.error('Firebase Auth Persistence Error:', errorCode, errorMessage);
 	});
 
 firebaseAuth.onAuthStateChanged((user) => {

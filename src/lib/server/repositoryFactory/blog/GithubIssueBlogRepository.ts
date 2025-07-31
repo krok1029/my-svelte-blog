@@ -3,6 +3,22 @@ import type { BlogPost } from '$lib/types/BlogPost';
 import octokit, { octokitPath } from '$lib/octokit';
 import { blogBriefBuilder } from '$lib/builder/builder';
 
+// GitHub API types
+interface GitHubLabel {
+	name: string;
+	color: string;
+	description?: string;
+}
+
+interface GitHubIssue {
+	number: number;
+	title: string;
+	body: string;
+	labels: GitHubLabel[];
+	created_at: string;
+	updated_at: string;
+}
+
 export default class GithubIssueBlogRepository extends BlogRepository {
 	constructor() {
 		super();
@@ -49,10 +65,10 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 				headers
 			});
 
-			const posts = result.data.map((data: any) => ({
+			const posts = result.data.map((data: GitHubIssue) => ({
 				id: data.number,
 				title: data.title,
-				tags: data.labels.map((label: any) => label.name),
+				tags: data.labels.map((label: GitHubLabel) => label.name),
 				brief: blogBriefBuilder(data.body),
 				content: data.body,
 				createdAt: data.created_at,
@@ -84,7 +100,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			const blogPost = {
 				id: data.number,
 				title: data.title,
-				tags: data.labels.map((label: any) => label.name),
+				tags: data.labels.map((label: GitHubLabel) => label.name),
 				brief: data.body.substring(0, 30),
 				content: data.body,
 				createdAt: data.created_at,
@@ -124,7 +140,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			const blogPost = {
 				id: data.number,
 				title: data.title,
-				tags: data.labels.map((label: any) => label.name),
+				tags: data.labels.map((label: GitHubLabel) => label.name),
 				brief: data.body.substring(0, 30),
 				content: data.body,
 				createdAt: data.created_at,
@@ -156,7 +172,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 			const blogPost = {
 				id: data.number,
 				title: data.title,
-				tags: data.labels.map((label: any) => label.name),
+				tags: data.labels.map((label: GitHubLabel) => label.name),
 				brief: data.body.substring(0, 30),
 				createdAt: data.created_at,
 				updatedAt: data.updated_at
