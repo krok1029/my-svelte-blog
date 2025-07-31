@@ -13,6 +13,13 @@
 		CheckCircle
 	} from 'lucide-svelte';
 	import type { ActionData } from './$types';
+	
+	// shadcn/ui components
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
 
 	interface Props {
 		form: ActionData;
@@ -85,41 +92,44 @@
 	<meta name="description" content="註冊李明峯的部落格管理系統帳號" />
 </svelte:head>
 
-<div class="register-container">
-	<div class="register-wrapper">
+<div class="min-h-screen bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 flex items-center justify-center p-5">
+	<div class="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl min-h-[700px] grid md:grid-cols-2">
 		<!-- Left Side - Branding -->
-		<div class="branding-section">
-			<div class="branding-content">
-				<div class="logo-section">
-					<div class="logo-icon">
+		<div class="bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 p-12 lg:p-16 flex flex-col justify-center text-white relative overflow-hidden">
+			<!-- Background Pattern -->
+			<div class="absolute inset-0 opacity-30" style="background-image: url(&quot;data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M30 30l15-15v30l-15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;);"></div>
+			
+			<div class="relative z-10">
+				<div class="text-center mb-10">
+					<div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-5 backdrop-blur-sm">
 						<UserPlus size={40} />
 					</div>
-					<h1 class="brand-title">加入我們</h1>
-					<p class="brand-subtitle">創建您的專屬帳號</p>
+					<h1 class="text-3xl font-bold mb-2">加入我們</h1>
+					<p class="text-emerald-100 text-lg">創建您的專屬帳號</p>
 				</div>
 
-				<div class="welcome-text">
-					<h2 class="welcome-title">開始您的旅程</h2>
-					<p class="welcome-description">註冊帳號以獲得完整的部落格管理功能和個人化體驗</p>
+				<div class="mb-10">
+					<h2 class="text-2xl font-semibold mb-3">開始您的旅程</h2>
+					<p class="text-emerald-100 leading-relaxed">註冊帳號以獲得完整的部落格管理功能和個人化體驗</p>
 				</div>
 
-				<div class="benefits-list">
-					<div class="benefit-item">
-						<div class="benefit-icon">
+				<div class="flex flex-col gap-5">
+					<div class="flex items-start gap-4">
+						<div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
 							<Shield size={20} />
 						</div>
-						<div class="benefit-content">
-							<h4>安全保護</h4>
-							<p>您的資料受到完整保護</p>
+						<div>
+							<h4 class="font-semibold mb-1">安全保護</h4>
+							<p class="text-emerald-100 text-sm">您的資料受到完整保護</p>
 						</div>
 					</div>
-					<div class="benefit-item">
-						<div class="benefit-icon">
+					<div class="flex items-start gap-4">
+						<div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
 							<CheckCircle size={20} />
 						</div>
-						<div class="benefit-content">
-							<h4>完整功能</h4>
-							<p>享受所有管理功能</p>
+						<div>
+							<h4 class="font-semibold mb-1">完整功能</h4>
+							<p class="text-emerald-100 text-sm">享受所有管理功能</p>
 						</div>
 					</div>
 				</div>
@@ -127,631 +137,196 @@
 		</div>
 
 		<!-- Right Side - Register Form -->
-		<div class="form-section">
-			<div class="form-container">
-				<div class="form-header">
-					<h2 class="form-title">建立新帳號</h2>
-					<p class="form-subtitle">請填寫以下資訊完成註冊</p>
-				</div>
-
-				<form
-					class="register-form"
-					method="POST"
-					use:enhance={() => {
-						isLoading = true;
-						return async ({ update }) => {
-							isLoading = false;
-							await update();
-						};
-					}}
-				>
-					<!-- Email Input -->
-					<div class="input-group">
-						<label for="email" class="input-label">Email 地址</label>
-						<div class="input-wrapper">
-							<Mail class="input-icon" size={20} />
-							<input
-								id="email"
-								name="email"
-								type="email"
-								placeholder="請輸入您的 Email"
-								class="form-input"
-								value={form?.email ?? ''}
-								disabled={isLoading}
-								required
-							/>
-						</div>
-					</div>
-
-					<!-- Password Input -->
-					<div class="input-group">
-						<label for="password" class="input-label">密碼</label>
-						<div class="input-wrapper">
-							<Lock class="input-icon" size={20} />
-							{#if showPassword}
-								<input
-									id="password"
-									name="password"
-									type="text"
-									bind:value={password}
-									placeholder="請輸入密碼"
-									class="form-input"
-								/>
-							{:else}
-								<input
-									id="password"
-									name="password"
-									type="password"
-									bind:value={password}
-									placeholder="請輸入密碼"
-									class="form-input"
-								/>
-							{/if}
-
-							<button
-								type="button"
-								class="password-toggle"
-								onclick={togglePasswordVisibility}
-								disabled={isLoading}
-							>
-								{#if showPassword}
-									<EyeOff size={20} />
-								{:else}
-									<Eye size={20} />
-								{/if}
-							</button>
-						</div>
-
-						<!-- Password Strength Indicator -->
-						{#if password}
-							<div class="password-strength">
-								<div class="strength-bar">
-									<div
-										class="strength-fill"
-										style="width: {(passwordStrength.score / 5) *
-											100}%; background-color: {passwordStrength.color}"
-									></div>
-								</div>
-								<div class="strength-text" style="color: {passwordStrength.color}">
-									密碼強度: {passwordStrength.text}
-								</div>
-								{#if passwordStrength.feedback.length > 0}
-									<div class="strength-feedback">
-										<p>建議改進:</p>
-										<ul>
-											{#each passwordStrength.feedback as tip}
-												<li>{tip}</li>
-											{/each}
-										</ul>
-									</div>
-								{/if}
-							</div>
-						{/if}
-					</div>
-
-					<!-- Confirm Password Input -->
-					<div class="input-group">
-						<label for="confirmPassword" class="input-label">確認密碼</label>
-						<div class="input-wrapper">
-							<Lock class="input-icon" size={20} />
-
-							{#if showConfirmPassword}
-								<input
-									id="confirmPassword"
-									name="confirmPassword"
-									type="text"
-									placeholder="請再次輸入密碼"
-									class="form-input"
-									class:error={confirmPassword && !passwordsMatch}
-									class:success={confirmPassword && passwordsMatch}
-									bind:value={confirmPassword}
-									disabled={isLoading}
-									required
-								/>
-							{:else}
-								<input
-									id="confirmPassword"
-									name="confirmPassword"
-									type="password"
-									placeholder="請再次輸入密碼"
-									class="form-input"
-									class:error={confirmPassword && !passwordsMatch}
-									class:success={confirmPassword && passwordsMatch}
-									bind:value={confirmPassword}
-									disabled={isLoading}
-									required
-								/>
-							{/if}
-
-							<button
-								type="button"
-								class="password-toggle"
-								onclick={toggleConfirmPasswordVisibility}
-								disabled={isLoading}
-							>
-								{#if showConfirmPassword}
-									<EyeOff size={20} />
-								{:else}
-									<Eye size={20} />
-								{/if}
-							</button>
-						</div>
-
-						{#if confirmPassword}
-							<div class="password-match">
-								{#if passwordsMatch}
-									<div class="match-success">
-										<CheckCircle size={16} />
-										<span>密碼一致</span>
-									</div>
-								{:else}
-									<div class="match-error">
-										<AlertCircle size={16} />
-										<span>密碼不一致</span>
-									</div>
-								{/if}
-							</div>
-						{/if}
-					</div>
-
-					<!-- Error Message -->
-					{#if form?.message}
-						<div class="error-message">
-							<AlertCircle size={16} />
-							<span>{form.message}</span>
-						</div>
-					{/if}
-
-					<!-- Submit Button -->
-					<button
-						type="submit"
-						class="submit-button"
-						disabled={isLoading ||
-							!password ||
-							!confirmPassword ||
-							!passwordsMatch ||
-							passwordStrength.score < 3}
+		<div class="p-12 lg:p-16 flex items-center justify-center overflow-y-auto">
+			<Card class="w-full max-w-md border-0 shadow-none">
+				<CardHeader class="text-center pb-8">
+					<CardTitle class="text-2xl font-bold text-gray-900">建立新帳號</CardTitle>
+					<CardDescription class="text-gray-600">請填寫以下資訊完成註冊</CardDescription>
+				</CardHeader>
+				
+				<CardContent>
+					<form
+						class="flex flex-col gap-6"
+						method="POST"
+						use:enhance={() => {
+							isLoading = true;
+							return async ({ update }) => {
+								isLoading = false;
+								await update();
+							};
+						}}
 					>
-						{#if isLoading}
-							<div class="loading-spinner"></div>
-							<span>註冊中...</span>
-						{:else}
-							<UserPlus size={20} />
-							<span>建立帳號</span>
-						{/if}
-					</button>
+						<!-- Email Input -->
+						<div class="flex flex-col gap-2">
+							<Label for="email" class="font-semibold text-gray-700 text-sm">Email 地址</Label>
+							<div class="relative flex items-center">
+								<Mail size={20} class="absolute left-4 text-gray-400 z-10" />
+								<Input
+									id="email"
+									name="email"
+									type="email"
+									placeholder="請輸入您的 Email"
+									class="pl-12 py-4 text-base"
+									value={form?.email ?? ''}
+									disabled={isLoading}
+									required
+								/>
+							</div>
+						</div>
 
-					<!-- Login Link -->
-					<div class="form-footer">
-						<p class="login-prompt">
-							已經有帳號了？
-							<button type="button" class="login-link" onclick={goToLogin} disabled={isLoading}>
-								<ArrowLeft size={16} />
-								返回登入
-							</button>
-						</p>
-					</div>
-				</form>
-			</div>
+						<!-- Password Input -->
+						<div class="flex flex-col gap-2">
+							<Label for="password" class="font-semibold text-gray-700 text-sm">密碼</Label>
+							<div class="relative flex items-center">
+								<Lock size={20} class="absolute left-4 text-gray-400 z-10" />
+								<Input
+									id="password"
+									name="password"
+									type={showPassword ? 'text' : 'password'}
+									placeholder="請輸入密碼"
+									class="pl-12 pr-12 py-4 text-base"
+									bind:value={password}
+									disabled={isLoading}
+									required
+								/>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
+									onclick={togglePasswordVisibility}
+									disabled={isLoading}
+								>
+									{#if showPassword}
+										<EyeOff size={20} />
+									{:else}
+										<Eye size={20} />
+									{/if}
+								</Button>
+							</div>
+
+							<!-- Password Strength Indicator -->
+							{#if password}
+								<div class="mt-2">
+									<div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden mb-2">
+										<div
+											class="h-full transition-all duration-300"
+											style="width: {(passwordStrength.score / 5) * 100}%; background-color: {passwordStrength.color}"
+										></div>
+									</div>
+									<div class="text-xs font-medium" style="color: {passwordStrength.color}">
+										密碼強度: {passwordStrength.text}
+									</div>
+									{#if passwordStrength.feedback.length > 0}
+										<div class="mt-2 text-xs text-gray-600">
+											<p class="font-medium mb-1">建議改進:</p>
+											<ul class="list-disc list-inside space-y-0.5">
+												{#each passwordStrength.feedback as tip}
+													<li>{tip}</li>
+												{/each}
+											</ul>
+										</div>
+									{/if}
+								</div>
+							{/if}
+						</div>
+
+						<!-- Confirm Password Input -->
+						<div class="flex flex-col gap-2">
+							<Label for="confirmPassword" class="font-semibold text-gray-700 text-sm">確認密碼</Label>
+							<div class="relative flex items-center">
+								<Lock size={20} class="absolute left-4 text-gray-400 z-10" />
+								<Input
+									id="confirmPassword"
+									name="confirmPassword"
+									type={showConfirmPassword ? 'text' : 'password'}
+									placeholder="請再次輸入密碼"
+									class="pl-12 pr-12 py-4 text-base {confirmPassword && !passwordsMatch ? 'border-red-500 focus:border-red-500' : ''} {confirmPassword && passwordsMatch ? 'border-green-500 focus:border-green-500' : ''}"
+									bind:value={confirmPassword}
+									disabled={isLoading}
+									required
+								/>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
+									onclick={toggleConfirmPasswordVisibility}
+									disabled={isLoading}
+								>
+									{#if showConfirmPassword}
+										<EyeOff size={20} />
+									{:else}
+										<Eye size={20} />
+									{/if}
+								</Button>
+							</div>
+
+							{#if confirmPassword}
+								<div class="mt-2">
+									{#if passwordsMatch}
+										<div class="flex items-center gap-2 text-green-600 text-sm font-medium">
+											<CheckCircle size={16} />
+											<span>密碼一致</span>
+										</div>
+									{:else}
+										<div class="flex items-center gap-2 text-red-600 text-sm font-medium">
+											<AlertCircle size={16} />
+											<span>密碼不一致</span>
+										</div>
+									{/if}
+								</div>
+							{/if}
+						</div>
+
+						<!-- Error Message -->
+						{#if form?.message}
+							<Alert variant="destructive">
+								<AlertCircle size={16} />
+								<AlertDescription>{form.message}</AlertDescription>
+							</Alert>
+						{/if}
+
+						<!-- Submit Button -->
+						<Button
+							type="submit"
+							class="w-full py-4 text-base font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40"
+							disabled={isLoading ||
+								!password ||
+								!confirmPassword ||
+								!passwordsMatch ||
+								passwordStrength.score < 3}
+						>
+							{#if isLoading}
+								<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+								<span>註冊中...</span>
+							{:else}
+								<UserPlus size={20} class="mr-2" />
+								<span>建立帳號</span>
+							{/if}
+						</Button>
+
+						<!-- Login Link -->
+						<div class="text-center pt-5 border-t border-gray-200">
+							<p class="text-gray-600 text-sm">
+								已經有帳號了？
+								<Button
+									type="button"
+									variant="link"
+									class="p-0 h-auto font-semibold text-emerald-600 hover:text-emerald-700"
+									onclick={goToLogin}
+									disabled={isLoading}
+								>
+									<ArrowLeft size={16} class="mr-1" />
+									返回登入
+								</Button>
+							</p>
+						</div>
+					</form>
+				</CardContent>
+			</Card>
 		</div>
 	</div>
 </div>
 
-<style>
-	.register-container {
-		min-height: 100vh;
-		background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 20px;
-	}
 
-	.register-wrapper {
-		background: white;
-		border-radius: 24px;
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-		overflow: hidden;
-		width: 100%;
-		max-width: 1000px;
-		min-height: 700px;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-	}
-
-	.branding-section {
-		background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-		padding: 60px 40px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		color: white;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.branding-section::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M30 30l15-15v30l-15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-		opacity: 0.3;
-	}
-
-	.branding-content {
-		position: relative;
-		z-index: 1;
-	}
-
-	.logo-section {
-		text-align: center;
-		margin-bottom: 40px;
-	}
-
-	.logo-icon {
-		width: 80px;
-		height: 80px;
-		background: rgba(255, 255, 255, 0.2);
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 0 auto 20px;
-		backdrop-filter: blur(10px);
-	}
-
-	.brand-title {
-		font-size: 2rem;
-		font-weight: 700;
-		margin-bottom: 8px;
-	}
-
-	.brand-subtitle {
-		opacity: 0.9;
-		font-size: 1.1rem;
-	}
-
-	.welcome-text {
-		margin-bottom: 40px;
-	}
-
-	.welcome-title {
-		font-size: 1.8rem;
-		font-weight: 600;
-		margin-bottom: 12px;
-	}
-
-	.welcome-description {
-		opacity: 0.9;
-		line-height: 1.6;
-	}
-
-	.benefits-list {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	.benefit-item {
-		display: flex;
-		align-items: flex-start;
-		gap: 16px;
-	}
-
-	.benefit-icon {
-		width: 40px;
-		height: 40px;
-		background: rgba(255, 255, 255, 0.2);
-		border-radius: 8px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
-	.benefit-content h4 {
-		font-weight: 600;
-		margin-bottom: 4px;
-	}
-
-	.benefit-content p {
-		opacity: 0.9;
-		font-size: 0.9rem;
-	}
-
-	.form-section {
-		padding: 60px 40px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		overflow-y: auto;
-	}
-
-	.form-container {
-		width: 100%;
-		max-width: 400px;
-	}
-
-	.form-header {
-		text-align: center;
-		margin-bottom: 40px;
-	}
-
-	.form-title {
-		font-size: 2rem;
-		font-weight: 700;
-		color: #1e293b;
-		margin-bottom: 8px;
-	}
-
-	.form-subtitle {
-		color: #64748b;
-		font-size: 1rem;
-	}
-
-	.register-form {
-		display: flex;
-		flex-direction: column;
-		gap: 24px;
-	}
-
-	.input-group {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.input-label {
-		font-weight: 600;
-		color: #374151;
-		font-size: 0.9rem;
-	}
-
-	.input-wrapper {
-		position: relative;
-		display: flex;
-		align-items: center;
-	}
-
-	.input-wrapper :global(.input-icon) {
-		position: absolute;
-		left: 16px;
-		color: #9ca3af;
-		z-index: 1;
-	}
-
-	.form-input {
-		width: 100%;
-		padding: 16px 16px 16px 48px;
-		border: 2px solid #e5e7eb;
-		border-radius: 12px;
-		font-size: 1rem;
-		transition: all 0.3s ease;
-		background: white;
-	}
-
-	.form-input:focus {
-		outline: none;
-		border-color: #10b981;
-		box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-	}
-
-	.form-input.error {
-		border-color: #ef4444;
-	}
-
-	.form-input.success {
-		border-color: #10b981;
-	}
-
-	.form-input:disabled {
-		background: #f9fafb;
-		cursor: not-allowed;
-	}
-
-	.password-toggle {
-		position: absolute;
-		right: 16px;
-		background: none;
-		border: none;
-		color: #9ca3af;
-		cursor: pointer;
-		padding: 4px;
-		border-radius: 4px;
-		transition: color 0.2s ease;
-	}
-
-	.password-toggle:hover:not(:disabled) {
-		color: #6b7280;
-	}
-
-	.password-toggle:disabled {
-		cursor: not-allowed;
-		opacity: 0.5;
-	}
-
-	.password-strength {
-		margin-top: 8px;
-	}
-
-	.strength-bar {
-		width: 100%;
-		height: 4px;
-		background: #e5e7eb;
-		border-radius: 2px;
-		overflow: hidden;
-		margin-bottom: 8px;
-	}
-
-	.strength-fill {
-		height: 100%;
-		transition: all 0.3s ease;
-	}
-
-	.strength-text {
-		font-size: 0.8rem;
-		font-weight: 600;
-		margin-bottom: 8px;
-	}
-
-	.strength-feedback {
-		font-size: 0.8rem;
-		color: #6b7280;
-	}
-
-	.strength-feedback p {
-		margin-bottom: 4px;
-		font-weight: 500;
-	}
-
-	.strength-feedback ul {
-		margin: 0;
-		padding-left: 16px;
-	}
-
-	.strength-feedback li {
-		margin-bottom: 2px;
-	}
-
-	.password-match {
-		margin-top: 8px;
-	}
-
-	.match-success,
-	.match-error {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 0.8rem;
-		font-weight: 500;
-	}
-
-	.match-success {
-		color: #10b981;
-	}
-
-	.match-error {
-		color: #ef4444;
-	}
-
-	.error-message {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 12px 16px;
-		background: #fef2f2;
-		border: 1px solid #fecaca;
-		border-radius: 8px;
-		color: #dc2626;
-		font-size: 0.9rem;
-	}
-
-	.submit-button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		background: linear-gradient(45deg, #10b981, #059669);
-		color: white;
-		border: none;
-		border-radius: 12px;
-		padding: 16px 24px;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
-	}
-
-	.submit-button:hover:not(:disabled) {
-		transform: translateY(-2px);
-		box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
-	}
-
-	.submit-button:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-		transform: none;
-	}
-
-	.loading-spinner {
-		width: 20px;
-		height: 20px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		border-top: 2px solid white;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
-	}
-
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-
-	.form-footer {
-		text-align: center;
-		padding-top: 20px;
-		border-top: 1px solid #e5e7eb;
-	}
-
-	.login-prompt {
-		color: #64748b;
-		font-size: 0.9rem;
-	}
-
-	.login-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 4px;
-		background: none;
-		border: none;
-		color: #10b981;
-		font-weight: 600;
-		cursor: pointer;
-		transition: color 0.2s ease;
-		margin-left: 4px;
-	}
-
-	.login-link:hover:not(:disabled) {
-		color: #059669;
-	}
-
-	.login-link:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	@media (max-width: 768px) {
-		.register-wrapper {
-			grid-template-columns: 1fr;
-			max-width: 500px;
-		}
-
-		.branding-section {
-			padding: 40px 30px;
-		}
-
-		.form-section {
-			padding: 40px 30px;
-		}
-
-		.welcome-title {
-			font-size: 1.5rem;
-		}
-
-		.form-title {
-			font-size: 1.5rem;
-		}
-
-		.benefits-list {
-			gap: 16px;
-		}
-	}
-</style>

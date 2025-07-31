@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { Mail, Lock, Eye, EyeOff, LogIn, ArrowRight, User, AlertCircle } from 'lucide-svelte';
+	import { Mail, Lock, Eye, EyeOff, LogIn, ArrowRight, User } from 'lucide-svelte';
 	import type { ActionData } from './$types';
+	
+	// shadcn/ui components
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
 
 	interface Props {
 		form: ActionData;
@@ -67,108 +74,112 @@
 
 		<!-- Right Side - Login Form -->
 		<div class="p-8 lg:p-12 flex items-center justify-center">
-			<div class="w-full max-w-sm">
-				<div class="text-center mb-10">
-					<h2 class="text-2xl font-bold text-gray-900 mb-2">登入帳號</h2>
-					<p class="text-gray-600">請輸入您的登入資訊</p>
-				</div>
-
-				<form
-					class="flex flex-col gap-6"
-					method="POST"
-					use:enhance={() => {
-						isLoading = true;
-						return async ({ update }) => {
-							isLoading = false;
-							await update();
-						};
-					}}
-				>
-					<!-- Email Input -->
-					<div class="flex flex-col gap-2">
-						<label for="email" class="font-semibold text-gray-700 text-sm">Email 地址</label>
-						<div class="relative flex items-center">
-							<Mail size={20} class="absolute left-4 text-gray-400" />
-							<input
-								id="email"
-								name="email"
-								type="email"
-								placeholder="請輸入您的 Email"
-								class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-500/10 disabled:bg-gray-50 disabled:cursor-not-allowed"
-								value={form?.email ?? ''}
-								disabled={isLoading}
-								required
-							/>
-						</div>
-					</div>
-
-					<!-- Password Input -->
-					<div class="flex flex-col gap-2">
-						<label for="password" class="font-semibold text-gray-700 text-sm">密碼</label>
-						<div class="relative flex items-center">
-							<Lock size={20} class="absolute left-4 text-gray-400" />
-							<input
-								id="password"
-								name="password"
-								type={showPassword ? 'text' : 'password'}
-								placeholder="請輸入您的密碼"
-								class="w-full pl-12 pr-12 py-4 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-3 focus:ring-blue-500/10 disabled:bg-gray-50 disabled:cursor-not-allowed"
-								disabled={isLoading}
-								required
-							/>
-							<button
-								type="button"
-								class="absolute right-4 text-gray-400 hover:text-gray-600 p-1 rounded transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-								onclick={togglePasswordVisibility}
-								disabled={isLoading}
-							>
-								{#if showPassword}
-									<EyeOff size={20} />
-								{:else}
-									<Eye size={20} />
-								{/if}
-							</button>
-						</div>
-					</div>
-
-					<!-- Error Message -->
-					{#if form?.message}
-						<div class="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-							<AlertCircle size={16} />
-							<span>{form.message}</span>
-						</div>
-					{/if}
-
-					<!-- Submit Button -->
-					<button 
-						type="submit" 
-						class="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white border-none rounded-xl py-4 px-6 text-base font-semibold cursor-pointer transition-all shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
-						disabled={isLoading}
+			<Card class="w-full max-w-sm border-0 shadow-none">
+				<CardHeader class="text-center pb-6">
+					<CardTitle class="text-2xl font-bold text-gray-900">登入帳號</CardTitle>
+					<CardDescription class="text-gray-600">請輸入您的登入資訊</CardDescription>
+				</CardHeader>
+				
+				<CardContent>
+					<form
+						class="flex flex-col gap-6"
+						method="POST"
+						use:enhance={() => {
+							isLoading = true;
+							return async ({ update }) => {
+								isLoading = false;
+								await update();
+							};
+						}}
 					>
-						{#if isLoading}
-							<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-							<span>登入中...</span>
-						{:else}
-							<LogIn size={20} />
-							<span>登入</span>
-						{/if}
-					</button>
+						<!-- Email Input -->
+						<div class="flex flex-col gap-2">
+							<Label for="email" class="font-semibold text-gray-700 text-sm">Email 地址</Label>
+							<div class="relative flex items-center">
+								<Mail size={20} class="absolute left-4 text-gray-400 z-10" />
+								<Input
+									id="email"
+									name="email"
+									type="email"
+									placeholder="請輸入您的 Email"
+									class="pl-12 py-4 text-base"
+									value={form?.email ?? ''}
+									disabled={isLoading}
+									required
+								/>
+							</div>
+						</div>
 
-					<!-- Register Link -->
-					<div class="text-center pt-5 border-t border-gray-200">
-						<span class="text-gray-600 text-sm">還沒有帳號？</span>
-						<button
-							type="button"
-							class="inline-flex items-center gap-1 bg-none border-none text-blue-500 font-semibold cursor-pointer transition-colors hover:text-blue-700 disabled:opacity-50 disabled:cursor-not-allowed ml-1"
-							onclick={goToRegister}
+						<!-- Password Input -->
+						<div class="flex flex-col gap-2">
+							<Label for="password" class="font-semibold text-gray-700 text-sm">密碼</Label>
+							<div class="relative flex items-center">
+								<Lock size={20} class="absolute left-4 text-gray-400 z-10" />
+								<Input
+									id="password"
+									name="password"
+									type={showPassword ? 'text' : 'password'}
+									placeholder="請輸入您的密碼"
+									class="pl-12 pr-12 py-4 text-base"
+									disabled={isLoading}
+									required
+								/>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
+									onclick={togglePasswordVisibility}
+									disabled={isLoading}
+								>
+									{#if showPassword}
+										<EyeOff size={20} />
+									{:else}
+										<Eye size={20} />
+									{/if}
+								</Button>
+							</div>
+						</div>
+
+						<!-- Error Message -->
+						{#if form?.message}
+							<Alert variant="destructive">
+								<AlertDescription>{form.message}</AlertDescription>
+							</Alert>
+						{/if}
+
+						<!-- Submit Button -->
+						<Button 
+							type="submit" 
+							class="w-full py-4 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40"
 							disabled={isLoading}
 						>
-							立即註冊
-							<ArrowRight size={14} />
-						</button>
-					</div>
-				</form>
-			</div>
+							{#if isLoading}
+								<div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+								<span>登入中...</span>
+							{:else}
+								<LogIn size={20} class="mr-2" />
+								<span>登入</span>
+							{/if}
+						</Button>
+
+						<!-- Register Link -->
+						<div class="text-center pt-5 border-t border-gray-200">
+							<span class="text-gray-600 text-sm">還沒有帳號？</span>
+							<Button
+								type="button"
+								variant="link"
+								class="p-0 h-auto font-semibold text-blue-500 hover:text-blue-700"
+								onclick={goToRegister}
+								disabled={isLoading}
+							>
+								立即註冊
+								<ArrowRight size={14} class="ml-1" />
+							</Button>
+						</div>
+					</form>
+				</CardContent>
+			</Card>
 		</div>
 	</div>
 </div>

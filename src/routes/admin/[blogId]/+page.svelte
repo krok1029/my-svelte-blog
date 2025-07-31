@@ -19,7 +19,6 @@
 	} from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
-
 	interface Props {
 		form: ActionData;
 		data: any;
@@ -27,7 +26,15 @@
 
 	let { form, data }: Props = $props();
 
-	let { id, content = '', title = '', tags, brief = '', createdAt, updatedAt } = $state(data.blogPost);
+	let {
+		id,
+		content = '',
+		title = '',
+		tags,
+		brief = '',
+		createdAt,
+		updatedAt
+	} = $state(data.blogPost);
 	let inputTags: string = $state(tags?.join(',') || '');
 	let showPreview = true;
 	let isSubmitting = $state(false);
@@ -38,10 +45,10 @@
 
 	// 原始資料，用於檢測變更
 	let originalData = $state({
-		title: title || '',
-		inputTags: inputTags || '',
-		brief: brief || '',
-		content: content || ''
+		title,
+		inputTags,
+		brief,
+		content
 	});
 
 	// 檢測是否有未儲存的變更
@@ -296,7 +303,7 @@
 						<span class="toolbar-title">預覽</span>
 					</div>
 					<div class="preview-content prose">
-					{@html marked(content, { mangle: false, headerIds: false })}
+						{@html marked(content, { mangle: false, headerIds: false })}
 					</div>
 				</div>
 			</div>
