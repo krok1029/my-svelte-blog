@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 
@@ -57,11 +57,11 @@
 		logo: 'https://www.ncku.edu.tw/var/file/0/1000/plugin/mobile/title/hln_4480_3767086_48566.png'
 	};
 
-	function toggleExperience() {
+	const toggleExperience = () => {
 		showAllExperience = !showAllExperience;
-	}
+	};
 
-	function getSkillColor(skill) {
+	const getSkillColor = (skill: string) => {
 		const colors = {
 			React: 'bg-blue-100 text-blue-800',
 			Redux: 'bg-purple-100 text-purple-800',
@@ -78,7 +78,7 @@
 			ROS: 'bg-red-100 text-red-800'
 		};
 		return colors[skill] || 'bg-gray-100 text-gray-800';
-	}
+	};
 </script>
 
 <section class="bg-gray-50 py-20">

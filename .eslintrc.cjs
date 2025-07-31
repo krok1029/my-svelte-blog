@@ -1,24 +1,17 @@
-const { rule } = require('postcss');
-
 module.exports = {
 	root: true,
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:svelte/recommended',
-		'prettier'
-	],
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
 	ignorePatterns: ['*.cjs'],
 	parserOptions: {
-		sourceType: 'module',
 		ecmaVersion: 2020,
+		sourceType: 'module',
 		extraFileExtensions: ['.svelte']
 	},
 	env: {
 		browser: true,
-		es2017: true,
+		es2021: true,
 		node: true
 	},
 	overrides: [

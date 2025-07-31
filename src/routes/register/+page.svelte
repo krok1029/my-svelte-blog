@@ -39,7 +39,7 @@
 	let showConfirmPassword = $state(false);
 	let isLoading = $state(false);
 
-	function checkPasswordStrength(pwd: string) {
+	const checkPasswordStrength = (pwd: string) => {
 		if (!pwd) return { score: 0, text: '', color: '' };
 
 		let score = 0;
@@ -74,7 +74,7 @@
 			color: strengthLevels[score - 1]?.color || '#ef4444',
 			feedback
 		};
-	}
+	};
 
 	const togglePasswordVisibility = () => {
 		showPassword = !showPassword;

@@ -21,7 +21,7 @@
 	mainBeat.preload = 'auto';
 	subBeat.preload = 'auto';
 
-	function playSound() {
+	const playSound = () => {
 		beatCount++;
 		currentBeat = (currentBeat % 4) + 1; // 視覺節拍指示 1-4
 
@@ -34,9 +34,9 @@
 			mainBeat.currentTime = 0;
 			subBeat.play();
 		}
-	}
+	};
 
-	function toggleMetronome() {
+	const toggleMetronome = () => {
 		if (isPlaying) {
 			clearInterval(interval);
 			beatCount = 0;
@@ -47,7 +47,7 @@
 			}, 60000 / tempo);
 		}
 		isPlaying = !isPlaying;
-	}
+	};
 
 	// 當 tempo 改變時，如果正在播放則重新設定間隔
 	run(() => {
