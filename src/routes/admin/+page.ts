@@ -1,10 +1,9 @@
 // src/routes/admin/+page.ts
 
 import { authUser } from '$lib/authStore';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ data }) => {
-	const unsubscribe = authUser.subscribe((user) => {
+	const unsubscribe = authUser.subscribe((_user) => {
 		// if (!user) {
 		// 	redirect(302, '/login');
 		// }

@@ -16,8 +16,8 @@
 
 	export let form: ActionData;
 
-	let password: string = '';
-	let confirmPassword: string = '';
+	let password = '';
+	let confirmPassword = '';
 	let showPassword = false;
 	let showConfirmPassword = false;
 	let isLoading = false;
@@ -512,7 +512,7 @@
 		align-items: center;
 	}
 
-	.input-icon {
+	.input-wrapper :global(.input-icon) {
 		position: absolute;
 		left: 16px;
 		color: #9ca3af;
@@ -642,18 +642,6 @@
 		border: 1px solid #fecaca;
 		border-radius: 8px;
 		color: #dc2626;
-		font-size: 0.9rem;
-	}
-
-	.success-message {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 12px 16px;
-		background: #f0fdf4;
-		border: 1px solid #bbf7d0;
-		border-radius: 8px;
-		color: #16a34a;
 		font-size: 0.9rem;
 	}
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ArrowLeft, Code, Palette, Github, ExternalLink, Info, Lightbulb } from 'lucide-svelte';
+	import { ArrowLeft, Code, Palette, Info, Lightbulb } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
 	export let practiceInfo: {

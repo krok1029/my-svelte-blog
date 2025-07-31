@@ -4,9 +4,9 @@
 	export let path: string;
 	export let imgPath: string;
 	export let projecName: string;
-	export let description: string = '';
+	export let description = '';
 	export let technologies: string[] = [];
-	export let githubUrl: string = '';
+	export let githubUrl = '';
 </script>
 
 <div class="project-card group">

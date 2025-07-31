@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
-	import { Share2, Copy, Check, Smartphone, Globe, Link } from 'lucide-svelte';
+	import { Share2, Copy, Check, Smartphone, Globe } from 'lucide-svelte';
 
 	let shareStatus = '';
 	let copied = false;
@@ -272,6 +272,7 @@ const shareFile = async (file) => {
 		margin-bottom: 20px;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.header-icon {
 		color: #667eea;
 	}
@@ -359,6 +360,7 @@ const shareFile = async (file) => {
 		transform: translateY(-1px);
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.mobile-icon {
 		opacity: 0.7;
 	}

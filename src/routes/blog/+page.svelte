@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Card from './components/BlogCard.svelte';
-	import { Search, Filter, Calendar, Tag } from 'lucide-svelte';
+	import { Search, Filter, Tag } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;

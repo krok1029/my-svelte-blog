@@ -10,7 +10,7 @@
 	let tempo = 120;
 	let volume = 0.8;
 	let isPlaying = false;
-	let interval: NodeJS.Timer;
+	let interval: number;
 	let currentBeat = 0; // 用於視覺指示
 
 	const mainBeat = new Audio(metronome1);
@@ -115,11 +115,12 @@
 
 			<!-- Tempo Control -->
 			<div class="control-group">
-				<label class="control-label">
+				<label for="tempo-input" class="control-label">
 					<span>節拍速度</span>
 				</label>
 				<div class="tempo-controls">
 					<input
+						id="tempo-input"
 						type="number"
 						bind:value={tempo}
 						min={MIN_TEMPO}
@@ -138,12 +139,13 @@
 
 			<!-- Volume Control -->
 			<div class="control-group">
-				<label class="control-label">
+				<label for="volume-input" class="control-label">
 					<Volume2 size={16} />
 					<span>音量</span>
 				</label>
 				<div class="volume-controls">
 					<input
+						id="volume-input"
 						type="number"
 						bind:value={volume}
 						min={0}

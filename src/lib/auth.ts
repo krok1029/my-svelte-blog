@@ -31,10 +31,7 @@ export function requireAuth(cookies: RequestEvent['cookies']): User {
 	return user;
 }
 
-export function redirectIfAuthenticated(
-	cookies: RequestEvent['cookies'],
-	redirectTo: string = '/admin'
-) {
+export function redirectIfAuthenticated(cookies: RequestEvent['cookies'], redirectTo = '/admin') {
 	const user = getUser(cookies);
 
 	if (user) {

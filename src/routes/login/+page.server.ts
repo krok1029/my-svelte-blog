@@ -64,31 +64,33 @@ export const actions: Actions = {
 					maxAge: 60 * 60 * 24 * 7
 				}
 			);
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error('登入錯誤:', error);
 
 			// 根據錯誤代碼回傳友善的錯誤訊息
 			let message = '登入失敗，請稍後再試';
 
-			switch (error.code) {
-				case 'auth/user-not-found':
-					message = '找不到此帳號，請確認 Email 是否正確';
-					break;
-				case 'auth/wrong-password':
-					message = '密碼錯誤，請重新輸入';
-					break;
-				case 'auth/invalid-email':
-					message = 'Email 格式不正確';
-					break;
-				case 'auth/user-disabled':
-					message = '此帳號已被停用';
-					break;
-				case 'auth/too-many-requests':
-					message = '登入嘗試次數過多，請稍後再試';
-					break;
-				case 'auth/invalid-credential':
-					message = '登入憑證無效，請檢查信箱與密碼';
-					break;
+			if (error && typeof error === 'object' && 'code' in error) {
+				switch (error.code) {
+					case 'auth/user-not-found':
+						message = '找不到此帳號，請確認 Email 是否正確';
+						break;
+					case 'auth/wrong-password':
+						message = '密碼錯誤，請重新輸入';
+						break;
+					case 'auth/invalid-email':
+						message = 'Email 格式不正確';
+						break;
+					case 'auth/user-disabled':
+						message = '此帳號已被停用';
+						break;
+					case 'auth/too-many-requests':
+						message = '登入嘗試次數過多，請稍後再試';
+						break;
+					case 'auth/invalid-credential':
+						message = '登入憑證無效，請檢查信箱與密碼';
+						break;
+				}
 			}
 
 			return fail(400, {

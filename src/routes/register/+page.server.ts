@@ -118,28 +118,30 @@ export const actions: Actions = {
 					maxAge: 60 * 60 * 24 * 7
 				}
 			);
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error('註冊錯誤:', error);
 
 			// 根據錯誤代碼回傳友善的錯誤訊息
 			let message = '註冊失敗，請稍後再試';
 
-			switch (error.code) {
-				case 'auth/email-already-in-use':
-					message = '此 Email 已被註冊，請使用其他 Email 或前往登入';
-					break;
-				case 'auth/invalid-email':
-					message = 'Email 格式不正確';
-					break;
-				case 'auth/weak-password':
-					message = '密碼強度不足，請使用至少 6 個字元的密碼';
-					break;
-				case 'auth/operation-not-allowed':
-					message = '註冊功能暫時停用，請聯絡管理員';
-					break;
-				case 'auth/network-request-failed':
-					message = '網路連線失敗，請檢查網路後重試';
-					break;
+			if (error && typeof error === 'object' && 'code' in error) {
+				switch (error.code) {
+					case 'auth/email-already-in-use':
+						message = '此 Email 已被註冊，請使用其他 Email 或前往登入';
+						break;
+					case 'auth/invalid-email':
+						message = 'Email 格式不正確';
+						break;
+					case 'auth/weak-password':
+						message = '密碼強度不足，請使用至少 6 個字元的密碼';
+						break;
+					case 'auth/operation-not-allowed':
+						message = '註冊功能暫時停用，請聯絡管理員';
+						break;
+					case 'auth/network-request-failed':
+						message = '網路連線失敗，請檢查網路後重試';
+						break;
+				}
 			}
 
 			return fail(400, {

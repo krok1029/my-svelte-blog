@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import defaultImageUrl from '$asset/card-top.jpg';
-	import { Code, Palette, ArrowRight, ExternalLink } from 'lucide-svelte';
+	import { Code, Palette, ArrowRight } from 'lucide-svelte';
 	import type { PracticeCard } from '$type/Card';
 
 	export let card: PracticeCard;
@@ -76,7 +76,7 @@
 	};
 </script>
 
-<article class="practice-card group" on:click={go} on:keydown={() => {}}>
+<button class="practice-card group w-full text-left" on:click={go}>
 	<div class="flex h-full">
 		<!-- Image Container -->
 		<div class="relative w-1/3 flex-shrink-0">
@@ -170,7 +170,7 @@
 			</div>
 		</div>
 	</div>
-</article>
+</button>
 
 <style lang="postcss">
 	.practice-card {

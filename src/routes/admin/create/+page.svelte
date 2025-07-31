@@ -30,9 +30,9 @@ console.log('Hello, World!');
 > 這是一個引用區塊
 `;
 
-	let title: string = '';
-	let inputTags: string = '';
-	let brief: string = '';
+	let title = '';
+	let inputTags = '';
+	let brief = '';
 	let showPreview = true;
 	let isSubmitting = false;
 
@@ -55,7 +55,7 @@ console.log('Hello, World!');
 	// Form enhancement
 	const handleSubmit = () => {
 		isSubmitting = true;
-		return async ({ result, update }) => {
+		return async ({ update }) => {
 			isSubmitting = false;
 			await update();
 		};
@@ -256,6 +256,7 @@ console.log('Hello, World!');
 							<span class="toolbar-title">預覽</span>
 						</div>
 						<div class="preview-content prose">
+							<!-- svelte-ignore svelte/no-at-html-tags -->
 							{@html marked(content, { mangle: false, headerIds: false })}
 						</div>
 					</div>
@@ -608,6 +609,7 @@ console.log('Hello, World!');
 		line-height: 1.7;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose h1 {
 		font-size: 2rem;
 		font-weight: 700;
@@ -617,6 +619,7 @@ console.log('Hello, World!');
 		padding-bottom: 0.5rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose h2 {
 		font-size: 1.5rem;
 		font-weight: 600;
@@ -624,6 +627,7 @@ console.log('Hello, World!');
 		margin: 2rem 0 1rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose h3 {
 		font-size: 1.25rem;
 		font-weight: 600;
@@ -631,20 +635,25 @@ console.log('Hello, World!');
 		margin: 1.5rem 0 0.75rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose p {
 		margin-bottom: 1rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose ul,
+	/* svelte-ignore css-unused-selector */
 	.prose ol {
 		margin: 1rem 0;
 		padding-left: 1.5rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose li {
 		margin-bottom: 0.5rem;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose blockquote {
 		border-left: 4px solid #e5e7eb;
 		padding-left: 1rem;
@@ -653,6 +662,7 @@ console.log('Hello, World!');
 		color: #6b7280;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose code {
 		background: #f3f4f6;
 		padding: 0.2rem 0.4rem;
@@ -661,6 +671,7 @@ console.log('Hello, World!');
 		color: #dc2626;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose pre {
 		background: #1f2937;
 		color: #f9fafb;
@@ -670,21 +681,25 @@ console.log('Hello, World!');
 		margin: 1.5rem 0;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose pre code {
 		background: none;
 		color: inherit;
 		padding: 0;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose strong {
 		font-weight: 600;
 		color: #1e293b;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.prose em {
 		font-style: italic;
 	}
 
+	/* svelte-ignore css-unused-selector */
 	.animate-spin {
 		animation: spin 1s linear infinite;
 	}
