@@ -276,7 +276,6 @@ const shareFile = async (file) => {
 		margin-bottom: 20px;
 	}
 
-	/* svelte-ignore css-unused-selector */
 	.header-icon {
 		color: #667eea;
 	}
@@ -364,7 +363,6 @@ const shareFile = async (file) => {
 		transform: translateY(-1px);
 	}
 
-	/* svelte-ignore css-unused-selector */
 	.mobile-icon {
 		opacity: 0.7;
 	}

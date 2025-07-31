@@ -151,7 +151,6 @@
 		<div
 			class="prose prose-lg lg:prose-xl mx-auto prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-purple-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-purple-600 prose-code:bg-purple-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100"
 		>
-			<!-- svelte-ignore svelte/no_at_html_tags -->
 			{@html marked(content, { mangle: false, headerIds: false })}
 		</div>
 	</article>

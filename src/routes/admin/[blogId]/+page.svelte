@@ -296,7 +296,6 @@
 						<span class="toolbar-title">預覽</span>
 					</div>
 					<div class="preview-content prose">
-						<!-- svelte-ignore svelte/no_at_html_tags -->
 					{@html marked(content, { mangle: false, headerIds: false })}
 					</div>
 				</div>
