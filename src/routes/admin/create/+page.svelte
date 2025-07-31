@@ -90,10 +90,12 @@ console.log('Hello, World!');
 	};
 
 	// 計算標籤預覽
-	$: tagList = inputTags
-		.split(',')
-		.map((tag) => tag.trim())
-		.filter((tag) => tag);
+	let tagList = $derived(
+		inputTags
+			.split(',')
+			.map((tag) => tag.trim())
+			.filter((tag) => tag)
+	);
 </script>
 
 <svelte:head>
