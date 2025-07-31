@@ -6,20 +6,18 @@
 	}
 
 	let { src, alt, size = 'md' }: Props = $props();
+
+	// 根據 size 決定 Tailwind 類別
+	const sizeClasses = {
+		lg: 'w-24 h-24', // 100px -> w-24 (96px)
+		md: 'w-12 h-12', // 50px -> w-12 (48px)
+		sm: 'w-6 h-6'    // 25px -> w-6 (24px)
+	};
 </script>
 
-<!-- <span title={alt}>
-</span> -->
-<img class=" {size}" {src} {alt} title={alt} />
-
-<style lang="scss">
-	.lg {
-		width: 100px;
-	}
-	.md {
-		width: 50px;
-	}
-	.sm {
-		width: 25px;
-	}
-</style>
+<img 
+	class="object-cover rounded {sizeClasses[size]}" 
+	{src} 
+	{alt} 
+	title={alt} 
+/>

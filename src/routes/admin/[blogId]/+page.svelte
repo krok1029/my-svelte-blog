@@ -19,6 +19,32 @@
 	} from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
+	// shadcn/ui components
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { Label } from '$lib/components/ui/label/index.js';
+	import { Textarea } from '$lib/components/ui/textarea/index.js';
+	import {
+		Card,
+		CardContent,
+		CardDescription,
+		CardHeader,
+		CardTitle
+	} from '$lib/components/ui/card/index.js';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert/index.js';
+	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs/index.js';
+	import { Badge } from '$lib/components/ui/badge/index.js';
+	import { Separator } from '$lib/components/ui/separator/index.js';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle
+	} from '$lib/components/ui/dialog/index.js';
+	import { toast } from 'svelte-sonner';
+
 	interface Props {
 		form: ActionData;
 		data: any;
@@ -36,12 +62,11 @@
 		updatedAt
 	} = $state(data.blogPost);
 	let inputTags: string = $state(tags?.join(',') || '');
-	let showPreview = true;
 	let isSubmitting = $state(false);
 	let isDeleting = $state(false);
-	let saveMessage = $state('');
 	let showDeleteModal = $state(false);
 	let hasUnsavedChanges = $state(false);
+	let activeTab = $state('write');
 
 	// 原始資料，用於檢測變更
 	let originalData = $state({
@@ -62,10 +87,6 @@
 
 	const handleDelete = () => {
 		showDeleteModal = true;
-	};
-
-	const cancelDelete = () => {
-		showDeleteModal = false;
 	};
 
 	const goBack = () => {
@@ -98,9 +119,9 @@
 			isSubmitting = false;
 
 			if (result?.type === 'failure') {
-				saveMessage = result.status === 400 ? '表單驗證失敗' : '儲存失敗';
+				toast.error('儲存失敗，請重試');
 			} else {
-				saveMessage = '儲存成功！';
+				toast.success('儲存成功！');
 				// 更新原始資料狀態，避免 hasUnsavedChanges 卡住
 				originalData = {
 					title,
@@ -111,6 +132,29 @@
 			}
 		};
 	};
+
+	const handleDeleteSubmit = () => {
+		isDeleting = true;
+		return async ({ update, result }) => {
+			await update();
+			isDeleting = false;
+			showDeleteModal = false;
+
+			if (result?.type === 'success') {
+				toast.success('文章已刪除');
+			} else {
+				toast.error('刪除失敗，請重試');
+			}
+		};
+	};
+
+	// 計算標籤預覽
+	let tagList = $derived(
+		inputTags
+			.split(',')
+			.map((tag) => tag.trim())
+			.filter((tag) => tag)
+	);
 </script>
 
 <svelte:head>
@@ -118,25 +162,25 @@
 	<meta name="description" content="編輯部落格文章" />
 </svelte:head>
 
-<div class="edit-container">
-	<form method="POST" action="?/update" use:enhance={handleSubmit}>
-		<!-- Header -->
-		<header class="edit-header">
-			<div class="header-left">
-				<button class="back-btn" onclick={goBack}>
-					<ArrowLeft size={20} />
-					<span>返回列表</span>
-				</button>
-				<div class="header-info">
-					<h1 class="page-title">編輯文章</h1>
-					<div class="page-meta">
-						<span class="meta-item">
+<div class="min-h-screen bg-gray-50">
+	<!-- Header -->
+	<header class="sticky top-0 z-50 border-b bg-white">
+		<div class="flex items-center justify-between p-6">
+			<div class="flex items-center gap-6">
+				<Button variant="ghost" size="sm" onclick={goBack} class="gap-2">
+					<ArrowLeft size={16} />
+					返回列表
+				</Button>
+				<div>
+					<h1 class="text-2xl font-bold text-gray-900">編輯文章</h1>
+					<div class="mt-1 flex items-center gap-4 text-sm text-gray-600">
+						<span class="flex items-center gap-1">
 							<User size={14} />
 							文章 ID: {id}
 						</span>
 						{#if hasUnsavedChanges}
-							<span class="unsaved-indicator">
-								<div class="unsaved-dot"></div>
+							<span class="flex items-center gap-2 font-medium text-amber-600">
+								<div class="h-2 w-2 animate-pulse rounded-full bg-amber-500"></div>
 								有未儲存的變更
 							</span>
 						{/if}
@@ -144,793 +188,312 @@
 				</div>
 			</div>
 
-			<div class="header-actions">
-				<button class="delete-btn" type="button" onclick={handleDelete} disabled={isDeleting}>
-					<Trash2 size={18} />
-					<span>刪除</span>
-				</button>
+			<div class="flex items-center gap-3">
+				<Button
+					variant="destructive"
+					size="sm"
+					onclick={handleDelete}
+					disabled={isDeleting}
+					class="gap-2"
+				>
+					<Trash2 size={16} />
+					刪除
+				</Button>
 
-				<button
-					class:has-changes={hasUnsavedChanges}
+				<Button
 					type="submit"
-					class="save-btn"
+					form="edit-form"
 					disabled={isSubmitting || !title.trim() || !content.trim()}
+					class="gap-2"
+					variant={hasUnsavedChanges ? 'default' : 'secondary'}
 				>
 					{#if isSubmitting}
-						<Loader2 size={18} class="animate-spin" />
-						<span>儲存中...</span>
+						<Loader2 size={16} class="animate-spin" />
+						儲存中...
 					{:else}
-						<Save size={18} />
-						<span>儲存變更</span>
+						<Save size={16} />
+						儲存變更
 					{/if}
-				</button>
-			</div>
-		</header>
-
-		<!-- Article Info -->
-		<div class="article-info">
-			<div class="info-grid">
-				<div class="info-item">
-					<Calendar size={16} />
-					<div class="info-content">
-						<span class="info-label">建立時間</span>
-						<span class="info-value">{formatDate(createdAt)}</span>
-					</div>
-				</div>
-				<div class="info-item">
-					<Clock size={16} />
-					<div class="info-content">
-						<span class="info-label">最後更新</span>
-						<span class="info-value">{formatDate(updatedAt)}</span>
-					</div>
-				</div>
+				</Button>
 			</div>
 		</div>
+	</header>
 
-		<!-- Form Fields -->
-		<div class="form-section">
-			<div class="form-grid">
-				<!-- Title -->
-				<div class="form-group full-width">
-					<label for="title" class="form-label">
-						<FileText size={16} />
-						<span>文章標題</span>
-						<span class="required">*</span>
-					</label>
-					<input
-						id="title"
-						name="title"
-						type="text"
-						placeholder="輸入吸引人的文章標題..."
-						class="form-input"
-						bind:value={title}
-						required
-					/>
+	<div class="container mx-auto max-w-7xl p-6">
+		<!-- 文章資訊卡片 -->
+		<Card class="mb-6">
+			<CardHeader>
+				<CardTitle class="flex items-center gap-2">
+					<Clock size={20} />
+					文章資訊
+				</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div class="flex items-center gap-3">
+						<Calendar size={16} class="text-gray-500" />
+						<div>
+							<div class="text-xs font-medium text-gray-500">建立時間</div>
+							<div class="text-sm font-medium text-gray-900">{formatDate(createdAt)}</div>
+						</div>
+					</div>
+					<div class="flex items-center gap-3">
+						<Clock size={16} class="text-gray-500" />
+						<div>
+							<div class="text-xs font-medium text-gray-500">最後更新</div>
+							<div class="text-sm font-medium text-gray-900">{formatDate(updatedAt)}</div>
+						</div>
+					</div>
 				</div>
+			</CardContent>
+		</Card>
 
-				<!-- Tags -->
-				<div class="form-group">
-					<label for="tags" class="form-label">
-						<Tag size={16} />
-						<span>標籤</span>
-					</label>
-					<input
-						id="tags"
-						name="tags"
-						type="text"
-						placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
-						class="form-input"
-						bind:value={inputTags}
-					/>
-					<div class="form-hint">
-						{#if inputTags}
-							<div class="tags-preview">
-								{#each inputTags
-									.split(',')
-									.map((tag) => tag.trim())
-									.filter((tag) => tag) as tag}
-									<span class="tag-preview">{tag}</span>
-								{/each}
+		<form
+			id="edit-form"
+			method="POST"
+			action="?/update"
+			use:enhance={handleSubmit}
+			class="space-y-6"
+		>
+			<!-- 基本資訊卡片 -->
+			<Card>
+				<CardHeader>
+					<CardTitle class="flex items-center gap-2">
+						<FileText size={20} />
+						文章基本資訊
+					</CardTitle>
+					<CardDescription>編輯文章的標題、標籤和摘要資訊</CardDescription>
+				</CardHeader>
+				<CardContent class="space-y-6">
+					<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+						<!-- 標題 -->
+						<div class="space-y-2 lg:col-span-2">
+							<Label for="title" class="flex items-center gap-2">
+								<FileText size={16} />
+								文章標題
+								<span class="text-red-500">*</span>
+							</Label>
+							<Input
+								id="title"
+								name="title"
+								placeholder="輸入吸引人的文章標題..."
+								bind:value={title}
+								required
+								class="text-lg"
+							/>
+						</div>
+
+						<!-- 標籤 -->
+						<div class="space-y-2">
+							<Label for="tags" class="flex items-center gap-2">
+								<Tag size={16} />
+								標籤
+							</Label>
+							<Input
+								id="tags"
+								name="tags"
+								placeholder="用逗號分隔標籤，例如：JavaScript, React, 前端"
+								bind:value={inputTags}
+							/>
+							{#if tagList.length > 0}
+								<div class="mt-2 flex flex-wrap gap-2">
+									{#each tagList as tag}
+										<Badge variant="secondary">{tag}</Badge>
+									{/each}
+								</div>
+							{/if}
+						</div>
+
+						<!-- 摘要 -->
+						<div class="space-y-2">
+							<Label for="brief" class="flex items-center gap-2">
+								<AlignLeft size={16} />
+								文章摘要
+							</Label>
+							<Textarea
+								id="brief"
+								name="brief"
+								placeholder="簡短描述文章內容，將顯示在文章列表中..."
+								bind:value={brief}
+								rows={3}
+								class="resize-none"
+							/>
+							<div class="text-right text-xs text-gray-500">
+								{brief.length} / 200 字符
 							</div>
-						{/if}
+						</div>
 					</div>
-				</div>
 
-				<!-- Brief -->
-				<div class="form-group">
-					<label for="brief" class="form-label">
-						<AlignLeft size={16} />
-						<span>文章摘要</span>
-					</label>
-					<textarea
-						id="brief"
-						name="brief"
-						placeholder="簡短描述文章內容，將顯示在文章列表中..."
-						class="form-textarea"
-						rows="3"
-						bind:value={brief}
-					></textarea>
-					<div class="char-count">
-						{brief.length} / 200 字符
+					<!-- 錯誤訊息 -->
+					{#if form?.error}
+						<Alert variant="destructive">
+							<AlertDescription>{form.error}</AlertDescription>
+						</Alert>
+					{/if}
+				</CardContent>
+			</Card>
+
+			<!-- 內容編輯卡片 -->
+			<Card class="flex-1">
+				<CardHeader>
+					<div class="flex items-center justify-between">
+						<div>
+							<CardTitle>文章內容</CardTitle>
+							<CardDescription>使用 Markdown 語法編輯文章內容</CardDescription>
+						</div>
+						<div class="flex items-center gap-4 text-sm text-gray-500">
+							<span>{content.length} 字符</span>
+							<Separator orientation="vertical" class="h-4" />
+							<span>支援 Markdown</span>
+						</div>
 					</div>
-				</div>
-			</div>
-			<!-- Status Message -->
-			{#if form?.error}
-				<div class="status-message error">
-					{form.error}
-				</div>
-			{/if}
+				</CardHeader>
+				<CardContent>
+					<Tabs bind:value={activeTab} class="w-full">
+						<TabsList class="grid w-full grid-cols-2">
+							<TabsTrigger value="write">編輯</TabsTrigger>
+							<TabsTrigger value="preview">預覽</TabsTrigger>
+						</TabsList>
 
-			<!-- Status Message -->
-			{#if saveMessage}
-				<div
-					class="status-message"
-					class:success={saveMessage.includes('成功')}
-					class:error={saveMessage.includes('失敗')}
-				>
-					{saveMessage}
-				</div>
-			{/if}
-		</div>
+						<TabsContent value="write" class="mt-4">
+							<Textarea
+								name="content"
+								bind:value={content}
+								placeholder="開始撰寫您的文章內容..."
+								required
+								rows={20}
+								class="resize-none font-mono text-sm"
+							/>
+						</TabsContent>
 
-		<!-- Editor -->
-		<div class="editor-section">
-			<div class="editor-header">
-				<h2 class="editor-title">文章內容</h2>
-				<div class="editor-info">
-					<span class="word-count">{content.length} 字符</span>
-					<span class="format-hint">支援 Markdown 語法</span>
-				</div>
-			</div>
-
-			<div class="editor-container" class:preview-mode={showPreview}>
-				<!-- Editor Panel -->
-				<div class="editor-panel">
-					<div class="editor-toolbar">
-						<span class="toolbar-title">編輯器</span>
-					</div>
-					<textarea
-						name="content"
-						class="editor-textarea"
-						bind:value={content}
-						placeholder="開始撰寫您的文章內容..."
-					></textarea>
-				</div>
-
-				<div class="preview-panel">
-					<div class="preview-header">
-						<span class="toolbar-title">預覽</span>
-					</div>
-					<div class="preview-content prose">
-						{@html marked(content, { mangle: false, headerIds: false })}
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+						<TabsContent value="preview" class="mt-4">
+							<div class="min-h-[500px] rounded-lg border bg-white p-6">
+								<div class="prose prose-gray max-w-none">
+									{@html marked(content, { mangle: false, headerIds: false })}
+								</div>
+							</div>
+						</TabsContent>
+					</Tabs>
+				</CardContent>
+			</Card>
+		</form>
+	</div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-{#if showDeleteModal}
-	<div class="modal-overlay">
-		<div class="modal-content">
-			<div class="modal-header">
-				<AlertTriangle class="modal-icon text-red-300" size={24} />
-				<h3 class="modal-title">確認刪除</h3>
+<!-- Delete Confirmation Dialog -->
+<Dialog bind:open={showDeleteModal}>
+	<DialogContent class="sm:max-w-md">
+		<DialogHeader>
+			<div class="flex items-center gap-3">
+				<AlertTriangle class="text-amber-500" size={24} />
+				<DialogTitle>確認刪除</DialogTitle>
 			</div>
-			<div class="modal-body">
-				<p>您確定要刪除文章「{title}」嗎？</p>
-				<p class="modal-warning">此操作無法復原。</p>
-			</div>
-			<div class="modal-actions">
-				<button
-					type="button"
-					class="modal-btn cancel-btn"
-					onclick={cancelDelete}
-					disabled={isDeleting}
-				>
-					取消
-				</button>
-				<form
-					method="POST"
-					action="?/delete"
-					use:enhance={() => {
-						isDeleting = true;
-						return async ({ update }) => {
-							isDeleting = false;
-							await update();
-						};
-					}}
-				>
-					<input type="hidden" name="id" value={id || ''} />
-					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
-						{#if isDeleting}
-							<div class="btn-spinner"></div>
-							刪除中...
-						{:else}
-							確認刪除
-						{/if}
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
-{/if}
+			<DialogDescription class="text-left">
+				您確定要刪除文章「{title}」嗎？
+				<br />
+				<span class="font-medium text-red-600">此操作無法復原。</span>
+			</DialogDescription>
+		</DialogHeader>
+		<DialogFooter class="flex gap-2">
+			<Button variant="outline" onclick={() => (showDeleteModal = false)} disabled={isDeleting}>
+				取消
+			</Button>
+			<form method="POST" action="?/delete" use:enhance={handleDeleteSubmit} class="inline">
+				<input type="hidden" name="id" value={id || ''} />
+				<Button type="submit" variant="destructive" disabled={isDeleting} class="gap-2">
+					{#if isDeleting}
+						<Loader2 size={16} class="animate-spin" />
+						刪除中...
+					{:else}
+						確認刪除
+					{/if}
+				</Button>
+			</form>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
 
 <style>
-	.edit-container {
-		min-height: 100vh;
-		background: #f8fafc;
-		display: flex;
-		flex-direction: column;
-	}
-
-	/* Header */
-	.edit-header {
-		background: white;
-		border-bottom: 1px solid #e2e8f0;
-		padding: 24px 32px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		position: sticky;
-		top: 0;
-		z-index: 100;
-	}
-
-	.header-left {
-		display: flex;
-		align-items: center;
-		gap: 24px;
-	}
-
-	.back-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: none;
-		border: none;
-		color: #64748b;
-		cursor: pointer;
-		padding: 8px 12px;
-		border-radius: 6px;
-		transition: all 0.2s ease;
-	}
-
-	.back-btn:hover {
-		background: #f1f5f9;
-		color: #1e293b;
-	}
-
-	.page-title {
-		font-size: 1.5rem;
-		font-weight: 700;
-		color: #1e293b;
-		margin-bottom: 4px;
-	}
-
-	.page-meta {
-		display: flex;
-		align-items: center;
-		gap: 16px;
-		font-size: 0.8rem;
-		color: #64748b;
-	}
-
-	.meta-item {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-	}
-
-	.unsaved-indicator {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		color: #f59e0b;
-		font-weight: 500;
-	}
-
-	.unsaved-dot {
-		width: 6px;
-		height: 6px;
-		background: #f59e0b;
-		border-radius: 50%;
-		animation: pulse 2s infinite;
-	}
-
-	@keyframes pulse {
-		0%,
-		100% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.5;
-		}
-	}
-
-	.header-actions {
-		display: flex;
-		gap: 12px;
-		align-items: center;
-	}
-
-	.delete-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: #fef2f2;
-		border: 1px solid #fecaca;
-		color: #dc2626;
-		padding: 8px 16px;
-		border-radius: 6px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.delete-btn:hover:not(:disabled) {
-		background: #fee2e2;
-		border-color: #f87171;
-	}
-
-	.delete-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	.save-btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		background: linear-gradient(45deg, #3b82f6, #1d4ed8);
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		border-radius: 6px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-	}
-
-	.save-btn.has-changes {
-		background: linear-gradient(45deg, #10b981, #059669);
-		box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-	}
-
-	.save-btn:hover:not(:disabled) {
-		transform: translateY(-1px);
-		box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-	}
-
-	.save-btn.has-changes:hover:not(:disabled) {
-		box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-	}
-
-	.save-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-		transform: none;
-	}
-
-	/* Article Info */
-	.article-info {
-		background: white;
-		border-bottom: 1px solid #f1f5f9;
-		padding: 16px 32px;
-	}
-
-	.info-grid {
-		display: flex;
-		gap: 32px;
-	}
-
-	.info-item {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		color: #64748b;
-		font-size: 0.9rem;
-	}
-
-	.info-content {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-	.info-label {
-		font-size: 0.75rem;
-		color: #9ca3af;
-		font-weight: 500;
-	}
-
-	.info-value {
-		color: #374151;
-		font-weight: 500;
-	}
-
-	/* Form Section */
-	.form-section {
-		padding: 32px;
-		background: white;
-		border-bottom: 1px solid #e2e8f0;
-	}
-
-	.form-grid {
-		display: grid;
-		grid-template-columns: 2fr 1fr;
-		gap: 24px;
-		margin-bottom: 24px;
-	}
-
-	.form-group {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.form-group.full-width {
-		grid-column: 1 / -1;
-	}
-
-	.form-label {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-weight: 600;
-		color: #374151;
-		font-size: 0.9rem;
-	}
-
-	.required {
-		color: #dc2626;
-	}
-
-	.form-input,
-	.form-textarea {
-		padding: 12px 16px;
-		border: 2px solid #e5e7eb;
-		border-radius: 8px;
-		font-size: 1rem;
-		transition: all 0.2s ease;
-		background: white;
-	}
-
-	.form-input:focus,
-	.form-textarea:focus {
-		outline: none;
-		border-color: #3b82f6;
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-	}
-
-	.form-textarea {
-		resize: vertical;
-		min-height: 80px;
-		font-family: inherit;
-	}
-
-	.form-hint {
-		margin-top: 8px;
-	}
-
-	.tags-preview {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
-
-	.tag-preview {
-		background: #eff6ff;
-		color: #3b82f6;
-		padding: 2px 8px;
-		border-radius: 12px;
-		font-size: 0.75rem;
-		font-weight: 500;
-	}
-
-	.char-count {
-		font-size: 0.8rem;
-		color: #9ca3af;
-		text-align: right;
-	}
-
-	.status-message {
-		padding: 12px 16px;
-		border-radius: 8px;
-		font-size: 0.9rem;
-		text-align: center;
-	}
-
-	.status-message.success {
-		background: #f0fdf4;
-		color: #16a34a;
-		border: 1px solid #bbf7d0;
-	}
-
-	.status-message.error {
-		background: #fef2f2;
-		color: #dc2626;
-		border: 1px solid #fecaca;
-	}
-
-	/* Editor Section */
-	.editor-section {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		background: white;
-	}
-
-	.editor-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 24px 32px 16px;
-		border-bottom: 1px solid #f1f5f9;
-	}
-
-	.editor-title {
-		font-size: 1.2rem;
-		font-weight: 600;
-		color: #1e293b;
-	}
-
-	.editor-info {
-		display: flex;
-		gap: 16px;
-		align-items: center;
-		font-size: 0.8rem;
-		color: #64748b;
-	}
-
-	.word-count {
-		font-weight: 500;
-	}
-
-	.format-hint {
-		opacity: 0.8;
-	}
-
-	.editor-container {
-		flex: 1;
-		display: grid;
-		grid-template-columns: 1fr;
-		min-height: 500px;
-	}
-
-	.editor-container.preview-mode {
-		grid-template-columns: 1fr 1fr;
-	}
-
-	.editor-panel,
-	.preview-panel {
-		display: flex;
-		flex-direction: column;
-		border-right: 1px solid #f1f5f9;
-	}
-
-	.preview-panel {
-		border-right: none;
-		border-left: 1px solid #f1f5f9;
-	}
-
-	.editor-toolbar,
-	.preview-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 12px 24px;
-		background: #f8fafc;
-		border-bottom: 1px solid #f1f5f9;
-	}
-
-	.toolbar-title {
-		font-size: 0.9rem;
-		font-weight: 600;
-		color: #374151;
-	}
-
-	.editor-textarea {
-		flex: 1;
-		border: none;
-		padding: 24px;
-		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-		font-size: 0.9rem;
-		line-height: 1.6;
-		resize: none;
-		background: #fafbfc;
-		color: #1e293b;
-	}
-
-	.editor-textarea:focus {
-		outline: none;
-		background: white;
-	}
-
-	.preview-content {
-		flex: 1;
-		padding: 24px;
-		overflow-y: auto;
-		background: white;
-	}
-
 	/* Prose styles for preview */
-	.prose {
-		max-width: none;
+	:global(.prose) {
 		color: #374151;
 		line-height: 1.7;
 	}
 
-	/* Modal */
-	.modal-overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(0, 0, 0, 0.5);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		z-index: 1000;
+	:global(.prose h1) {
+		font-size: 2rem;
+		font-weight: 700;
+		color: #1e293b;
+		margin-bottom: 1rem;
+		border-bottom: 2px solid #e5e7eb;
+		padding-bottom: 0.5rem;
 	}
 
-	.modal-content {
-		background: white;
-		border-radius: 12px;
-		padding: 24px;
-		width: 90%;
-		max-width: 400px;
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	:global(.prose h2) {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: #1e293b;
+		margin: 2rem 0 1rem;
 	}
 
-	.modal-header {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		margin-bottom: 16px;
+	:global(.prose h3) {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1e293b;
+		margin: 1.5rem 0 0.75rem;
 	}
 
-	.modal-icon {
-		color: #f59e0b;
+	:global(.prose p) {
+		margin-bottom: 1rem;
 	}
 
-	.modal-title {
-		font-size: 1.2rem;
+	:global(.prose ul),
+	:global(.prose ol) {
+		margin: 1rem 0;
+		padding-left: 1.5rem;
+	}
+
+	:global(.prose li) {
+		margin-bottom: 0.5rem;
+	}
+
+	:global(.prose blockquote) {
+		border-left: 4px solid #e5e7eb;
+		padding-left: 1rem;
+		margin: 1.5rem 0;
+		font-style: italic;
+		color: #6b7280;
+	}
+
+	:global(.prose code) {
+		background: #f3f4f6;
+		padding: 0.2rem 0.4rem;
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+		color: #dc2626;
+	}
+
+	:global(.prose pre) {
+		background: #1f2937;
+		color: #f9fafb;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+	}
+
+	:global(.prose pre code) {
+		background: none;
+		color: inherit;
+		padding: 0;
+	}
+
+	:global(.prose strong) {
 		font-weight: 600;
 		color: #1e293b;
 	}
 
-	.modal-body {
-		margin-bottom: 24px;
-		color: #64748b;
-		line-height: 1.6;
-	}
-
-	.modal-warning {
-		color: #dc2626;
-		font-size: 0.9rem;
-		margin-top: 8px;
-	}
-
-	.modal-actions {
-		display: flex;
-		gap: 12px;
-		justify-content: flex-end;
-	}
-
-	.modal-btn {
-		padding: 8px 16px;
-		border-radius: 6px;
-		border: none;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	.cancel-btn {
-		background: #f1f5f9;
-		color: #64748b;
-	}
-
-	.cancel-btn:hover:not(:disabled) {
-		background: #e2e8f0;
-	}
-
-	.confirm-btn {
-		background: #dc2626;
-		color: white;
-	}
-
-	.confirm-btn:hover:not(:disabled) {
-		background: #b91c1c;
-	}
-
-	.modal-btn:disabled {
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	.btn-spinner {
-		width: 16px;
-		height: 16px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		border-top: 2px solid white;
-		border-radius: 50%;
-		animation: spin 1s linear infinite;
-	}
-
-	.animate-spin {
-		animation: spin 1s linear infinite;
-	}
-
-	@keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-
-	@media (max-width: 768px) {
-		.edit-header {
-			padding: 16px 20px;
-			flex-direction: column;
-			gap: 16px;
-			align-items: stretch;
-		}
-
-		.header-left {
-			flex-direction: column;
-			gap: 12px;
-			align-items: flex-start;
-		}
-
-		.article-info {
-			padding: 12px 20px;
-		}
-
-		.info-grid {
-			flex-direction: column;
-			gap: 12px;
-		}
-
-		.form-section {
-			padding: 20px;
-		}
-
-		.form-grid {
-			grid-template-columns: 1fr;
-			gap: 16px;
-		}
-
-		.editor-header {
-			padding: 16px 20px 12px;
-			flex-direction: column;
-			gap: 12px;
-			align-items: flex-start;
-		}
-
-		.editor-container.preview-mode {
-			grid-template-columns: 1fr;
-		}
-
-		.preview-panel {
-			display: none;
-		}
-
-		.editor-textarea {
-			padding: 16px;
-		}
-
-		.preview-content {
-			padding: 16px;
-		}
+	:global(.prose em) {
+		font-style: italic;
 	}
 </style>
