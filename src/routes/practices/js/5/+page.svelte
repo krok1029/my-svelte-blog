@@ -1,27 +1,35 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { Upload, Copy, Check, Image, Eye } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 
-	export let data: PageData;
-	export let form: ActionData;
-
-	let files: FileList | undefined;
-	let imgSrc: string;
-	let uploading = false;
-	let copiedIndex = -1;
-
-	const reader = new FileReader();
-
-	$: if (files) {
-		for (const file of files) {
-			console.log(`${file.name}: ${file.size} bytes`);
-		}
-		if (files[0]) {
-			reader.readAsDataURL(files[0]);
-		}
+	interface Props {
+		data: PageData;
+		form: ActionData;
 	}
+
+	let { data, form }: Props = $props();
+
+	let files: FileList | undefined = $state();
+	let imgSrc: string = $state();
+	let uploading = $state(false);
+	let copiedIndex = $state(-1);
+
+	const reader = $state(new FileReader());
+
+	run(() => {
+		if (files) {
+			for (const file of files) {
+				console.log(`${file.name}: ${file.size} bytes`);
+			}
+			if (files[0]) {
+				reader.readAsDataURL(files[0]);
+			}
+		}
+	});
 
 	reader.onload = (e) => {
 		const base64 = e.target?.result;
@@ -31,7 +39,7 @@
 	};
 
 	// 從 server load 函數獲取圖片列表
-	$: imgArr = data.images || [];
+	let imgArr = $derived(data.images || []);
 
 	const copyImageUrl = async (path: string, index: number) => {
 		const url = `https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`;
@@ -133,163 +141,167 @@ const handleDragOver = (e) => {
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo" class="demo-wrapper">
-		<div class="image-hosting-container">
-			<!-- Upload Section -->
-			<div class="upload-section">
-				<h2 class="section-title">
-					<Upload size={24} />
-					圖片上傳
-				</h2>
-				<form
-					method="POST"
-					action="?/upload"
-					enctype="multipart/form-data"
-					use:enhance={() => {
-						uploading = true;
-						return async ({ update }) => {
-							await update();
-							uploading = false;
-							// 清除預覽
-							files = undefined;
-							imgSrc = '';
-						};
-					}}
-				>
-					<div class="upload-area">
-						<div class="file-input-wrapper">
-							<input
-								bind:files
-								type="file"
-								name="image"
-								id="image_input"
-								accept="image/*"
-								class="file-input"
-							/>
-							<label for="image_input" class="file-label">
-								<Image size={32} />
-								<span>點擊選擇圖片</span>
-								<span class="file-hint">支援 JPG, PNG, GIF 格式</span>
-							</label>
-						</div>
-
-						{#if imgSrc}
-							<div class="preview-section">
-								<div class="preview-image">
-									<img src={imgSrc} alt="預覽" />
-								</div>
-								<div class="file-info">
-									{#if files && files[0]}
-										<div class="file-details">
-											<div class="file-name">{files[0].name}</div>
-											<div class="file-size">{formatFileSize(files[0].size)}</div>
-										</div>
-									{/if}
-
-									<button
-										type="submit"
-										class="upload-btn"
-										class:loading={uploading}
-										disabled={uploading || !files || !files[0]}
-									>
-										{#if uploading}
-											<div class="spinner" />
-											上傳中...
-										{:else}
-											<Upload size={16} />
-											上傳圖片
-										{/if}
-									</button>
-								</div>
-							</div>
-						{/if}
-
-						{#if form?.error || form?.success || data.error}
-							<div
-								class="status-message"
-								class:success={form?.success}
-								class:error={form?.error || data.error}
-							>
-								{form?.success || form?.error || data.error}
-							</div>
-						{/if}
-					</div>
-				</form>
-			</div>
-
-			<!-- Gallery Section -->
-			<div class="gallery-section">
-				<h2 class="section-title">
-					<Eye size={24} />
-					圖片庫
-					<span class="image-count">({imgArr.length} 張圖片)</span>
-				</h2>
-
-				<div class="gallery-hint">點擊圖片複製連結</div>
-
-				<div class="image-grid">
-					{#each imgArr as { name, path }, i}
-						<div class="image-card">
-							<div class="image-wrapper">
-								<img
-									src={`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`}
-									alt={name}
-									title={name}
-									loading="lazy"
+	{#snippet demo()}
+		<div  class="demo-wrapper">
+			<div class="image-hosting-container">
+				<!-- Upload Section -->
+				<div class="upload-section">
+					<h2 class="section-title">
+						<Upload size={24} />
+						圖片上傳
+					</h2>
+					<form
+						method="POST"
+						action="?/upload"
+						enctype="multipart/form-data"
+						use:enhance={() => {
+							uploading = true;
+							return async ({ update }) => {
+								await update();
+								uploading = false;
+								// 清除預覽
+								files = undefined;
+								imgSrc = '';
+							};
+						}}
+					>
+						<div class="upload-area">
+							<div class="file-input-wrapper">
+								<input
+									bind:files
+									type="file"
+									name="image"
+									id="image_input"
+									accept="image/*"
+									class="file-input"
 								/>
-								<div class="image-overlay">
-									<button class="overlay-btn copy-btn" on:click={() => copyImageUrl(path, i)}>
-										{#if copiedIndex === i}
-											<Check size={16} />
-										{:else}
-											<Copy size={16} />
+								<label for="image_input" class="file-label">
+									<Image size={32} />
+									<span>點擊選擇圖片</span>
+									<span class="file-hint">支援 JPG, PNG, GIF 格式</span>
+								</label>
+							</div>
+
+							{#if imgSrc}
+								<div class="preview-section">
+									<div class="preview-image">
+										<img src={imgSrc} alt="預覽" />
+									</div>
+									<div class="file-info">
+										{#if files && files[0]}
+											<div class="file-details">
+												<div class="file-name">{files[0].name}</div>
+												<div class="file-size">{formatFileSize(files[0].size)}</div>
+											</div>
 										{/if}
-									</button>
-									<a
-										href={`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="overlay-btn view-btn"
-									>
-										<Eye size={16} />
-									</a>
+
+										<button
+											type="submit"
+											class="upload-btn"
+											class:loading={uploading}
+											disabled={uploading || !files || !files[0]}
+										>
+											{#if uploading}
+												<div class="spinner"></div>
+												上傳中...
+											{:else}
+												<Upload size={16} />
+												上傳圖片
+											{/if}
+										</button>
+									</div>
 								</div>
-							</div>
-							<div class="image-info">
-								<div class="image-name" title={name}>{name}</div>
-							</div>
+							{/if}
+
+							{#if form?.error || form?.success || data.error}
+								<div
+									class="status-message"
+									class:success={form?.success}
+									class:error={form?.error || data.error}
+								>
+									{form?.success || form?.error || data.error}
+								</div>
+							{/if}
 						</div>
-					{/each}
+					</form>
 				</div>
 
-				{#if imgArr.length === 0}
-					<div class="empty-state">
-						<Image size={48} />
-						<p>還沒有上傳任何圖片</p>
-						<p class="empty-hint">上傳第一張圖片開始使用吧！</p>
-					</div>
-				{/if}
-			</div>
-		</div>
-	</div>
+				<!-- Gallery Section -->
+				<div class="gallery-section">
+					<h2 class="section-title">
+						<Eye size={24} />
+						圖片庫
+						<span class="image-count">({imgArr.length} 張圖片)</span>
+					</h2>
 
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				這個圖片託管工具展示了如何整合多個 Web API
-				來創建完整的檔案上傳功能，包括檔案讀取、編碼轉換和遠端儲存。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• FileReader.readAsDataURL() 將檔案轉為 Base64</li>
-					<li>• GitHub API 可以作為簡單的檔案儲存服務</li>
-					<li>• 適當的錯誤處理和載入狀態很重要</li>
-					<li>• 檔案大小和類型驗證提升使用者體驗</li>
-				</ul>
+					<div class="gallery-hint">點擊圖片複製連結</div>
+
+					<div class="image-grid">
+						{#each imgArr as { name, path }, i}
+							<div class="image-card">
+								<div class="image-wrapper">
+									<img
+										src={`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`}
+										alt={name}
+										title={name}
+										loading="lazy"
+									/>
+									<div class="image-overlay">
+										<button class="overlay-btn copy-btn" onclick={() => copyImageUrl(path, i)}>
+											{#if copiedIndex === i}
+												<Check size={16} />
+											{:else}
+												<Copy size={16} />
+											{/if}
+										</button>
+										<a
+											href={`https://raw.githubusercontent.com/krok1029/my-svelte-blog/image/${path}`}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="overlay-btn view-btn"
+										>
+											<Eye size={16} />
+										</a>
+									</div>
+								</div>
+								<div class="image-info">
+									<div class="image-name" title={name}>{name}</div>
+								</div>
+							</div>
+						{/each}
+					</div>
+
+					{#if imgArr.length === 0}
+						<div class="empty-state">
+							<Image size={48} />
+							<p>還沒有上傳任何圖片</p>
+							<p class="empty-hint">上傳第一張圖片開始使用吧！</p>
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
+
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					這個圖片託管工具展示了如何整合多個 Web API
+					來創建完整的檔案上傳功能，包括檔案讀取、編碼轉換和遠端儲存。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• FileReader.readAsDataURL() 將檔案轉為 Base64</li>
+						<li>• GitHub API 可以作為簡單的檔案儲存服務</li>
+						<li>• 適當的錯誤處理和載入狀態很重要</li>
+						<li>• 檔案大小和類型驗證提升使用者體驗</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	{/snippet}
 </PracticeLayout>
 
 <style>

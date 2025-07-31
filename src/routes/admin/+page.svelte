@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { page } from '$app/stores';
 	import { authUser } from '$lib/authStore';
 	import { goto } from '$app/navigation';
@@ -23,39 +25,45 @@
 	} from 'lucide-svelte';
 	import type { Timestamp } from 'firebase/firestore';
 
-	export let data: PageData;
-	export let form: ActionData;
-
-	let blogPosts: BlogPost[] = data.blogPosts || [];
-	let filteredPosts: BlogPost[] = [];
-	let searchQuery = '';
-	let selectedTag = '';
-	let isLoading = false;
-	let showDeleteModal = false;
-	let postToDelete: BlogPost | null = null;
-	let isDeleting = false;
-	let successMessage = '';
-
-	// 檢查 URL 參數中的成功訊息
-	$: if ($page.url.searchParams.get('success')) {
-		successMessage = $page.url.searchParams.get('success') || '';
-		// 3秒後清除訊息
-		setTimeout(() => {
-			successMessage = '';
-			// 清除 URL 參數
-			const url = new URL($page.url);
-			url.searchParams.delete('success');
-			goto(url.pathname, { replaceState: true });
-		}, 3000);
+	interface Props {
+		data: PageData;
+		form: ActionData;
 	}
 
+	let { data, form }: Props = $props();
+
+	let blogPosts: BlogPost[] = $state(data.blogPosts || []);
+	let filteredPosts: BlogPost[] = $state([]);
+	let searchQuery = $state('');
+	let selectedTag = $state('');
+	let isLoading = false;
+	let showDeleteModal = $state(false);
+	let postToDelete: BlogPost | null = $state(null);
+	let isDeleting = $state(false);
+	let successMessage = $state('');
+
+	// 檢查 URL 參數中的成功訊息
+	run(() => {
+		if ($page.url.searchParams.get('success')) {
+			successMessage = $page.url.searchParams.get('success') || '';
+			// 3秒後清除訊息
+			setTimeout(() => {
+				successMessage = '';
+				// 清除 URL 參數
+				const url = new URL($page.url);
+				url.searchParams.delete('success');
+				goto(url.pathname, { replaceState: true });
+			}, 3000);
+		}
+	});
+
 	// 統計資料
-	$: totalPosts = blogPosts.length;
-	$: allTags = [...new Set(blogPosts.flatMap((post) => post.tags || []))];
-	$: recentPosts = blogPosts.slice(0, 5);
+	let totalPosts = $derived(blogPosts.length);
+	let allTags = $derived([...new Set(blogPosts.flatMap((post) => post.tags || []))]);
+	let recentPosts = $derived(blogPosts.slice(0, 5));
 
 	// 過濾邏輯
-	$: {
+	run(() => {
 		filteredPosts = blogPosts.filter((post) => {
 			const matchesSearch =
 				!searchQuery ||
@@ -64,7 +72,7 @@
 			const matchesTag = !selectedTag || post.tags?.includes(selectedTag);
 			return matchesSearch && matchesTag;
 		});
-	}
+	});
 
 	const handleDelete = async (post: BlogPost) => {
 		postToDelete = post;
@@ -77,14 +85,16 @@
 	};
 
 	// 處理刪除成功後的更新
-	$: if (form?.success) {
-		// 重新載入頁面數據或從列表中移除已刪除的項目
-		if (postToDelete) {
-			blogPosts = blogPosts.filter((p) => p.id !== postToDelete?.id);
-			showDeleteModal = false;
-			postToDelete = null;
+	run(() => {
+		if (form?.success) {
+			// 重新載入頁面數據或從列表中移除已刪除的項目
+			if (postToDelete) {
+				blogPosts = blogPosts.filter((p) => p.id !== postToDelete?.id);
+				showDeleteModal = false;
+				postToDelete = null;
+			}
 		}
-	}
+	});
 
 	const logout = () => {
 		$authUser = undefined;
@@ -133,7 +143,7 @@
 		</nav>
 
 		<div class="sidebar-footer">
-			<button class="logout-btn" on:click={logout}>
+			<button class="logout-btn" onclick={logout}>
 				<LogOut size={18} />
 				<span>登出</span>
 			</button>
@@ -221,7 +231,7 @@
 		<div class="table-container">
 			{#if isLoading}
 				<div class="loading-state">
-					<div class="loading-spinner" />
+					<div class="loading-spinner"></div>
 					<p>載入中...</p>
 				</div>
 			{:else if filteredPosts.length === 0}
@@ -291,7 +301,7 @@
 											<a href={`/admin/${post.id}`} class="action-btn edit-btn">
 												<Edit size={16} />
 											</a>
-											<button class="action-btn delete-btn" on:click={() => handleDelete(post)}>
+											<button class="action-btn delete-btn" onclick={() => handleDelete(post)}>
 												<Trash2 size={16} />
 											</button>
 										</div>
@@ -322,7 +332,7 @@
 				<button
 					type="button"
 					class="modal-btn cancel-btn"
-					on:click={cancelDelete}
+					onclick={cancelDelete}
 					disabled={isDeleting}
 				>
 					取消
@@ -341,7 +351,7 @@
 					<input type="hidden" name="id" value={postToDelete?.id || ''} />
 					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
 						{#if isDeleting}
-							<div class="btn-spinner" />
+							<div class="btn-spinner"></div>
 							刪除中...
 						{:else}
 							確認刪除

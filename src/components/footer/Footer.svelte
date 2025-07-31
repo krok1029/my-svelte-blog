@@ -4,19 +4,19 @@
 		<div class="flex justify-center space-x-6">
 			<div class="text-gray-400 hover:text-white">
 				<span class="sr-only">Facebook</span>
-				<i class="fab fa-facebook fa-2x" />
+				<i class="fab fa-facebook fa-2x"></i>
 			</div>
 			<div class="text-gray-400 hover:text-white">
 				<span class="sr-only">Twitter</span>
-				<i class="fab fa-twitter fa-2x" />
+				<i class="fab fa-twitter fa-2x"></i>
 			</div>
 			<div class="text-gray-400 hover:text-white">
 				<span class="sr-only">GitHub</span>
-				<i class="fab fa-github fa-2x" />
+				<i class="fab fa-github fa-2x"></i>
 			</div>
 			<div class="text-gray-400 hover:text-white">
 				<span class="sr-only">LinkedIn</span>
-				<i class="fab fa-linkedin fa-2x" />
+				<i class="fab fa-linkedin fa-2x"></i>
 			</div>
 		</div>
 		<div class="mt-8 flex justify-center space-x-6">

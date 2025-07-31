@@ -3,7 +3,11 @@
 	import { Calendar, Clock, ArrowRight, Tag } from 'lucide-svelte';
 	import type { BlogCard } from '$type/Card';
 
-	export let card: BlogCard;
+	interface Props {
+		card: BlogCard;
+	}
+
+	let { card }: Props = $props();
 
 	// 格式化日期
 	const formatDate = (dateString: string) => {
@@ -35,7 +39,7 @@
 		/>
 		<div
 			class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-		/>
+		></div>
 	</div>
 
 	<!-- Content Container -->

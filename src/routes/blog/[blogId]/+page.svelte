@@ -4,7 +4,11 @@
 	import { Calendar, Clock, ArrowLeft, Share2, Tag, User } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 	const { title, content, createdAt, tags, image, brief } = data.blogPost;
 
 	// 格式化日期
@@ -59,7 +63,7 @@
 <div class="bg-white border-b border-gray-100">
 	<div class="container mx-auto px-4 py-4">
 		<button
-			on:click={() => goto('/blog')}
+			onclick={() => goto('/blog')}
 			class="inline-flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors"
 		>
 			<ArrowLeft size={18} />
@@ -119,7 +123,7 @@
 			<!-- Share Button -->
 			<div class="flex items-center gap-4">
 				<button
-					on:click={shareArticle}
+					onclick={shareArticle}
 					class="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg border border-gray-200 transition-colors"
 				>
 					<Share2 size={16} />
@@ -147,7 +151,7 @@
 		<div
 			class="prose prose-lg lg:prose-xl mx-auto prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-purple-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-code:text-purple-600 prose-code:bg-purple-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100"
 		>
-			<!-- svelte-ignore svelte/no-at-html-tags -->
+			<!-- svelte-ignore svelte/no_at_html_tags -->
 			{@html marked(content, { mangle: false, headerIds: false })}
 		</div>
 	</article>
@@ -173,11 +177,11 @@
 					熱愛前端技術的工程師，專注於創造優質的使用者體驗。喜歡分享技術心得與學習過程。
 				</p>
 				<div class="flex gap-4">
-					<button on:click={shareArticle} class="btn-primary">
+					<button onclick={shareArticle} class="btn-primary">
 						<Share2 size={16} />
 						分享這篇文章
 					</button>
-					<button on:click={() => goto('/blog')} class="btn-secondary"> 查看更多文章 </button>
+					<button onclick={() => goto('/blog')} class="btn-secondary"> 查看更多文章 </button>
 				</div>
 			</div>
 		</div>

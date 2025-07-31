@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { User2, Menu, X } from 'lucide-svelte';
 
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import type { Page } from '@sveltejs/kit';
 	import ProfileDropdown from './ProfileDropdown.svelte';
 	import MobileMenuDropdown from './MobileMenuDropdown.svelte';
 	import { navbarList } from '$lib/const';
 
-	let showMainMenu = false;
+	let showMainMenu = $state(false);
 	const handleMainIconClick = () => {
 		showMainMenu = !showMainMenu;
 	};
 
-	let showUserMenu = false;
+	let showUserMenu = $state(false);
 	const handleUserIconClick = () => {
 		showUserMenu = !showUserMenu;
 	};
@@ -26,7 +26,7 @@
 			<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 				<!-- Mobile menu button-->
 				<button
-					on:click={handleMainIconClick}
+					onclick={handleMainIconClick}
 					type="button"
 					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500"
 					aria-controls="mobile-menu"
@@ -53,7 +53,7 @@
 				<div class="hidden sm:ml-8 sm:block">
 					<div class="flex space-x-1">
 						{#each navbarList as navbar}
-							<a href={navbar.link} class={checkCurrentUrl($page, navbar.link)}>{navbar.text}</a>
+							<a href={navbar.link} class={checkCurrentUrl(page, navbar.link)}>{navbar.text}</a>
 						{/each}
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 				<div class="relative ml-3">
 					<div>
 						<button
-							on:click={handleUserIconClick}
+							onclick={handleUserIconClick}
 							type="button"
 							class="flex rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
 							id="user-menu-button"

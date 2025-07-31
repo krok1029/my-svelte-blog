@@ -70,51 +70,55 @@
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo" class="demo-wrapper">
-		<div class="form-container">
-			<h2 class="form-title">聯絡表單</h2>
-			<form class="demo-form">
-				<div class="inputBox">
-					<input class="form-input" type="text" required />
-					<span class="input_span style1">First Name</span>
-				</div>
+	{#snippet demo()}
+		<div  class="demo-wrapper">
+			<div class="form-container">
+				<h2 class="form-title">聯絡表單</h2>
+				<form class="demo-form">
+					<div class="inputBox">
+						<input class="form-input" type="text" required />
+						<span class="input_span style1">First Name</span>
+					</div>
 
-				<div class="inputBox">
-					<input class="form-input" type="text" required />
-					<span class="input_span style2">Last Name</span>
-				</div>
+					<div class="inputBox">
+						<input class="form-input" type="text" required />
+						<span class="input_span style2">Last Name</span>
+					</div>
 
-				<div class="inputBox">
-					<input class="form-input" type="email" required />
-					<span class="input_span style3">Email Address</span>
-				</div>
+					<div class="inputBox">
+						<input class="form-input" type="email" required />
+						<span class="input_span style3">Email Address</span>
+					</div>
 
-				<div class="inputBox">
-					<textarea class="form-input" rows="4" required />
-					<span class="input_span style4">Message</span>
-				</div>
+					<div class="inputBox">
+						<textarea class="form-input" rows="4" required></textarea>
+						<span class="input_span style4">Message</span>
+					</div>
 
-				<button type="submit" class="submit-btn"> Send Message </button>
-			</form>
-		</div>
-	</div>
-
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				這個練習展示了如何使用 CSS 偽類選擇器創建流暢的表單動畫，提升使用者體驗。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• :focus 偽類在元素獲得焦點時觸發</li>
-					<li>• :valid 偽類在輸入內容有效時觸發</li>
-					<li>• pointer-events: none 讓標籤不阻擋點擊</li>
-					<li>• transform 比改變 position 性能更好</li>
-				</ul>
+					<button type="submit" class="submit-btn"> Send Message </button>
+				</form>
 			</div>
 		</div>
-	</div>
+	{/snippet}
+
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					這個練習展示了如何使用 CSS 偽類選擇器創建流暢的表單動畫，提升使用者體驗。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• :focus 偽類在元素獲得焦點時觸發</li>
+						<li>• :valid 偽類在輸入內容有效時觸發</li>
+						<li>• pointer-events: none 讓標籤不阻擋點擊</li>
+						<li>• transform 比改變 position 性能更好</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	{/snippet}
 </PracticeLayout>
 
 <style>

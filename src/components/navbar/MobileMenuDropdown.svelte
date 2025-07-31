@@ -3,9 +3,13 @@
 	import { page } from '$app/stores';
 	import type { Page } from '@sveltejs/kit';
 	import { navbarList } from '$lib/const';
-	export let showDropdown: boolean;
+	interface Props {
+		showDropdown: boolean;
+	}
 
-	let dropdown: HTMLDivElement;
+	let { showDropdown = $bindable() }: Props = $props();
+
+	let dropdown: HTMLDivElement = $state();
 	const handleClick = (event: MouseEvent) => {
 		if (event.target instanceof Node && !dropdown.contains(event.target)) {
 			showDropdown = false;

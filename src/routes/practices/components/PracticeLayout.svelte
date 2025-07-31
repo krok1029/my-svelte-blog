@@ -2,7 +2,8 @@
 	import { ArrowLeft, Code, Palette, Info, Lightbulb } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
-	export let practiceInfo: {
+	interface Props {
+		practiceInfo: {
 		id: number;
 		title: string;
 		description: string;
@@ -17,6 +18,11 @@
 			language: string;
 		}>;
 	};
+		demo?: import('svelte').Snippet;
+		tips?: import('svelte').Snippet;
+	}
+
+	let { practiceInfo, demo, tips }: Props = $props();
 
 	// 類型圖示映射
 	const getTypeIcon = (type: string) => {
@@ -95,7 +101,7 @@
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex items-center justify-between">
 			<button
-				on:click={() => goto('/practices')}
+				onclick={() => goto('/practices')}
 				class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
 			>
 				<ArrowLeft size={18} />
@@ -160,7 +166,7 @@
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 					{#each practiceInfo.concepts as concept}
 						<div class="flex items-center gap-2 text-gray-700">
-							<div class="w-2 h-2 bg-blue-500 rounded-full" />
+							<div class="w-2 h-2 bg-blue-500 rounded-full"></div>
 							{concept}
 						</div>
 					{/each}
@@ -173,7 +179,7 @@
 <!-- Practice Demo -->
 <section class="practice-demo-section">
 	<div class="demo-container">
-		<slot name="demo" />
+		{@render demo?.()}
 	</div>
 </section>
 
@@ -216,11 +222,11 @@
 					<Info size={20} />
 					學習重點
 				</h3>
-				<slot name="tips">
+				{#if tips}{@render tips()}{:else}
 					<p class="text-gray-700">
 						這個練習幫助你理解 {getTypeName(practiceInfo.type)} 的核心概念，通過實際操作加深對相關技術的理解。
 					</p>
-				</slot>
+				{/if}
 			</div>
 		</div>
 	</div>

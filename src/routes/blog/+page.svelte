@@ -3,22 +3,26 @@
 	import { Search, Filter, Tag } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
 
-	let searchQuery = '';
-	let selectedTag = '';
+	let { data }: Props = $props();
+
+	let searchQuery = $state('');
+	let selectedTag = $state('');
 
 	// 獲取所有標籤
-	$: allTags = [...new Set(data.blogPosts.flatMap((post) => post.tags))];
+	let allTags = $derived([...new Set(data.blogPosts.flatMap((post) => post.tags))]);
 
 	// 過濾文章
-	$: filteredPosts = data.blogPosts.filter((post) => {
+	let filteredPosts = $derived(data.blogPosts.filter((post) => {
 		const matchesSearch =
 			post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
 			post.brief.toLowerCase().includes(searchQuery.toLowerCase());
 		const matchesTag = !selectedTag || post.tags.includes(selectedTag);
 		return matchesSearch && matchesTag;
-	});
+	}));
 </script>
 
 <svelte:head>
@@ -63,7 +67,7 @@
 				</div>
 
 				<button
-					on:click={() => (selectedTag = '')}
+					onclick={() => (selectedTag = '')}
 					class="filter-tag {selectedTag === '' ? 'active' : ''}"
 				>
 					全部
@@ -71,7 +75,7 @@
 
 				{#each allTags as tag}
 					<button
-						on:click={() => (selectedTag = tag)}
+						onclick={() => (selectedTag = tag)}
 						class="filter-tag {selectedTag === tag ? 'active' : ''}"
 					>
 						<Tag size={14} />
@@ -109,7 +113,7 @@
 					<h3 class="text-xl font-semibold text-gray-900 mb-2">找不到相關文章</h3>
 					<p class="text-gray-600 mb-6">試試調整搜尋關鍵字或選擇不同的標籤</p>
 					<button
-						on:click={() => {
+						onclick={() => {
 							searchQuery = '';
 							selectedTag = '';
 						}}

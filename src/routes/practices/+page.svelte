@@ -3,20 +3,24 @@
 	import { Search, Filter, Code, Palette, Zap } from 'lucide-svelte';
 	import type { PageData } from './$types';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
 
-	let searchQuery = '';
-	let selectedType = '';
+	let { data }: Props = $props();
+
+	let searchQuery = $state('');
+	let selectedType = $state('');
 
 	// 獲取所有類型
-	$: allTypes = [...new Set(data.practice.map((item) => item.type))];
+	let allTypes = $derived([...new Set(data.practice.map((item) => item.type))]);
 
 	// 過濾練習
-	$: filteredPractices = data.practice.filter((item) => {
+	let filteredPractices = $derived(data.practice.filter((item) => {
 		const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
 		const matchesType = !selectedType || item.type === selectedType;
 		return matchesSearch && matchesType;
-	});
+	}));
 
 	// 類型圖示映射
 	const getTypeIcon = (type: string) => {
@@ -83,7 +87,7 @@
 				</div>
 
 				<button
-					on:click={() => (selectedType = '')}
+					onclick={() => (selectedType = '')}
 					class="filter-tag {selectedType === '' ? 'active' : ''}"
 				>
 					<Zap size={14} />
@@ -93,7 +97,7 @@
 				{#each allTypes as type}
 					{@const Icon = getTypeIcon(type)}
 					<button
-						on:click={() => (selectedType = type)}
+						onclick={() => (selectedType = type)}
 						class="filter-tag {selectedType === type ? 'active' : ''}"
 					>
 						<Icon size={14} />
@@ -131,7 +135,7 @@
 					<h3 class="text-xl font-semibold text-gray-900 mb-2">找不到相關練習</h3>
 					<p class="text-gray-600 mb-6">試試調整搜尋關鍵字或選擇不同的類型</p>
 					<button
-						on:click={() => {
+						onclick={() => {
 							searchQuery = '';
 							selectedType = '';
 						}}

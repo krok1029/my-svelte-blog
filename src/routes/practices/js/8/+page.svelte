@@ -2,8 +2,8 @@
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { Share2, Copy, Check, Smartphone, Globe } from 'lucide-svelte';
 
-	let shareStatus = '';
-	let copied = false;
+	let shareStatus = $state('');
+	let copied = $state(false);
 
 	const shareData = {
 		title: '李明峯的程式練習',
@@ -133,109 +133,113 @@ const shareFile = async (file) => {
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo" class="demo-wrapper">
-		<div class="share-container">
-			<div class="content-card">
-				<div class="card-header">
-					<Globe class="header-icon" />
-					<h2 class="card-title">Web Share API 練習</h2>
+	{#snippet demo()}
+		<div  class="demo-wrapper">
+			<div class="share-container">
+				<div class="content-card">
+					<div class="card-header">
+						<Globe class="header-icon" />
+						<h2 class="card-title">Web Share API 練習</h2>
+					</div>
+
+					<div class="card-content">
+						<p class="content-text">
+							這個練習展示了如何使用現代瀏覽器的原生分享功能。點擊下方按鈕體驗不同的分享方式！
+						</p>
+
+						<div class="share-info">
+							<div class="info-item">
+								<strong>標題：</strong>
+								{shareData.title}
+							</div>
+							<div class="info-item">
+								<strong>描述：</strong>
+								{shareData.text}
+							</div>
+							<div class="info-item">
+								<strong>連結：</strong>
+								<span class="url-text">{shareData.url}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-actions">
+						<button onclick={share} class="share-btn primary">
+							<Share2 size={20} />
+							原生分享
+							<Smartphone size={16} class="mobile-icon" />
+						</button>
+
+						<button onclick={copyToClipboard} class="share-btn secondary">
+							{#if copied}
+								<Check size={20} />
+								已複製
+							{:else}
+								<Copy size={20} />
+								複製連結
+							{/if}
+						</button>
+					</div>
+
+					{#if shareStatus}
+						<div
+							class="status-message"
+							class:success={shareStatus.includes('成功')}
+							class:error={shareStatus.includes('失敗')}
+						>
+							{shareStatus}
+						</div>
+					{/if}
 				</div>
 
-				<div class="card-content">
-					<p class="content-text">
-						這個練習展示了如何使用現代瀏覽器的原生分享功能。點擊下方按鈕體驗不同的分享方式！
-					</p>
-
-					<div class="share-info">
-						<div class="info-item">
-							<strong>標題：</strong>
-							{shareData.title}
+				<!-- 支援度檢測 -->
+				<div class="support-info">
+					<h3 class="support-title">瀏覽器支援度</h3>
+					<div class="support-grid">
+						<div
+							class="support-item"
+							class:supported={typeof navigator !== 'undefined' && navigator.share}
+						>
+							<Share2 size={16} />
+							<span>Web Share API</span>
+							<span class="support-status">
+								{typeof navigator !== 'undefined' && navigator.share ? '✅' : '❌'}
+							</span>
 						</div>
-						<div class="info-item">
-							<strong>描述：</strong>
-							{shareData.text}
-						</div>
-						<div class="info-item">
-							<strong>連結：</strong>
-							<span class="url-text">{shareData.url}</span>
+						<div
+							class="support-item"
+							class:supported={typeof navigator !== 'undefined' && navigator.clipboard}
+						>
+							<Copy size={16} />
+							<span>Clipboard API</span>
+							<span class="support-status">
+								{typeof navigator !== 'undefined' && navigator.clipboard ? '✅' : '❌'}
+							</span>
 						</div>
 					</div>
 				</div>
-
-				<div class="card-actions">
-					<button on:click={share} class="share-btn primary">
-						<Share2 size={20} />
-						原生分享
-						<Smartphone size={16} class="mobile-icon" />
-					</button>
-
-					<button on:click={copyToClipboard} class="share-btn secondary">
-						{#if copied}
-							<Check size={20} />
-							已複製
-						{:else}
-							<Copy size={20} />
-							複製連結
-						{/if}
-					</button>
-				</div>
-
-				{#if shareStatus}
-					<div
-						class="status-message"
-						class:success={shareStatus.includes('成功')}
-						class:error={shareStatus.includes('失敗')}
-					>
-						{shareStatus}
-					</div>
-				{/if}
 			</div>
+		</div>
+	{/snippet}
 
-			<!-- 支援度檢測 -->
-			<div class="support-info">
-				<h3 class="support-title">瀏覽器支援度</h3>
-				<div class="support-grid">
-					<div
-						class="support-item"
-						class:supported={typeof navigator !== 'undefined' && navigator.share}
-					>
-						<Share2 size={16} />
-						<span>Web Share API</span>
-						<span class="support-status">
-							{typeof navigator !== 'undefined' && navigator.share ? '✅' : '❌'}
-						</span>
-					</div>
-					<div
-						class="support-item"
-						class:supported={typeof navigator !== 'undefined' && navigator.clipboard}
-					>
-						<Copy size={16} />
-						<span>Clipboard API</span>
-						<span class="support-status">
-							{typeof navigator !== 'undefined' && navigator.clipboard ? '✅' : '❌'}
-						</span>
-					</div>
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					Web Share API 讓網頁可以使用裝置的原生分享功能，提供更好的使用者體驗，特別是在行動裝置上。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• Web Share API 主要在行動裝置上支援</li>
+						<li>• 需要 HTTPS 環境才能使用</li>
+						<li>• 總是要提供備用方案（如複製到剪貼簿）</li>
+						<li>• 使用 navigator.canShare() 檢查檔案分享支援</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				Web Share API 讓網頁可以使用裝置的原生分享功能，提供更好的使用者體驗，特別是在行動裝置上。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• Web Share API 主要在行動裝置上支援</li>
-					<li>• 需要 HTTPS 環境才能使用</li>
-					<li>• 總是要提供備用方案（如複製到剪貼簿）</li>
-					<li>• 使用 navigator.canShare() 檢查檔案分享支援</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	{/snippet}
 </PracticeLayout>
 
 <style>

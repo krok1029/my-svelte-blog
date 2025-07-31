@@ -14,17 +14,18 @@
 	} from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
-	export let form: ActionData;
+	interface Props {
+		form: ActionData;
+	}
 
-	let password = '';
-	let confirmPassword = '';
-	let showPassword = false;
-	let showConfirmPassword = false;
-	let isLoading = false;
+	let { form }: Props = $props();
 
-	// 密碼強度檢查
-	$: passwordStrength = checkPasswordStrength(password);
-	$: passwordsMatch = password && confirmPassword && password === confirmPassword;
+	let password = $state('');
+	let confirmPassword = $state('');
+	let showPassword = $state(false);
+	let showConfirmPassword = $state(false);
+	let isLoading = $state(false);
+
 
 	function checkPasswordStrength(pwd: string) {
 		if (!pwd) return { score: 0, text: '', color: '' };
@@ -74,6 +75,9 @@
 	const goToLogin = () => {
 		goto('/login');
 	};
+	// 密碼強度檢查
+	let passwordStrength = $derived(checkPasswordStrength(password));
+	let passwordsMatch = $derived(password && confirmPassword && password === confirmPassword);
 </script>
 
 <svelte:head>
@@ -187,7 +191,7 @@
 							<button
 								type="button"
 								class="password-toggle"
-								on:click={togglePasswordVisibility}
+								onclick={togglePasswordVisibility}
 								disabled={isLoading}
 							>
 								{#if showPassword}
@@ -206,7 +210,7 @@
 										class="strength-fill"
 										style="width: {(passwordStrength.score / 5) *
 											100}%; background-color: {passwordStrength.color}"
-									/>
+									></div>
 								</div>
 								<div class="strength-text" style="color: {passwordStrength.color}">
 									密碼強度: {passwordStrength.text}
@@ -262,7 +266,7 @@
 							<button
 								type="button"
 								class="password-toggle"
-								on:click={toggleConfirmPasswordVisibility}
+								onclick={toggleConfirmPasswordVisibility}
 								disabled={isLoading}
 							>
 								{#if showConfirmPassword}
@@ -309,7 +313,7 @@
 							passwordStrength.score < 3}
 					>
 						{#if isLoading}
-							<div class="loading-spinner" />
+							<div class="loading-spinner"></div>
 							<span>註冊中...</span>
 						{:else}
 							<UserPlus size={20} />
@@ -321,7 +325,7 @@
 					<div class="form-footer">
 						<p class="login-prompt">
 							已經有帳號了？
-							<button type="button" class="login-link" on:click={goToLogin} disabled={isLoading}>
+							<button type="button" class="login-link" onclick={goToLogin} disabled={isLoading}>
 								<ArrowLeft size={16} />
 								返回登入
 							</button>

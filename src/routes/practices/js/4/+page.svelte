@@ -79,25 +79,29 @@ function toggleMetronome() {
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo">
-		<Metronome />
-	</div>
+	{#snippet demo()}
+		<div >
+			<Metronome />
+		</div>
+	{/snippet}
 
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				這個節拍器展示了如何使用 Web Audio API
-				和定時器創建音樂工具。重點在於精確的時間控制和音頻同步。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• Audio 物件的 preload 屬性可以提升播放性能</li>
-					<li>• 重置 currentTime 確保音頻從頭播放</li>
-					<li>• BPM 轉換公式：60000ms ÷ BPM = 間隔毫秒數</li>
-					<li>• 使用計數器創造節拍的重音效果</li>
-				</ul>
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					這個節拍器展示了如何使用 Web Audio API
+					和定時器創建音樂工具。重點在於精確的時間控制和音頻同步。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• Audio 物件的 preload 屬性可以提升播放性能</li>
+						<li>• 重置 currentTime 確保音頻從頭播放</li>
+						<li>• BPM 轉換公式：60000ms ÷ BPM = 間隔毫秒數</li>
+						<li>• 使用計數器創造節拍的重音效果</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
 </PracticeLayout>

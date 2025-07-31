@@ -1,13 +1,19 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
 	import { enhance } from '$app/forms';
 	import { Save, ArrowLeft, Eye, EyeOff, FileText, Tag, AlignLeft, Loader2 } from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
-	export let form: ActionData;
+	interface Props {
+		form: ActionData;
+	}
 
-	let content = `# 我的新文章
+	let { form }: Props = $props();
+
+	let content = $state(`# 我的新文章
 
 歡迎來到我的部落格！這裡是文章內容的開始...
 
@@ -28,21 +34,23 @@ console.log('Hello, World!');
 - 項目三
 
 > 這是一個引用區塊
-`;
+`);
 
-	let title = '';
-	let inputTags = '';
-	let brief = '';
-	let showPreview = true;
-	let isSubmitting = false;
+	let title = $state('');
+	let inputTags = $state('');
+	let brief = $state('');
+	let showPreview = $state(true);
+	let isSubmitting = $state(false);
 
 	// 如果有 form 數據，恢復表單狀態
-	$: if (form) {
-		title = form.title || title;
-		inputTags = form.tags || inputTags;
-		brief = form.brief || brief;
-		content = form.content || content;
-	}
+	run(() => {
+		if (form) {
+			title = form.title || title;
+			inputTags = form.tags || inputTags;
+			brief = form.brief || brief;
+			content = form.content || content;
+		}
+	});
 
 	const togglePreview = () => {
 		showPreview = !showPreview;
@@ -71,7 +79,7 @@ console.log('Hello, World!');
 	<!-- Header -->
 	<header class="create-header">
 		<div class="header-left">
-			<button class="back-btn" on:click={goBack}>
+			<button class="back-btn" onclick={goBack}>
 				<ArrowLeft size={20} />
 				<span>返回列表</span>
 			</button>
@@ -82,7 +90,7 @@ console.log('Hello, World!');
 		</div>
 
 		<div class="header-actions">
-			<button class="preview-toggle" on:click={togglePreview}>
+			<button class="preview-toggle" onclick={togglePreview}>
 				{#if showPreview}
 					<EyeOff size={18} />
 					<span>隱藏預覽</span>
@@ -158,7 +166,7 @@ console.log('Hello, World!');
 						class="form-textarea"
 						rows="3"
 						bind:value={brief}
-					/>
+					></textarea>
 					<div class="char-count">
 						{brief.length} / 200 字符
 					</div>
@@ -210,7 +218,7 @@ console.log('Hello, World!');
 								type="button"
 								class="toolbar-btn"
 								title="粗體"
-								on:click={() => {
+								onclick={() => {
 									const textarea = document.querySelector('.editor-textarea');
 									const start = textarea.selectionStart;
 									const end = textarea.selectionEnd;
@@ -226,7 +234,7 @@ console.log('Hello, World!');
 								type="button"
 								class="toolbar-btn"
 								title="斜體"
-								on:click={() => {
+								onclick={() => {
 									const textarea = document.querySelector('.editor-textarea');
 									const start = textarea.selectionStart;
 									const end = textarea.selectionEnd;
@@ -246,7 +254,7 @@ console.log('Hello, World!');
 						bind:value={content}
 						placeholder="開始撰寫您的文章內容..."
 						required
-					/>
+					></textarea>
 				</div>
 
 				<!-- Preview Panel -->
@@ -256,7 +264,7 @@ console.log('Hello, World!');
 							<span class="toolbar-title">預覽</span>
 						</div>
 						<div class="preview-content prose">
-							<!-- svelte-ignore svelte/no-at-html-tags -->
+							<!-- svelte-ignore svelte/no_at_html_tags -->
 							{@html marked(content, { mangle: false, headerIds: false })}
 						</div>
 					</div>

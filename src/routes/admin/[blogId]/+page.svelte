@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
@@ -17,33 +19,39 @@
 	} from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
-	export let form: ActionData;
 
-	export let data;
+	interface Props {
+		form: ActionData;
+		data: any;
+	}
 
-	let { id, content = '', title = '', tags, brief = '', createdAt, updatedAt } = data.blogPost;
-	let inputTags: string = tags?.join(',') || '';
+	let { form, data }: Props = $props();
+
+	let { id, content = '', title = '', tags, brief = '', createdAt, updatedAt } = $state(data.blogPost);
+	let inputTags: string = $state(tags?.join(',') || '');
 	let showPreview = true;
-	let isSubmitting = false;
-	let isDeleting = false;
-	let saveMessage = '';
-	let showDeleteModal = false;
-	let hasUnsavedChanges = false;
+	let isSubmitting = $state(false);
+	let isDeleting = $state(false);
+	let saveMessage = $state('');
+	let showDeleteModal = $state(false);
+	let hasUnsavedChanges = $state(false);
 
 	// 原始資料，用於檢測變更
-	let originalData = {
+	let originalData = $state({
 		title: title || '',
 		inputTags: inputTags || '',
 		brief: brief || '',
 		content: content || ''
-	};
+	});
 
 	// 檢測是否有未儲存的變更
-	$: hasUnsavedChanges =
-		title !== originalData.title ||
-		inputTags !== originalData.inputTags ||
-		brief !== originalData.brief ||
-		content !== originalData.content;
+	run(() => {
+		hasUnsavedChanges =
+			title !== originalData.title ||
+			inputTags !== originalData.inputTags ||
+			brief !== originalData.brief ||
+			content !== originalData.content;
+	});
 
 	const handleDelete = () => {
 		showDeleteModal = true;
@@ -108,7 +116,7 @@
 		<!-- Header -->
 		<header class="edit-header">
 			<div class="header-left">
-				<button class="back-btn" on:click={goBack}>
+				<button class="back-btn" onclick={goBack}>
 					<ArrowLeft size={20} />
 					<span>返回列表</span>
 				</button>
@@ -121,7 +129,7 @@
 						</span>
 						{#if hasUnsavedChanges}
 							<span class="unsaved-indicator">
-								<div class="unsaved-dot" />
+								<div class="unsaved-dot"></div>
 								有未儲存的變更
 							</span>
 						{/if}
@@ -130,7 +138,7 @@
 			</div>
 
 			<div class="header-actions">
-				<button class="delete-btn" type="button" on:click={handleDelete} disabled={isDeleting}>
+				<button class="delete-btn" type="button" onclick={handleDelete} disabled={isDeleting}>
 					<Trash2 size={18} />
 					<span>刪除</span>
 				</button>
@@ -234,7 +242,7 @@
 						class="form-textarea"
 						rows="3"
 						bind:value={brief}
-					/>
+					></textarea>
 					<div class="char-count">
 						{brief.length} / 200 字符
 					</div>
@@ -280,7 +288,7 @@
 						class="editor-textarea"
 						bind:value={content}
 						placeholder="開始撰寫您的文章內容..."
-					/>
+					></textarea>
 				</div>
 
 				<div class="preview-panel">
@@ -288,7 +296,7 @@
 						<span class="toolbar-title">預覽</span>
 					</div>
 					<div class="preview-content prose">
-						<!-- svelte-ignore svelte/no-at-html-tags -->
+						<!-- svelte-ignore svelte/no_at_html_tags -->
 					{@html marked(content, { mangle: false, headerIds: false })}
 					</div>
 				</div>
@@ -313,7 +321,7 @@
 				<button
 					type="button"
 					class="modal-btn cancel-btn"
-					on:click={cancelDelete}
+					onclick={cancelDelete}
 					disabled={isDeleting}
 				>
 					取消
@@ -332,7 +340,7 @@
 					<input type="hidden" name="id" value={id || ''} />
 					<button type="submit" class="modal-btn confirm-btn" disabled={isDeleting}>
 						{#if isDeleting}
-							<div class="btn-spinner" />
+							<div class="btn-spinner"></div>
 							刪除中...
 						{:else}
 							確認刪除

@@ -5,9 +5,13 @@
 	import { signOut } from 'firebase/auth';
 	import { firebaseAuth } from '$lib/firebase';
 
-	export let showDropdown: boolean;
+	interface Props {
+		showDropdown: boolean;
+	}
 
-	let dropdown: HTMLDivElement;
+	let { showDropdown = $bindable() }: Props = $props();
+
+	let dropdown: HTMLDivElement = $state();
 	const handleClick = (event: MouseEvent) => {
 		if (event.target instanceof Node && !dropdown.contains(event.target)) {
 			showDropdown = false;
@@ -57,7 +61,7 @@
 			class="block px-4 py-2 text-sm text-gray-700"
 			role="menuitem"
 			tabindex="-1"
-			on:click={handleLogout}
+			onclick={handleLogout}
 			id="user-menu-item-1">Logout</button
 		>
 	{:else}

@@ -2,7 +2,7 @@
 	import { Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 
-	let showAllExperience = false;
+	let showAllExperience = $state(false);
 
 	const experiences = [
 		{
@@ -141,7 +141,7 @@
 			<!-- Toggle Button -->
 			<div class="text-center mb-8">
 				<button
-					on:click={toggleExperience}
+					onclick={toggleExperience}
 					class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
 				>
 					{showAllExperience ? '收合更多經歷' : '查看更多經歷'}

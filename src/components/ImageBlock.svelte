@@ -1,7 +1,11 @@
 <script lang="ts">
-	export let src: string;
-	export let alt: string;
-	export let size: 'lg' | 'md' | 'sm' = 'md';
+	interface Props {
+		src: string;
+		alt: string;
+		size?: 'lg' | 'md' | 'sm';
+	}
+
+	let { src, alt, size = 'md' }: Props = $props();
 </script>
 
 <!-- <span title={alt}>

@@ -3,7 +3,7 @@
 </script>
 
 <section class="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-	<div class="absolute inset-0 bg-black/20" />
+	<div class="absolute inset-0 bg-black/20"></div>
 	<div class="relative container mx-auto px-4 py-20 lg:py-32">
 		<div class="max-w-4xl mx-auto text-center">
 			<div class="mb-8">

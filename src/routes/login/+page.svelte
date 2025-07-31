@@ -4,10 +4,14 @@
 	import { Mail, Lock, Eye, EyeOff, LogIn, ArrowRight, User, AlertCircle } from 'lucide-svelte';
 	import type { ActionData } from './$types';
 
-	export let form: ActionData;
+	interface Props {
+		form: ActionData;
+	}
 
-	let showPassword = false;
-	let isLoading = false;
+	let { form }: Props = $props();
+
+	let showPassword = $state(false);
+	let isLoading = $state(false);
 
 	const togglePasswordVisibility = () => {
 		showPassword = !showPassword;
@@ -112,7 +116,7 @@
 							<button
 								type="button"
 								class="password-toggle"
-								on:click={togglePasswordVisibility}
+								onclick={togglePasswordVisibility}
 								disabled={isLoading}
 							>
 								{#if showPassword}
@@ -135,7 +139,7 @@
 					<!-- Submit Button -->
 					<button type="submit" class="submit-button" disabled={isLoading}>
 						{#if isLoading}
-							<div class="loading-spinner" />
+							<div class="loading-spinner"></div>
 							<span>登入中...</span>
 						{:else}
 							<LogIn size={20} />
@@ -150,7 +154,7 @@
 							<button
 								type="button"
 								class="register-link"
-								on:click={goToRegister}
+								onclick={goToRegister}
 								disabled={isLoading}
 							>
 								立即註冊

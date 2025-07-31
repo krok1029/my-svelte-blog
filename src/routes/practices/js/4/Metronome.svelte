@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import metronome1 from '$asset/audio/metronome1.mp3';
 	import metronome2 from '$asset/audio/metronome2.mp3';
 	import { Play, Pause, Volume2, Music } from 'lucide-svelte';
@@ -7,14 +9,14 @@
 	const MAX_TEMPO = 300;
 	const BEAT = 2;
 	let beatCount = 0;
-	let tempo = 120;
-	let volume = 0.8;
-	let isPlaying = false;
-	let interval: number;
-	let currentBeat = 0; // 用於視覺指示
+	let tempo = $state(120);
+	let volume = $state(0.8);
+	let isPlaying = $state(false);
+	let interval: number = $state();
+	let currentBeat = $state(0); // 用於視覺指示
 
-	const mainBeat = new Audio(metronome1);
-	const subBeat = new Audio(metronome2);
+	const mainBeat = $state(new Audio(metronome1));
+	const subBeat = $state(new Audio(metronome2));
 
 	mainBeat.preload = 'auto';
 	subBeat.preload = 'auto';
@@ -48,17 +50,19 @@
 	}
 
 	// 當 tempo 改變時，如果正在播放則重新設定間隔
-	$: if (isPlaying && tempo) {
-		clearInterval(interval);
-		interval = setInterval(() => {
-			playSound();
-		}, 60000 / tempo);
-	}
+	run(() => {
+		if (isPlaying && tempo) {
+			clearInterval(interval);
+			interval = setInterval(() => {
+				playSound();
+			}, 60000 / tempo);
+		}
+	});
 
-	$: {
+	run(() => {
 		mainBeat.volume = volume;
 		subBeat.volume = volume;
-	}
+	});
 
 	// 獲取 tempo 的描述
 	const getTempoDescription = (bpm: number) => {
@@ -96,14 +100,14 @@
 					class="beat-dot"
 					class:active={currentBeat === i + 1}
 					class:main={i === 0 || i === 2}
-				/>
+				></div>
 			{/each}
 		</div>
 
 		<!-- Controls -->
 		<div class="controls-section">
 			<!-- Play/Pause Button -->
-			<button class="play-button" class:playing={isPlaying} on:click={toggleMetronome}>
+			<button class="play-button" class:playing={isPlaying} onclick={toggleMetronome}>
 				{#if isPlaying}
 					<Pause size={24} />
 					<span>停止</span>
@@ -169,10 +173,10 @@
 		<div class="preset-section">
 			<h3 class="preset-title">快速設定</h3>
 			<div class="preset-buttons">
-				<button class="preset-btn" on:click={() => (tempo = 60)}>60 BPM</button>
-				<button class="preset-btn" on:click={() => (tempo = 80)}>80 BPM</button>
-				<button class="preset-btn" on:click={() => (tempo = 120)}>120 BPM</button>
-				<button class="preset-btn" on:click={() => (tempo = 140)}>140 BPM</button>
+				<button class="preset-btn" onclick={() => (tempo = 60)}>60 BPM</button>
+				<button class="preset-btn" onclick={() => (tempo = 80)}>80 BPM</button>
+				<button class="preset-btn" onclick={() => (tempo = 120)}>120 BPM</button>
+				<button class="preset-btn" onclick={() => (tempo = 140)}>140 BPM</button>
 			</div>
 		</div>
 	</div>

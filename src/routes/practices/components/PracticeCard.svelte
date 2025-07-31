@@ -4,7 +4,11 @@
 	import { Code, Palette, ArrowRight } from 'lucide-svelte';
 	import type { PracticeCard } from '$type/Card';
 
-	export let card: PracticeCard;
+	interface Props {
+		card: PracticeCard;
+	}
+
+	let { card }: Props = $props();
 
 	const path = `/practices/${card.type}/${card.id}`;
 	const go = () => goto(path);
@@ -76,11 +80,11 @@
 	};
 </script>
 
-<button class="practice-card group w-full text-left" on:click={go}>
+<button class="practice-card group w-full text-left" onclick={go}>
 	<div class="flex h-full">
 		<!-- Image Container -->
 		<div class="relative w-1/3 flex-shrink-0">
-			<div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 z-10" />
+			<div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 z-10"></div>
 			<img
 				class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
 				src={card?.image || defaultImageUrl}

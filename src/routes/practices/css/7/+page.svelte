@@ -2,8 +2,8 @@
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { onMount } from 'svelte';
 
-	let date = new Date();
-	let mounted = false;
+	let date = $state(new Date());
+	let mounted = $state(false);
 
 	onMount(() => {
 		mounted = true;
@@ -105,67 +105,71 @@ const seconds = formatTime(date.getSeconds());`,
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo" class="demo-wrapper">
-		<div class="clock-container">
-			<!-- 日期顯示 -->
-			<div class="date-display">
-				<div class="date-text">
-					{#if mounted}
-						{date.toLocaleDateString('zh-TW', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-							weekday: 'long'
-						})}
-					{/if}
+	{#snippet demo()}
+		<div  class="demo-wrapper">
+			<div class="clock-container">
+				<!-- 日期顯示 -->
+				<div class="date-display">
+					<div class="date-text">
+						{#if mounted}
+							{date.toLocaleDateString('zh-TW', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+								weekday: 'long'
+							})}
+						{/if}
+					</div>
 				</div>
-			</div>
 
-			<!-- 時鐘主體 -->
-			<div class="time-display">
-				<div class="time-section">
-					<span class="time">{mounted ? formatTime(date.getHours()) : '00'}</span>
-					<span class="label">Hours</span>
+				<!-- 時鐘主體 -->
+				<div class="time-display">
+					<div class="time-section">
+						<span class="time">{mounted ? formatTime(date.getHours()) : '00'}</span>
+						<span class="label">Hours</span>
+					</div>
+					<span class="separator">:</span>
+					<div class="time-section">
+						<span class="time">{mounted ? formatTime(date.getMinutes()) : '00'}</span>
+						<span class="label">Minutes</span>
+					</div>
+					<span class="separator">:</span>
+					<div class="time-section">
+						<span class="time">{mounted ? formatTime(date.getSeconds()) : '00'}</span>
+						<span class="label">Seconds</span>
+					</div>
 				</div>
-				<span class="separator">:</span>
-				<div class="time-section">
-					<span class="time">{mounted ? formatTime(date.getMinutes()) : '00'}</span>
-					<span class="label">Minutes</span>
-				</div>
-				<span class="separator">:</span>
-				<div class="time-section">
-					<span class="time">{mounted ? formatTime(date.getSeconds()) : '00'}</span>
-					<span class="label">Seconds</span>
-				</div>
-			</div>
 
-			<!-- 時區顯示 -->
-			<div class="timezone-display">
-				<span class="timezone-text">
-					{#if mounted}
-						{Intl.DateTimeFormat().resolvedOptions().timeZone}
-					{/if}
-				</span>
+				<!-- 時區顯示 -->
+				<div class="timezone-display">
+					<span class="timezone-text">
+						{#if mounted}
+							{Intl.DateTimeFormat().resolvedOptions().timeZone}
+						{/if}
+					</span>
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
 
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				這個練習展示了如何結合 JavaScript 的 Date 物件和 CSS 樣式創建一個功能完整的數位時鐘。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• setInterval 用於定時更新顯示</li>
-					<li>• padStart() 方法確保時間格式一致</li>
-					<li>• CSS Grid 和 Flexbox 的組合使用</li>
-					<li>• 考慮時區和國際化顯示</li>
-				</ul>
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					這個練習展示了如何結合 JavaScript 的 Date 物件和 CSS 樣式創建一個功能完整的數位時鐘。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• setInterval 用於定時更新顯示</li>
+						<li>• padStart() 方法確保時間格式一致</li>
+						<li>• CSS Grid 和 Flexbox 的組合使用</li>
+						<li>• 考慮時區和國際化顯示</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
 </PracticeLayout>
 
 <style>

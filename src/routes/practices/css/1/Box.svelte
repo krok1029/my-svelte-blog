@@ -1,9 +1,9 @@
 <script lang="ts">
-	let scrollY: number;
-	let height: number;
-	let element: HTMLElement;
+	let scrollY: number = $state();
+	let height: number = $state();
+	let element: HTMLElement = $state();
 
-	$: offset = element && element.offsetTop;
+	let offset = $derived(element && element.offsetTop);
 	const random256 = () => Math.floor(Math.random() * 256);
 	const color = `rgb(${random256()}, ${random256()}, ${random256()})`;
 </script>
@@ -16,7 +16,7 @@
 	bind:this={element}
 	bind:clientHeight={height}
 	class:active={offset + 10 < scrollY}
-/>
+></div>
 
 <style>
 	.box {

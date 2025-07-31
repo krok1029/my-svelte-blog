@@ -1,12 +1,23 @@
 <script lang="ts">
 	import { ExternalLink, Github } from 'lucide-svelte';
 
-	export let path: string;
-	export let imgPath: string;
-	export let projecName: string;
-	export let description = '';
-	export let technologies: string[] = [];
-	export let githubUrl = '';
+	interface Props {
+		path: string;
+		imgPath: string;
+		projecName: string;
+		description?: string;
+		technologies?: string[];
+		githubUrl?: string;
+	}
+
+	let {
+		path,
+		imgPath,
+		projecName,
+		description = '',
+		technologies = [],
+		githubUrl = ''
+	}: Props = $props();
 </script>
 
 <div class="project-card group">

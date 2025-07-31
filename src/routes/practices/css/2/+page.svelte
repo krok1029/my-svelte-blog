@@ -64,42 +64,46 @@
 </script>
 
 <PracticeLayout {practiceInfo}>
-	<div slot="demo" class="demo-wrapper">
-		<div class="demo-container">
-			<div class="box">
-				<img class="pokemon-img" src={inagea} alt="001_妙蛙種子" />
-			</div>
-			<div class="box">
-				<img class="pokemon-img" src={inageb} alt="004_小火龍" />
-			</div>
-			<div class="box">
-				<img class="pokemon-img" src={inagec} alt="007_傑尼龜" />
-			</div>
-			<div class="box">
-				<img class="pokemon-img" src={inaged} alt="010_綠毛蟲" />
-			</div>
-			<div class="box">
-				<img class="pokemon-img" src={inagee} alt="013_獨角蟲" />
+	{#snippet demo()}
+		<div  class="demo-wrapper">
+			<div class="demo-container">
+				<div class="box">
+					<img class="pokemon-img" src={inagea} alt="001_妙蛙種子" />
+				</div>
+				<div class="box">
+					<img class="pokemon-img" src={inageb} alt="004_小火龍" />
+				</div>
+				<div class="box">
+					<img class="pokemon-img" src={inagec} alt="007_傑尼龜" />
+				</div>
+				<div class="box">
+					<img class="pokemon-img" src={inaged} alt="010_綠毛蟲" />
+				</div>
+				<div class="box">
+					<img class="pokemon-img" src={inagee} alt="013_獨角蟲" />
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
 
-	<div slot="tips">
-		<div class="space-y-4">
-			<p class="text-gray-700">
-				這個練習展示了 CSS :not() 偽類選擇器的強大功能，通過組合 :hover 狀態創造出獨特的互動效果。
-			</p>
-			<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-				<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
-				<ul class="text-blue-800 text-sm space-y-1">
-					<li>• :not() 選擇器可以排除特定狀態的元素</li>
-					<li>• 組合偽類選擇器創造複雜的互動效果</li>
-					<li>• CSS transform 和 transition 的配合使用</li>
-					<li>• -webkit-box-reflect 創造倒影效果</li>
-				</ul>
+	{#snippet tips()}
+		<div >
+			<div class="space-y-4">
+				<p class="text-gray-700">
+					這個練習展示了 CSS :not() 偽類選擇器的強大功能，通過組合 :hover 狀態創造出獨特的互動效果。
+				</p>
+				<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+					<h4 class="font-semibold text-blue-900 mb-2">💡 學習要點：</h4>
+					<ul class="text-blue-800 text-sm space-y-1">
+						<li>• :not() 選擇器可以排除特定狀態的元素</li>
+						<li>• 組合偽類選擇器創造複雜的互動效果</li>
+						<li>• CSS transform 和 transition 的配合使用</li>
+						<li>• -webkit-box-reflect 創造倒影效果</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
+	{/snippet}
 </PracticeLayout>
 
 <style>
