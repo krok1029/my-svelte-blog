@@ -28,7 +28,7 @@
 	};
 </script>
 
-<article class="blog-card group">
+<article class="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full group">
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl">
 		<img
@@ -78,7 +78,7 @@
 		{#if card.tags && card.tags.length > 0}
 			<div class="flex flex-wrap gap-2 mb-4">
 				{#each card.tags.slice(0, 3) as tag}
-					<span class="card-tag">
+					<span class="inline-flex items-center gap-1 bg-purple-50 text-purple-700 rounded-full px-2 py-1 text-xs font-medium">
 						<Tag size={12} />
 						{tag}
 					</span>
@@ -101,27 +101,3 @@
 		</div>
 	</div>
 </article>
-
-<style lang="postcss">
-	.blog-card {
-		@apply bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full;
-	}
-
-	.card-tag {
-		@apply inline-flex items-center gap-1 bg-purple-50 text-purple-700 rounded-full px-2 py-1 text-xs font-medium;
-	}
-
-	.line-clamp-2 {
-		display: -webkit-box;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.line-clamp-3 {
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-</style>

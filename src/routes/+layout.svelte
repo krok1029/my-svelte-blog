@@ -8,7 +8,7 @@
 	let { children }: Props = $props();
 </script>
 
-<div class="root min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col bg-white text-gray-900">
 	<Navbar />
 	<main class="flex-1">
 		{@render children?.()}
@@ -17,11 +17,8 @@
 </div>
 
 <style lang="postcss">
+	@reference "tailwindcss";
 	:global(html) {
 		scroll-behavior: smooth;
-	}
-
-	:global(body) {
-		@apply bg-white text-gray-900;
 	}
 </style>

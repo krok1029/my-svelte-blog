@@ -17,7 +17,7 @@
 		showUserMenu = !showUserMenu;
 	};
 	const checkCurrentUrl = (current: Page, url: string) =>
-		current.url.pathname === url ? 'nav-bar-selected' : 'nav-bar-default';
+		current.url.pathname === url ? 'bg-purple-100 text-purple-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900';
 </script>
 
 <nav class="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
@@ -53,7 +53,7 @@
 				<div class="hidden sm:ml-8 sm:block">
 					<div class="flex space-x-1">
 						{#each navbarList as navbar}
-							<a href={navbar.link} class={checkCurrentUrl(page, navbar.link)}>{navbar.text}</a>
+							<a href={navbar.link} class="rounded-lg px-3 py-2 text-sm font-medium transition-colors {checkCurrentUrl(page, navbar.link)}">{navbar.text}</a>
 						{/each}
 					</div>
 				</div>
@@ -91,13 +91,3 @@
 		<MobileMenuDropdown bind:showDropdown={showMainMenu} />
 	{/if}
 </nav>
-
-<style lang="postcss">
-	.nav-bar-selected {
-		@apply bg-purple-100 text-purple-700 rounded-lg px-3 py-2 text-sm font-medium;
-	}
-
-	.nav-bar-default {
-		@apply text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg px-3 py-2 text-sm font-medium transition-colors;
-	}
-</style>

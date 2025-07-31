@@ -33,22 +33,12 @@
 
 			<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
 				{#each skills as skill}
-					<div class="skill-item group">
+					<div class="flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
 						<ImageBlock src={skill.src} alt={skill.alt} />
-						<span class="skill-label">{skill.name}</span>
+						<span class="mt-3 text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors">{skill.name}</span>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</div>
 </section>
-
-<style lang="postcss">
-	.skill-item {
-		@apply flex flex-col items-center p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1;
-	}
-
-	.skill-label {
-		@apply mt-3 text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors;
-	}
-</style>

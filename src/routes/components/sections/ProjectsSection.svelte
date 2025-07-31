@@ -61,7 +61,7 @@
 
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 				{#each projects as project}
-					<div class="project-card group">
+					<div class="transform transition-all duration-300 hover:-translate-y-2 group">
 						<SideProjectCard
 							projecName={project.name}
 							path={project.path}
@@ -86,9 +86,3 @@
 		</div>
 	</div>
 </section>
-
-<style lang="postcss">
-	.project-card {
-		@apply transform transition-all duration-300 hover:-translate-y-2;
-	}
-</style>

@@ -20,7 +20,7 @@
 	}: Props = $props();
 </script>
 
-<div class="project-card group">
+<div class="bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full group">
 	<!-- Image Container -->
 	<div class="relative overflow-hidden rounded-t-xl bg-gray-100">
 		<img
@@ -76,7 +76,7 @@
 		{#if technologies.length > 0}
 			<div class="flex flex-wrap gap-2 mb-4">
 				{#each technologies as tech}
-					<span class="tech-tag">
+					<span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">
 						{tech}
 					</span>
 				{/each}
@@ -107,13 +107,3 @@
 		</div>
 	</div>
 </div>
-
-<style lang="postcss">
-	.project-card {
-		@apply bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col h-full;
-	}
-
-	.tech-tag {
-		@apply bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium;
-	}
-</style>
