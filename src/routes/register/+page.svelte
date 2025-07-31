@@ -1,7 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { createUserWithEmailAndPassword } from 'firebase/auth';
-	import { firebaseAuth } from '$lib/firebase';
 	import {
 		Mail,
 		Lock,
@@ -13,15 +12,15 @@
 		AlertCircle,
 		CheckCircle
 	} from 'lucide-svelte';
+	import type { ActionData } from './$types';
 
-	let email: string = '';
+	export let form: ActionData;
+
 	let password: string = '';
 	let confirmPassword: string = '';
 	let showPassword = false;
 	let showConfirmPassword = false;
 	let isLoading = false;
-	let errorMessage = '';
-	let successMessage = '';
 
 	// 密碼強度檢查
 	$: passwordStrength = checkPasswordStrength(password);
@@ -64,62 +63,6 @@
 		};
 	}
 
-	const register = async () => {
-		// 基本驗證
-		if (!email || !password || !confirmPassword) {
-			errorMessage = '請填寫所有必填欄位';
-			return;
-		}
-
-		if (password !== confirmPassword) {
-			errorMessage = '密碼確認不一致';
-			return;
-		}
-
-		if (passwordStrength.score < 3) {
-			errorMessage = '密碼強度不足，請使用更強的密碼';
-			return;
-		}
-
-		isLoading = true;
-		errorMessage = '';
-		successMessage = '';
-
-		try {
-			const userCredentials = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-			console.log('Registration successful:', userCredentials);
-
-			successMessage = '註冊成功！正在跳轉到登入頁面...';
-
-			// 延遲跳轉讓使用者看到成功訊息
-			setTimeout(() => {
-				goto('/login');
-			}, 2000);
-		} catch (error: any) {
-			console.error('Registration error:', error);
-
-			// 根據錯誤代碼顯示友善的錯誤訊息
-			switch (error.code) {
-				case 'auth/email-already-in-use':
-					errorMessage = '此 Email 已被註冊，請使用其他 Email 或前往登入';
-					break;
-				case 'auth/invalid-email':
-					errorMessage = 'Email 格式不正確';
-					break;
-				case 'auth/weak-password':
-					errorMessage = '密碼強度不足，請使用至少 6 個字符的密碼';
-					break;
-				case 'auth/operation-not-allowed':
-					errorMessage = '註冊功能暫時停用，請聯繫管理員';
-					break;
-				default:
-					errorMessage = '註冊失敗，請稍後再試';
-			}
-		} finally {
-			isLoading = false;
-		}
-	};
-
 	const togglePasswordVisibility = () => {
 		showPassword = !showPassword;
 	};
@@ -130,11 +73,6 @@
 
 	const goToLogin = () => {
 		goto('/login');
-	};
-
-	// 停用註冊功能（如果需要）
-	const disableRegister = () => {
-		errorMessage = '註冊功能暫時停用';
 	};
 </script>
 
@@ -192,7 +130,17 @@
 					<p class="form-subtitle">請填寫以下資訊完成註冊</p>
 				</div>
 
-				<form class="register-form" on:submit|preventDefault={register}>
+				<form
+					class="register-form"
+					method="POST"
+					use:enhance={() => {
+						isLoading = true;
+						return async ({ update }) => {
+							isLoading = false;
+							await update();
+						};
+					}}
+				>
 					<!-- Email Input -->
 					<div class="input-group">
 						<label for="email" class="input-label">Email 地址</label>
@@ -200,10 +148,11 @@
 							<Mail class="input-icon" size={20} />
 							<input
 								id="email"
+								name="email"
 								type="email"
 								placeholder="請輸入您的 Email"
 								class="form-input"
-								bind:value={email}
+								value={form?.email ?? ''}
 								disabled={isLoading}
 								required
 							/>
@@ -215,15 +164,26 @@
 						<label for="password" class="input-label">密碼</label>
 						<div class="input-wrapper">
 							<Lock class="input-icon" size={20} />
-							<input
-								id="password"
-								type="password"
-								placeholder="請輸入密碼"
-								class="form-input"
-								bind:value={password}
-								disabled={isLoading}
-								required
-							/>
+							{#if showPassword}
+								<input
+									id="password"
+									name="password"
+									type="text"
+									bind:value={password}
+									placeholder="請輸入密碼"
+									class="form-input"
+								/>
+							{:else}
+								<input
+									id="password"
+									name="password"
+									type="password"
+									bind:value={password}
+									placeholder="請輸入密碼"
+									class="form-input"
+								/>
+							{/if}
+
 							<button
 								type="button"
 								class="password-toggle"
@@ -270,17 +230,35 @@
 						<label for="confirmPassword" class="input-label">確認密碼</label>
 						<div class="input-wrapper">
 							<Lock class="input-icon" size={20} />
-							<input
-								id="confirmPassword"
-								type="password"
-								placeholder="請再次輸入密碼"
-								class="form-input"
-								class:error={confirmPassword && !passwordsMatch}
-								class:success={confirmPassword && passwordsMatch}
-								bind:value={confirmPassword}
-								disabled={isLoading}
-								required
-							/>
+
+							{#if showConfirmPassword}
+								<input
+									id="confirmPassword"
+									name="confirmPassword"
+									type="text"
+									placeholder="請再次輸入密碼"
+									class="form-input"
+									class:error={confirmPassword && !passwordsMatch}
+									class:success={confirmPassword && passwordsMatch}
+									bind:value={confirmPassword}
+									disabled={isLoading}
+									required
+								/>
+							{:else}
+								<input
+									id="confirmPassword"
+									name="confirmPassword"
+									type="password"
+									placeholder="請再次輸入密碼"
+									class="form-input"
+									class:error={confirmPassword && !passwordsMatch}
+									class:success={confirmPassword && passwordsMatch}
+									bind:value={confirmPassword}
+									disabled={isLoading}
+									required
+								/>
+							{/if}
+
 							<button
 								type="button"
 								class="password-toggle"
@@ -313,18 +291,10 @@
 					</div>
 
 					<!-- Error Message -->
-					{#if errorMessage}
+					{#if form?.message}
 						<div class="error-message">
 							<AlertCircle size={16} />
-							<span>{errorMessage}</span>
-						</div>
-					{/if}
-
-					<!-- Success Message -->
-					{#if successMessage}
-						<div class="success-message">
-							<CheckCircle size={16} />
-							<span>{successMessage}</span>
+							<span>{form.message}</span>
 						</div>
 					{/if}
 
@@ -333,7 +303,6 @@
 						type="submit"
 						class="submit-button"
 						disabled={isLoading ||
-							!email ||
 							!password ||
 							!confirmPassword ||
 							!passwordsMatch ||

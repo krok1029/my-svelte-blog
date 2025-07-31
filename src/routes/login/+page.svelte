@@ -1,62 +1,13 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { signInWithEmailAndPassword } from 'firebase/auth';
-	import { firebaseAuth } from '$lib/firebase';
-	import { authUser } from '$lib/authStore';
 	import { Mail, Lock, Eye, EyeOff, LogIn, ArrowRight, User, AlertCircle } from 'lucide-svelte';
+	import type { ActionData } from './$types';
 
-	let email: string = '';
-	let password: string = '';
+	export let form: ActionData;
+
 	let showPassword = false;
 	let isLoading = false;
-	let errorMessage = '';
-
-	const login = async () => {
-		if (!email || !password) {
-			errorMessage = '請填寫所有必填欄位';
-			return;
-		}
-
-		isLoading = true;
-		errorMessage = '';
-
-		try {
-			const userCredentials = await signInWithEmailAndPassword(firebaseAuth, email, password);
-
-			$authUser = {
-				uid: userCredentials.user.uid,
-				email: userCredentials.user.email || ''
-			};
-
-			// 成功登入後跳轉
-			await goto('/admin');
-		} catch (error: any) {
-			console.error('Login error:', error);
-
-			// 根據錯誤代碼顯示友善的錯誤訊息
-			switch (error.code) {
-				case 'auth/user-not-found':
-					errorMessage = '找不到此帳號，請檢查 Email 是否正確';
-					break;
-				case 'auth/wrong-password':
-					errorMessage = '密碼錯誤，請重新輸入';
-					break;
-				case 'auth/invalid-email':
-					errorMessage = 'Email 格式不正確';
-					break;
-				case 'auth/user-disabled':
-					errorMessage = '此帳號已被停用';
-					break;
-				case 'auth/too-many-requests':
-					errorMessage = '登入嘗試次數過多，請稍後再試';
-					break;
-				default:
-					errorMessage = '登入失敗，請稍後再試';
-			}
-		} finally {
-			isLoading = false;
-		}
-	};
 
 	const togglePasswordVisibility = () => {
 		showPassword = !showPassword;
@@ -115,18 +66,29 @@
 					<p class="form-subtitle">請輸入您的登入資訊</p>
 				</div>
 
-				<form class="login-form" on:submit|preventDefault={login}>
+				<form 
+					class="login-form" 
+					method="POST"
+					use:enhance={() => {
+						isLoading = true;
+						return async ({ update }) => {
+							isLoading = false;
+							await update();
+						};
+					}}
+				>
 					<!-- Email Input -->
 					<div class="input-group">
 						<label for="email" class="input-label">Email 地址</label>
 						<div class="input-wrapper">
-							<Mail class="input-icon" size={20} />
+							<Mail size={20} />
 							<input
 								id="email"
+								name="email"
 								type="email"
 								placeholder="請輸入您的 Email"
 								class="form-input"
-								bind:value={email}
+								value={form?.email ?? ''}
 								disabled={isLoading}
 								required
 							/>
@@ -137,13 +99,13 @@
 					<div class="input-group">
 						<label for="password" class="input-label">密碼</label>
 						<div class="input-wrapper">
-							<Lock class="input-icon" size={20} />
+							<Lock size={20} />
 							<input
 								id="password"
-								type="password"
+								name="password"
+								type={showPassword ? 'text' : 'password'}
 								placeholder="請輸入您的密碼"
 								class="form-input"
-								bind:value={password}
 								disabled={isLoading}
 								required
 							/>
@@ -163,15 +125,15 @@
 					</div>
 
 					<!-- Error Message -->
-					{#if errorMessage}
+					{#if form?.message}
 						<div class="error-message">
 							<AlertCircle size={16} />
-							<span>{errorMessage}</span>
+							<span>{form.message}</span>
 						</div>
 					{/if}
 
 					<!-- Submit Button -->
-					<button type="submit" class="submit-button" disabled={isLoading || !email || !password}>
+					<button type="submit" class="submit-button" disabled={isLoading}>
 						{#if isLoading}
 							<div class="loading-spinner" />
 							<span>登入中...</span>
@@ -362,13 +324,6 @@
 		position: relative;
 		display: flex;
 		align-items: center;
-	}
-
-	.input-icon {
-		position: absolute;
-		left: 16px;
-		color: #9ca3af;
-		z-index: 1;
 	}
 
 	.form-input {
