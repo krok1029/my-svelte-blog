@@ -197,3 +197,7 @@
 		</div>
 	</footer>
 </div>
+
+<style lang="postcss">
+	@reference "tailwindcss";
+</style>

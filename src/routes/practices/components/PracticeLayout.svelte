@@ -233,6 +233,8 @@
 </section>
 
 <style lang="postcss">
+	@reference "tailwindcss";
+
 	.practice-demo-section {
 		@apply min-h-screen bg-gray-900;
 	}

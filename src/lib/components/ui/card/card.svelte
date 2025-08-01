@@ -21,3 +21,7 @@
 >
 	{@render children?.()}
 </div>
+
+<style lang="postcss">
+	@reference "tailwindcss";
+</style>

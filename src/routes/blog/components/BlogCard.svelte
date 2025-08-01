@@ -105,3 +105,7 @@
 		</div>
 	</div>
 </article>
+
+<style lang="postcss">
+	@reference "tailwindcss";
+</style>

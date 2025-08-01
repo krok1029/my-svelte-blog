@@ -69,12 +69,12 @@
 	let activeTab = $state('write');
 
 	// 原始資料，用於檢測變更
-	let originalData = $state({
-		title,
-		inputTags,
-		brief,
-		content
-	});
+	const originalData = {
+		title: data.blogPost.title || '',
+		inputTags: data.blogPost.tags?.join(',') || '',
+		brief: data.blogPost.brief || '',
+		content: data.blogPost.content || ''
+	};
 
 	// 檢測是否有未儲存的變更
 	run(() => {
@@ -114,7 +114,7 @@
 
 	const handleSubmit = () => {
 		isSubmitting = true;
-		return async ({ update, result }) => {
+		return async ({ update, result }: { update: () => Promise<void>; result: any }) => {
 			await update();
 			isSubmitting = false;
 
@@ -123,19 +123,14 @@
 			} else {
 				toast.success('儲存成功！');
 				// 更新原始資料狀態，避免 hasUnsavedChanges 卡住
-				originalData = {
-					title,
-					inputTags,
-					brief,
-					content
-				};
+				// 這裡不需要更新 originalData，因為它是常量
 			}
 		};
 	};
 
 	const handleDeleteSubmit = () => {
 		isDeleting = true;
-		return async ({ update, result }) => {
+		return async ({ update, result }: { update: () => Promise<void>; result: any }) => {
 			await update();
 			isDeleting = false;
 			showDeleteModal = false;

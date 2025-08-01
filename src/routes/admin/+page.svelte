@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { page } from '$app/stores';
 	import { authUser } from '$lib/authStore';
 	import { goto } from '$app/navigation';
@@ -66,7 +64,7 @@
 	let successMessage = $state('');
 
 	// 檢查 URL 參數中的成功訊息
-	run(() => {
+	$effect(() => {
 		if ($page.url.searchParams.get('success')) {
 			successMessage = $page.url.searchParams.get('success') || '';
 			// 3秒後清除訊息
@@ -86,7 +84,7 @@
 	let recentPosts = $derived(blogPosts.slice(0, 5));
 
 	// 過濾邏輯
-	run(() => {
+	$effect(() => {
 		filteredPosts = blogPosts.filter((post) => {
 			const matchesSearch =
 				!searchQuery ||
@@ -108,7 +106,7 @@
 	};
 
 	// 處理刪除成功後的更新
-	run(() => {
+	$effect(() => {
 		if (form?.success) {
 			// 重新載入頁面數據或從列表中移除已刪除的項目
 			if (postToDelete) {
@@ -279,12 +277,10 @@
 					<FileText size={48} class="mb-4 text-gray-400" />
 					<h3 class="mb-2 text-lg font-semibold text-gray-900">沒有找到文章</h3>
 					<p class="mb-6 text-gray-600">試試調整搜尋條件或建立新文章</p>
-					<Button asChild>
-						<a href="/admin/create" class="gap-2">
-							<Plus size={16} />
-							建立第一篇文章
-						</a>
-					</Button>
+					<a href="/admin/create" class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+						<Plus size={16} />
+						建立第一篇文章
+					</a>
 				</CardContent>
 			{:else}
 				<div class="table-wrapper">
@@ -337,16 +333,12 @@
 
 									<td class="actions-cell">
 										<div class="action-buttons">
-											<Button variant="ghost" size="sm" asChild>
-												<a href={`/blog/${post.id}`} target="_blank" class="p-2">
-													<Eye size={16} />
-												</a>
-											</Button>
-											<Button variant="ghost" size="sm" asChild>
-												<a href={`/admin/${post.id}`} class="p-2">
-													<Edit size={16} />
-												</a>
-											</Button>
+											<a href={`/blog/${post.id}`} target="_blank" class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+												<Eye size={16} />
+											</a>
+											<a href={`/admin/${post.id}`} class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+												<Edit size={16} />
+											</a>
 											<Button
 												variant="ghost"
 												size="sm"

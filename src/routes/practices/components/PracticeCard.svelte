@@ -177,6 +177,8 @@
 </button>
 
 <style lang="postcss">
+	@reference "tailwindcss";
+
 	.practice-card {
 		@apply cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg;
 	}

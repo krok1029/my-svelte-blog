@@ -236,3 +236,7 @@
 		</div>
 	</div>
 </section>
+
+<style lang="postcss">
+	@reference "tailwindcss";
+</style>

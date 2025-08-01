@@ -138,7 +138,7 @@ const shareFile = async (file) => {
 			<div class="share-container">
 				<div class="content-card">
 					<div class="card-header">
-						<Globe class="header-icon" />
+						<Globe />
 						<h2 class="card-title">Web Share API 練習</h2>
 					</div>
 
@@ -167,7 +167,7 @@ const shareFile = async (file) => {
 						<button onclick={share} class="share-btn primary">
 							<Share2 size={20} />
 							原生分享
-							<Smartphone size={16} class="mobile-icon" />
+							<Smartphone size={16} />
 						</button>
 
 						<button onclick={copyToClipboard} class="share-btn secondary">
@@ -276,10 +276,6 @@ const shareFile = async (file) => {
 		margin-bottom: 20px;
 	}
 
-	.header-icon {
-		color: #667eea;
-	}
-
 	.card-title {
 		font-size: 1.5rem;
 		font-weight: 600;
@@ -361,10 +357,6 @@ const shareFile = async (file) => {
 	.share-btn.secondary:hover {
 		background: #cbd5e0;
 		transform: translateY(-1px);
-	}
-
-	.mobile-icon {
-		opacity: 0.7;
 	}
 
 	.status-message {
