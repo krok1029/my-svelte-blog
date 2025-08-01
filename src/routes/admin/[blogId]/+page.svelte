@@ -45,9 +45,21 @@
 	} from '$lib/components/ui/dialog/index.js';
 	import { toast } from 'svelte-sonner';
 
+	interface BlogPost {
+		id: string;
+		title: string;
+		content: string;
+		brief: string;
+		tags: string[];
+		createdAt: string | Date;
+		updatedAt: string | Date;
+	}
+
 	interface Props {
 		form: ActionData;
-		data: any;
+		data: {
+			blogPost: BlogPost;
+		};
 	}
 
 	let { form, data }: Props = $props();
@@ -114,7 +126,13 @@
 
 	const handleSubmit = () => {
 		isSubmitting = true;
-		return async ({ update, result }: { update: () => Promise<void>; result: any }) => {
+		return async ({
+			update,
+			result
+		}: {
+			update: () => Promise<void>;
+			result: { type?: string };
+		}) => {
 			await update();
 			isSubmitting = false;
 
@@ -130,7 +148,13 @@
 
 	const handleDeleteSubmit = () => {
 		isDeleting = true;
-		return async ({ update, result }: { update: () => Promise<void>; result: any }) => {
+		return async ({
+			update,
+			result
+		}: {
+			update: () => Promise<void>;
+			result: { type?: string };
+		}) => {
 			await update();
 			isDeleting = false;
 			showDeleteModal = false;

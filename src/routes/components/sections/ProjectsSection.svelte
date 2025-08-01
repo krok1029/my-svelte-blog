@@ -63,7 +63,7 @@
 				{#each projects as project}
 					<div class="group transform transition-all duration-300 hover:-translate-y-2">
 						<SideProjectCard
-							projecName={project.name}
+							projectName={project.name}
 							path={project.path}
 							imgPath={project.imgPath}
 							description={project.description}

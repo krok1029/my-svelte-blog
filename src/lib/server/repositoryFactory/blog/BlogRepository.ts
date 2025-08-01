@@ -6,21 +6,19 @@ export default class BlogRepository {
 	}
 
 	// Create - 新增一篇部落格文章
-	createBlogPost(blogPost: BlogPost, token?: string): Promise<boolean> {
+	createBlogPost(_blogPost: BlogPost, _token?: string): Promise<boolean> {
 		// 在這裡實現新增文章的邏輯，可能涉及將資料存儲到資料庫中
 		// 暫時使用 blogPost 以避免未使用參數錯誤
-		console.log('createBlogPost called with:', blogPost, 'and token:', token);
 		// 假設成功新增文章後返回 true，失敗則返回 false
 		return Promise.resolve(false);
 	}
 
 	// Read - 讀取所有部落格文章
-	getAllBlogPosts(token?: string): Promise<BlogPost[]> {
+	getAllBlogPosts(_token?: string): Promise<BlogPost[]> {
 		// 在這裡實現讀取所有文章的邏輯，可能涉及查詢資料庫中的所有文章
 		// 假設 BlogPost 是表示部落格文章的介面或類別
 		// 例如：interface BlogPost { title: string; tags: string[]; content: string; }
 
-		console.log('getAllBlogPosts called with token:', token);
 		return Promise.resolve([]); // 假設這裡返回一個 BlogPost 陣列
 	}
 

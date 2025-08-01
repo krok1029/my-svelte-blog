@@ -4,7 +4,7 @@
 	interface Props {
 		path: string;
 		imgPath: string;
-		projecName: string;
+		projectName: string;
 		description?: string;
 		technologies?: string[];
 		githubUrl?: string;
@@ -13,7 +13,7 @@
 	let {
 		path,
 		imgPath,
-		projecName,
+		projectName,
 		description = '',
 		technologies = [],
 		githubUrl = ''
@@ -28,7 +28,7 @@
 		<img
 			class="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
 			src={imgPath}
-			alt={projecName}
+			alt={projectName}
 			loading="lazy"
 		/>
 		<div
@@ -63,7 +63,7 @@
 		<!-- Title -->
 		<h3 class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-purple-600">
 			<a href={path} target="_blank" rel="noopener noreferrer" class="hover:underline">
-				{projecName}
+				{projectName}
 			</a>
 		</h3>
 

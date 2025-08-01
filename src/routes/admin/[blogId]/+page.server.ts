@@ -15,7 +15,6 @@ export const actions: Actions = {
 	update: async ({ request, params }) => {
 		const id = params.blogId;
 		const data = await request.formData();
-		console.log(id);
 
 		const title = data.get('title') as string;
 		const tags = data.get('tags') as string;
