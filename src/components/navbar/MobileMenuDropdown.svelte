@@ -9,9 +9,9 @@
 
 	let { showDropdown = $bindable() }: Props = $props();
 
-	let dropdown: HTMLDivElement = $state();
+	let dropdown: HTMLDivElement | undefined = $state();
 	const handleClick = (event: MouseEvent) => {
-		if (event.target instanceof Node && !dropdown.contains(event.target)) {
+		if (event.target instanceof Node && dropdown && !dropdown.contains(event.target)) {
 			showDropdown = false;
 		}
 	};

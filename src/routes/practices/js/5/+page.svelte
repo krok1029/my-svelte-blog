@@ -14,7 +14,7 @@
 	let { data, form }: Props = $props();
 
 	let files: FileList | undefined = $state();
-	let imgSrc: string = $state();
+	let imgSrc: string = $state('');
 	let uploading = $state(false);
 	let copiedIndex = $state(-1);
 

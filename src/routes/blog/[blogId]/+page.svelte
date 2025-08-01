@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { marked } from 'marked';
+	import { formatDateShort } from '$lib/utils/dateUtils';
 	import { Calendar, Clock, ArrowLeft, Share2, Tag, User } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
@@ -16,21 +17,11 @@
 	}
 
 	let { data }: Props = $props();
-	const { title, content, createdAt, tags, image, brief } = data.blogPost;
-
-	// 格式化日期
-	const formatDate = (dateString: string) => {
-		if (!dateString) return '';
-		const date = new Date(dateString);
-		return date.toLocaleDateString('zh-TW', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	};
+	const { title, content, createdAt, tags, image, brief } = data.blogPost || {};
 
 	// 估算閱讀時間
-	const estimateReadingTime = (content: string) => {
+	const estimateReadingTime = (content: string | undefined) => {
+		if (!content) return 0;
 		const wordsPerMinute = 200;
 		const wordCount = content.length / 2;
 		return Math.ceil(wordCount / wordsPerMinute);
@@ -95,7 +86,7 @@
 						<Separator orientation="vertical" class="h-4" />
 						<div class="flex items-center gap-2">
 							<Calendar size={16} />
-							<span>{formatDate(createdAt)}</span>
+							<span>{formatDateShort(createdAt)}</span>
 						</div>
 					{/if}
 					<Separator orientation="vertical" class="h-4" />
@@ -157,7 +148,7 @@
 			<Card class="p-8">
 				<CardContent class="p-0">
 					<div class="prose prose-lg lg:prose-xl max-w-none">
-						{@html marked(content, { mangle: false, headerIds: false })}
+						{@html marked(content || '', { mangle: false, headerIds: false })}
 					</div>
 				</CardContent>
 			</Card>

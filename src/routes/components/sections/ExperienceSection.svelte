@@ -77,7 +77,7 @@
 			MSSQL: 'bg-green-100 text-green-800',
 			ROS: 'bg-red-100 text-red-800'
 		};
-		return colors[skill] || 'bg-gray-100 text-gray-800';
+		return colors[skill as keyof typeof colors] || 'bg-gray-100 text-gray-800';
 	};
 </script>
 

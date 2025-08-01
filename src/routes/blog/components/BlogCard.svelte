@@ -2,23 +2,13 @@
 	import defaultImageUrl from '$asset/card-top.jpg';
 	import { Calendar, Clock, ArrowRight, Tag } from 'lucide-svelte';
 	import type { BlogCard } from '$type/Card';
+	import { formatDateShort } from '$lib/utils/dateUtils';
 
 	interface Props {
 		card: BlogCard;
 	}
 
 	let { card }: Props = $props();
-
-	// 格式化日期
-	const formatDate = (dateString: string) => {
-		if (!dateString) return '';
-		const date = new Date(dateString);
-		return date.toLocaleDateString('zh-TW', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	};
 
 	// 估算閱讀時間
 	const estimateReadingTime = (content: string) => {
@@ -51,7 +41,7 @@
 			{#if card.createdAt}
 				<div class="flex items-center gap-1">
 					<Calendar size={14} />
-					<span>{formatDate(card.createdAt)}</span>
+					<span>{formatDateShort(card.createdAt)}</span>
 				</div>
 			{/if}
 			{#if card.content}

@@ -5,6 +5,7 @@
 	import { enhance } from '$app/forms';
 	import type { BlogPost } from '$lib/types/BlogPost';
 	import type { PageData, ActionData } from './$types';
+	import { formatDateShort } from '$lib/utils/dateUtils';
 	import {
 		Plus,
 		Edit,
@@ -21,7 +22,6 @@
 		Eye,
 		AlertTriangle
 	} from 'lucide-svelte';
-	import type { Timestamp } from 'firebase/firestore';
 
 	// shadcn/ui components
 	import { Button } from '$lib/components/ui/button';
@@ -113,16 +113,6 @@
 	const logout = () => {
 		$authUser = undefined;
 		goto('/login');
-	};
-
-	const formatDate = (dateString?: string | Date | Timestamp) => {
-		if (!dateString) return '-';
-		const date = new Date(dateString.toLocaleString());
-		return date.toLocaleDateString('zh-TW', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
 	};
 </script>
 
@@ -320,11 +310,11 @@
 									</td>
 
 									<td class="date-cell">
-										{formatDate(post.createdAt)}
+										{formatDateShort(post.createdAt)}
 									</td>
 
 									<td class="date-cell">
-										{formatDate(post.updatedAt)}
+										{formatDateShort(post.updatedAt)}
 									</td>
 
 									<td class="actions-cell">

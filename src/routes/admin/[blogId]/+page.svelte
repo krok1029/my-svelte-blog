@@ -4,6 +4,7 @@
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
+	import { formatDateWithTime } from '$lib/utils/dateUtils';
 	import {
 		Save,
 		ArrowLeft,
@@ -109,19 +110,6 @@
 		} else {
 			goto('/admin');
 		}
-	};
-
-	// 格式化日期
-	const formatDate = (dateString: string | Date) => {
-		if (!dateString) return '-';
-		const date = new Date(dateString);
-		return date.toLocaleString('zh-TW', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit'
-		});
 	};
 
 	const handleSubmit = () => {
@@ -253,14 +241,14 @@
 						<Calendar size={16} class="text-gray-500" />
 						<div>
 							<div class="text-xs font-medium text-gray-500">建立時間</div>
-							<div class="text-sm font-medium text-gray-900">{formatDate(createdAt)}</div>
+							<div class="text-sm font-medium text-gray-900">{formatDateWithTime(createdAt)}</div>
 						</div>
 					</div>
 					<div class="flex items-center gap-3">
 						<Clock size={16} class="text-gray-500" />
 						<div>
 							<div class="text-xs font-medium text-gray-500">最後更新</div>
-							<div class="text-sm font-medium text-gray-900">{formatDate(updatedAt)}</div>
+							<div class="text-sm font-medium text-gray-900">{formatDateWithTime(updatedAt)}</div>
 						</div>
 					</div>
 				</div>

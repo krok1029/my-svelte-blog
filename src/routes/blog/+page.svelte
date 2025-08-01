@@ -2,6 +2,7 @@
 	import Card from './components/BlogCard.svelte';
 	import { Search, Filter, Tag } from 'lucide-svelte';
 	import type { PageData } from './$types';
+	import type { BlogPost } from '$lib/types/BlogPost';
 
 	// shadcn/ui components
 	import { Input } from '$lib/components/ui/input';
@@ -31,15 +32,31 @@
 	);
 
 	// 轉換 BlogPost 到 BlogCard 格式
-	const convertToCard = (post: any, index: number) => ({
-		id: index + 1, // 使用索引作為數字 ID
-		title: post.title || '',
-		brief: post.brief || '',
-		createdAt: post.createdAt || '',
-		image: post.image,
-		tags: post.tags || [],
-		content: post.content || ''
-	});
+	const convertToCard = (post: BlogPost, index: number) => {
+		// Convert Timestamp to Date if needed
+		let createdAt: Date | string = '';
+		if (post.createdAt) {
+			if (
+				typeof post.createdAt === 'object' &&
+				'toDate' in post.createdAt &&
+				typeof post.createdAt.toDate === 'function'
+			) {
+				createdAt = post.createdAt.toDate();
+			} else {
+				createdAt = post.createdAt as string;
+			}
+		}
+
+		return {
+			id: index + 1, // 使用索引作為數字 ID
+			title: post.title || '',
+			brief: post.brief || '',
+			createdAt,
+			image: post.image,
+			tags: post.tags || [],
+			content: post.content || ''
+		};
+	};
 </script>
 
 <svelte:head>
@@ -92,7 +109,7 @@
 					全部
 				</Button>
 
-				{#each allTags.filter(tag => tag) as tag}
+				{#each allTags.filter((tag) => tag) as tag}
 					<Button
 						variant={selectedTag === tag ? 'default' : 'outline'}
 						size="sm"

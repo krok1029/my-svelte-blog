@@ -20,8 +20,9 @@
 				shareStatus = '分享成功！';
 				console.log('分享成功');
 			} catch (error) {
-				if (error.name !== 'AbortError') {
-					shareStatus = '分享失敗：' + error.message;
+				const err = error as Error;
+				if (err.name !== 'AbortError') {
+					shareStatus = '分享失敗：' + err.message;
 					console.error('分享失敗', error);
 				}
 			}
@@ -40,7 +41,8 @@
 				copied = false;
 			}, 2000);
 		} catch (error) {
-			shareStatus = '複製失敗：' + error.message;
+			const err = error as Error;
+			shareStatus = '複製失敗：' + err.message;
 		}
 	};
 
@@ -203,7 +205,7 @@ const shareFile = async (file) => {
 							<Share2 size={16} />
 							<span>Web Share API</span>
 							<span class="support-status">
-								{typeof navigator !== 'undefined' && navigator.share ? '✅' : '❌'}
+								{typeof navigator !== 'undefined' && navigator.share !== undefined ? '✅' : '❌'}
 							</span>
 						</div>
 						<div

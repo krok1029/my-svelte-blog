@@ -240,7 +240,7 @@
 									<div class="text-xs font-medium" style="color: {passwordStrength.color}">
 										密碼強度: {passwordStrength.text}
 									</div>
-									{#if passwordStrength.feedback.length > 0}
+									{#if passwordStrength.feedback && passwordStrength.feedback.length > 0}
 										<div class="mt-2 text-xs text-gray-600">
 											<p class="mb-1 font-medium">建議改進:</p>
 											<ul class="list-inside list-disc space-y-0.5">

@@ -9,10 +9,10 @@
 	const MAX_TEMPO = 300;
 	const BEAT = 2;
 	let beatCount = 0;
-	let tempo = $state(120);
+	let tempo = $state(180);
 	let volume = $state(0.8);
 	let isPlaying = $state(false);
-	let interval: number = $state();
+	let interval: number = $state(0);
 	let currentBeat = $state(0); // 用於視覺指示
 
 	const mainBeat = $state(new Audio(metronome1));
@@ -44,7 +44,7 @@
 		} else {
 			interval = setInterval(() => {
 				playSound();
-			}, 60000 / tempo);
+			}, 60000 / tempo) as unknown as number;
 		}
 		isPlaying = !isPlaying;
 	};
@@ -55,7 +55,7 @@
 			clearInterval(interval);
 			interval = setInterval(() => {
 				playSound();
-			}, 60000 / tempo);
+			}, 60000 / tempo) as unknown as number;
 		}
 	});
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	let scrollY: number = $state();
-	let height: number = $state();
-	let element: HTMLElement = $state();
+	let scrollY: number = $state(0);
+	let height: number = $state(0);
+	let element: HTMLElement | undefined = $state();
 
 	let offset = $derived(element && element.offsetTop);
 	const random256 = () => Math.floor(Math.random() * 256);
@@ -15,7 +15,7 @@
 	style:background-color={color}
 	bind:this={element}
 	bind:clientHeight={height}
-	class:active={offset + 10 < scrollY}
+	class:active={offset && offset + 10 < scrollY}
 ></div>
 
 <style>
