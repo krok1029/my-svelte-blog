@@ -45,6 +45,7 @@
 				await navigator.clipboard.writeText(window.location.href);
 				toast.success('連結已複製到剪貼簿！');
 			} catch (err) {
+				console.error('複製失敗:', err);
 				toast.error('複製失敗，請手動複製網址');
 			}
 		}
