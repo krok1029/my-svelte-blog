@@ -277,7 +277,10 @@
 					<FileText size={48} class="mb-4 text-gray-400" />
 					<h3 class="mb-2 text-lg font-semibold text-gray-900">沒有找到文章</h3>
 					<p class="mb-6 text-gray-600">試試調整搜尋條件或建立新文章</p>
-					<a href="/admin/create" class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+					<a
+						href="/admin/create"
+						class="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+					>
 						<Plus size={16} />
 						建立第一篇文章
 					</a>
@@ -333,10 +336,17 @@
 
 									<td class="actions-cell">
 										<div class="action-buttons">
-											<a href={`/blog/${post.id}`} target="_blank" class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+											<a
+												href={`/blog/${post.id}`}
+												target="_blank"
+												class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+											>
 												<Eye size={16} />
 											</a>
-											<a href={`/admin/${post.id}`} class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+											<a
+												href={`/admin/${post.id}`}
+												class="inline-flex items-center justify-center rounded-md p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground"
+											>
 												<Edit size={16} />
 											</a>
 											<Button
