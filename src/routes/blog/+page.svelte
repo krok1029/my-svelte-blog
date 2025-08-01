@@ -17,18 +17,29 @@
 	let selectedTag = $state('');
 
 	// 獲取所有標籤
-	let allTags = $derived([...new Set(data.blogPosts.flatMap((post) => post.tags))]);
+	let allTags = $derived([...new Set(data.blogPosts.flatMap((post) => post.tags || []))]);
 
 	// 過濾文章
 	let filteredPosts = $derived(
 		data.blogPosts.filter((post) => {
 			const matchesSearch =
 				post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				post.brief.toLowerCase().includes(searchQuery.toLowerCase());
-			const matchesTag = !selectedTag || post.tags.includes(selectedTag);
+				(post.brief?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+			const matchesTag = !selectedTag || (post.tags?.includes(selectedTag) ?? false);
 			return matchesSearch && matchesTag;
 		})
 	);
+
+	// 轉換 BlogPost 到 BlogCard 格式
+	const convertToCard = (post: any, index: number) => ({
+		id: index + 1, // 使用索引作為數字 ID
+		title: post.title || '',
+		brief: post.brief || '',
+		createdAt: post.createdAt || '',
+		image: post.image,
+		tags: post.tags || [],
+		content: post.content || ''
+	});
 </script>
 
 <svelte:head>
@@ -81,7 +92,7 @@
 					全部
 				</Button>
 
-				{#each allTags as tag}
+				{#each allTags.filter(tag => tag) as tag}
 					<Button
 						variant={selectedTag === tag ? 'default' : 'outline'}
 						size="sm"
@@ -107,9 +118,9 @@
 		<div class="mx-auto max-w-6xl">
 			{#if filteredPosts.length > 0}
 				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{#each filteredPosts as card}
+					{#each filteredPosts as post, index}
 						<div class="blog-card-wrapper">
-							<Card {card} />
+							<Card card={convertToCard(post, index)} />
 						</div>
 					{/each}
 				</div>

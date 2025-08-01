@@ -77,7 +77,7 @@ console.log('Hello, World!');
 	// Form enhancement
 	const handleSubmit = () => {
 		isSubmitting = true;
-		return async ({ update, result }) => {
+		return async ({ update, result }: { update: () => Promise<void>; result: { type?: string } }) => {
 			isSubmitting = false;
 			await update();
 
