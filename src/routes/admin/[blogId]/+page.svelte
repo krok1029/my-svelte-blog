@@ -21,21 +21,21 @@
 	import type { ActionData } from './$types';
 
 	// shadcn/ui components
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
-	import { Textarea } from '$lib/components/ui/textarea/index.js';
+	import { Button } from '$lib/components/ui/button';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
+	import { Textarea } from '$lib/components/ui/textarea';
 	import {
 		Card,
 		CardContent,
 		CardDescription,
 		CardHeader,
 		CardTitle
-	} from '$lib/components/ui/card/index.js';
-	import { Alert, AlertDescription } from '$lib/components/ui/alert/index.js';
-	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { Separator } from '$lib/components/ui/separator/index.js';
+	} from '$lib/components/ui/card';
+	import { Alert, AlertDescription } from '$lib/components/ui/alert';
+	import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Separator } from '$lib/components/ui/separator';
 	import {
 		Dialog,
 		DialogContent,
@@ -43,7 +43,7 @@
 		DialogFooter,
 		DialogHeader,
 		DialogTitle
-	} from '$lib/components/ui/dialog/index.js';
+	} from '$lib/components/ui/dialog';
 	import { toast } from 'svelte-sonner';
 
 	interface BlogPost {

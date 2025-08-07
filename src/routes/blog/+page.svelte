@@ -32,7 +32,7 @@
 	);
 
 	// 轉換 BlogPost 到 BlogCard 格式
-	const convertToCard = (post: BlogPost, index: number) => {
+	const convertToCard = (post: BlogPost) => {
 		// Convert Timestamp to Date if needed
 		let createdAt: Date | string = '';
 		if (post.createdAt) {
@@ -48,7 +48,7 @@
 		}
 
 		return {
-			id: index + 1, // 使用索引作為數字 ID
+			id: Number(post.id),
 			title: post.title || '',
 			brief: post.brief || '',
 			createdAt,
@@ -135,9 +135,9 @@
 		<div class="mx-auto max-w-6xl">
 			{#if filteredPosts.length > 0}
 				<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{#each filteredPosts as post, index}
+					{#each filteredPosts as post}
 						<div class="blog-card-wrapper">
-							<Card card={convertToCard(post, index)} />
+							<Card card={convertToCard(post)} />
 						</div>
 					{/each}
 				</div>

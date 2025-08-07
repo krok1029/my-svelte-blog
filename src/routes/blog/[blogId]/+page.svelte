@@ -1,15 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { marked } from 'marked';
-	import { formatDateShort } from '$lib/utils/dateUtils';
-	import { Calendar, Clock, ArrowLeft, Share2, Tag, User } from 'lucide-svelte';
+	import { ArrowLeft, Share2, Tag } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
 	// shadcn/ui components
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { Card, CardContent } from '$lib/components/ui/card/index.js';
-	import { Separator } from '$lib/components/ui/separator/index.js';
+	import { Button } from '$lib/components/ui/button';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Card, CardContent } from '$lib/components/ui/card';
 	import { toast } from 'svelte-sonner';
 
 	interface Props {
@@ -17,15 +15,7 @@
 	}
 
 	let { data }: Props = $props();
-	const { title, content, createdAt, tags, image, brief } = data.blogPost || {};
-
-	// 估算閱讀時間
-	const estimateReadingTime = (content: string | undefined) => {
-		if (!content) return 0;
-		const wordsPerMinute = 200;
-		const wordCount = content.length / 2;
-		return Math.ceil(wordCount / wordsPerMinute);
-	};
+	const { title, content, tags, image, brief } = data.blogPost || {};
 
 	// 分享功能
 	const shareArticle = async () => {
@@ -77,26 +67,6 @@
 	<header class="bg-gradient-to-br from-purple-50 to-pink-50 py-16">
 		<div class="container mx-auto px-4">
 			<div class="mx-auto max-w-4xl">
-				<!-- Meta Information -->
-				<div class="mb-6 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-					<div class="flex items-center gap-2">
-						<User size={16} />
-						<span>李明峯</span>
-					</div>
-					{#if createdAt}
-						<Separator orientation="vertical" class="h-4" />
-						<div class="flex items-center gap-2">
-							<Calendar size={16} />
-							<span>{formatDateShort(createdAt)}</span>
-						</div>
-					{/if}
-					<Separator orientation="vertical" class="h-4" />
-					<div class="flex items-center gap-2">
-						<Clock size={16} />
-						<span>{estimateReadingTime(content)} 分鐘閱讀</span>
-					</div>
-				</div>
-
 				<!-- Title -->
 				<h1 class="mb-6 text-3xl leading-tight font-bold text-gray-900 lg:text-5xl">
 					{title}

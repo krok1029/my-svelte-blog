@@ -19,6 +19,11 @@ interface GitHubIssue {
 	updated_at: string;
 }
 
+function extractFirstImageUrl(content: string): string | null {
+	const match = content.match(/<img\s[^>]*src=["']([^"']+)["'][^>]*>/);
+	return match ? match[1] : null;
+}
+
 export default class GithubIssueBlogRepository extends BlogRepository {
 	constructor() {
 		super();
@@ -71,6 +76,7 @@ export default class GithubIssueBlogRepository extends BlogRepository {
 				tags: data.labels.map((label: GitHubLabel) => label.name),
 				brief: blogBriefBuilder(data.body),
 				content: data.body,
+				image: extractFirstImageUrl(data.body),
 				createdAt: data.created_at,
 				updatedAt: data.updated_at
 			}));
