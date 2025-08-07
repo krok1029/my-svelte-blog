@@ -47,6 +47,16 @@
 			description: '整合天氣 API 的 Svelte 應用程式，提供即時天氣資訊和預報功能。',
 			technologies: ['Svelte', 'Weather API', 'Responsive Design'],
 			githubUrl: 'https://github.com/krok1029/svelte-weather-app'
+		},
+		{
+			name: 'Vocabulary Flashcards',
+			path: 'https://github.com/krok1029/vocab-flashcards',
+			imgPath:
+				'https://github.com/krok1029/my-svelte-blog/blob/image/src/assets/image/vocab-flashcard.png?raw=true',
+			description:
+				'一款基於 Tauri 與 SvelteKit 的智慧單字卡工具，具備字典查詢、批次匯入、熟悉度管理與智能複習等功能。',
+			technologies: ['Tauri', 'SvelteKit', 'TypeScript', 'Rust', 'SQLite'],
+			githubUrl: 'https://github.com/krok1029/vocab-flashcards'
 		}
 	];
 </script>
