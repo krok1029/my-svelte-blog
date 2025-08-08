@@ -22,15 +22,6 @@
 			githubUrl: 'https://github.com/krok1029/xinbei-map'
 		},
 		{
-			name: 'Svelte Todos',
-			path: 'https://sveltekit-todos-3yz9a28on-leolees-projects.vercel.app/todos/',
-			imgPath:
-				'https://github.com/krok1029/my-svelte-blog/blob/image/src/assets/image/%E6%88%AA%E5%9C%96%202024-03-10%20%E4%B8%8B%E5%8D%883.47.38.png?raw=true',
-			description: '使用 SvelteKit 建構的現代化待辦事項應用，具有直觀的使用者介面。',
-			technologies: ['Svelte', 'SvelteKit', 'TypeScript'],
-			githubUrl: 'https://github.com/krok1029/svelte-todos'
-		},
-		{
 			name: 'Fight Game',
 			path: 'https://fight-game-steel.vercel.app/',
 			imgPath:
