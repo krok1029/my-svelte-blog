@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ArrowLeft, Code, Palette, Info, Lightbulb } from 'lucide-svelte';
+	import { ArrowLeft, Code, Palette, Info, Lightbulb, ChevronDown, ChevronUp } from 'lucide-svelte';
+	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
 	import { goto } from '$app/navigation';
 
 	interface Props {
@@ -23,6 +24,7 @@
 	}
 
 	let { practiceInfo, demo, tips }: Props = $props();
+	let open = $state(false);
 
 	// 類型圖示映射
 	const getTypeIcon = (type: string) => {
@@ -130,51 +132,66 @@
 </header>
 
 <!-- Practice Info -->
-<section class="bg-gradient-to-br from-gray-50 to-blue-50 py-12">
-	<div class="container mx-auto px-4">
-		<div class="mx-auto max-w-4xl">
-			<div class="mb-4 flex items-center gap-2 text-sm text-gray-600">
-				<span>練習 #{practiceInfo.id}</span>
-				<span>•</span>
-				<span>{getTypeName(practiceInfo.type)} 練習</span>
-			</div>
+<Collapsible.Root>
+	<Collapsible.Trigger onclick={() => (open = !open)} class="flex items-center justify-between">
+		<div class="flex items-center gap-2 px-3 py-2 text-gray-500">
+			<span class="text-gray-600 transition-colors hover:text-gray-900">練習重點</span>
 
-			<h1 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
-				{practiceInfo.title}
-			</h1>
-			<p class="mb-6 text-lg text-gray-600">
-				{practiceInfo.description}
-			</p>
+			{#if open}
+				<ChevronUp size={18} />
+			{:else}
+				<ChevronDown size={18} />
+			{/if}
+		</div>
+	</Collapsible.Trigger>
+	<Collapsible.Content>
+		<section class="bg-gradient-to-br from-gray-50 to-blue-50 py-12">
+			<div class="container mx-auto px-4">
+				<div class="mx-auto max-w-4xl">
+					<div class="mb-4 flex items-center gap-2 text-sm text-gray-600">
+						<span>練習 #{practiceInfo.id}</span>
+						<span>•</span>
+						<span>{getTypeName(practiceInfo.type)} 練習</span>
+					</div>
 
-			<!-- Tags -->
-			<div class="mb-6 flex flex-wrap gap-2">
-				{#each practiceInfo.tags as tag}
-					<span
-						class="rounded-full border border-gray-200 bg-white/80 px-3 py-1 text-sm text-gray-700 backdrop-blur-sm"
-					>
-						#{tag}
-					</span>
-				{/each}
-			</div>
+					<h1 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
+						{practiceInfo.title}
+					</h1>
+					<p class="mb-6 text-lg text-gray-600">
+						{practiceInfo.description}
+					</p>
 
-			<!-- Key Concepts -->
-			<div class="rounded-xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm">
-				<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
-					<Lightbulb size={20} />
-					主要概念
-				</h3>
-				<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
-					{#each practiceInfo.concepts as concept}
-						<div class="flex items-center gap-2 text-gray-700">
-							<div class="h-2 w-2 rounded-full bg-blue-500"></div>
-							{concept}
+					<!-- Tags -->
+					<div class="mb-6 flex flex-wrap gap-2">
+						{#each practiceInfo.tags as tag}
+							<span
+								class="rounded-full border border-gray-200 bg-white/80 px-3 py-1 text-sm text-gray-700 backdrop-blur-sm"
+							>
+								#{tag}
+							</span>
+						{/each}
+					</div>
+
+					<!-- Key Concepts -->
+					<div class="rounded-xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm">
+						<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
+							<Lightbulb size={20} />
+							主要概念
+						</h3>
+						<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+							{#each practiceInfo.concepts as concept}
+								<div class="flex items-center gap-2 text-gray-700">
+									<div class="h-2 w-2 rounded-full bg-blue-500"></div>
+									{concept}
+								</div>
+							{/each}
 						</div>
-					{/each}
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</section>
+		</section>
+	</Collapsible.Content>
+</Collapsible.Root>
 
 <!-- Practice Demo -->
 <section class="practice-demo-section">
