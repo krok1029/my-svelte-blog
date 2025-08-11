@@ -26,7 +26,7 @@
 			company: '資策會',
 			period: '七月 2020 - 十一月 2020',
 			location: '台北, 台灣',
-			logo: 'data:image/png;base64,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',
+			logo: 'https://www.iii.org.tw/favicon.ico',
 			skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Redux', 'PHP'],
 			description: [
 				'在這期間扎實且有系統學習前端技能期間，平時我也會盡可能的教導附近的同學，從一開始 CSS 的 Float / Flex，到後來 Javascript 的 var / let / const、閉包、callback 地獄 / promise / async & await 等重要觀念，在期末的專題製作中，也是扮演技術支援的角色，協助大家debug，同學們的問題主要都是發生在使用串接資料庫的異步處理，以及使用useEffect的生命週期管理上。'
@@ -54,7 +54,7 @@
 		title: '國立成功大學工程科學系',
 		subtitle: '資訊工程組',
 		period: '2013 - 2018',
-		logo: 'https://www.ncku.edu.tw/var/file/0/1000/plugin/mobile/title/hln_4480_3767086_48566.png'
+		logo: 'https://www.es.ncku.edu.tw/esncku/zh/favicon.ico'
 	};
 
 	const toggleExperience = () => {
