@@ -1,70 +1,169 @@
-<script>
-	import { Github, Linkedin, Mail, Download } from 'lucide-svelte';
+<script lang="ts">
+  import { Calendar, MapPin } from 'lucide-svelte';
+
+  // === 基本資訊 ===
+  const NAME = 'Gandalf Lee';
+  const YEARS_TOTAL = 6;
+  const YEARS_FE = 4; // Cyberbiz
+  const YEARS_BE = 2; // Kenmec
+
+  // === 經歷（對齊 ExperienceSection 的呈現方式） ===
+  const experiences = [
+    {
+      id: 'cyberbiz',
+      company: '順立智慧股份有限公司（Cyberbiz）',
+      title: '前端工程師 / Scrum Master',
+      period: '二月 2021 - 現在',
+      location: '台北, 台灣',
+      logo: 'https://static.104.com.tw/b_profile/cust_picture/6441/130000000046441/logo.png?v=20230911163752',
+      skills: ['React', 'Redux', 'TypeScript', 'Vue', 'Electron', 'Storybook'],
+      points: [
+        '主力負責電商與 POS 前端開發與維護，推動效能優化（分包、Lazy Loading、快取策略）',
+        '導入 TypeScript 與元件化設計，建立 Storybook 文件與可及性檢核流程',
+        '擔任 Scrum Master：儀式推動、燃盡圖/看板可視化、跨部門協作落地'
+      ]
+    },
+    {
+      id: 'kenmec',
+      company: '廣運機械工程股份有限公司（Kenmec）',
+      title: '.NET Developer',
+      period: '九月 2018 - 五月 2020',
+      location: '台北, 台灣',
+      logo: 'https://static.104.com.tw/b_profile/cust_picture/1000/4757891000/logo.png?v=20230914104647',
+      skills: ['C#', 'MSSQL', 'ASP.NET MVC'],
+      points: [
+        '內部工具與後端 API 開發，配合資料模型與商業流程落地',
+        '使用 SQL Stored Procedure 處理資料流；與設備/系統整合'
+      ]
+    }
+  ];
+
+  // === 個人標籤 ===
+  const tags = [
+    '前端為主',
+    '樂於嘗試後端',
+    'React / Vue',
+    'Vite / Webpack / esbuild',
+    'Tailwind / Bootstrap / shadcn',
+    'Electron / Tauri',
+    'Scrum Master'
+  ];
+
+  // 與 ExperienceSection 一致的技能顏色（找不到則走灰色）
+  const getSkillColor = (skill: string) => {
+    const colors = {
+      React: 'bg-blue-100 text-blue-800',
+      Redux: 'bg-purple-100 text-purple-800',
+      Vue: 'bg-green-100 text-green-800',
+      TypeScript: 'bg-yellow-100 text-yellow-800',
+      Electron: 'bg-red-100 text-red-800',
+      Storybook: 'bg-indigo-100 text-indigo-800',
+      'C#': 'bg-blue-100 text-blue-800',
+      MSSQL: 'bg-green-100 text-green-800',
+      'ASP.NET MVC': 'bg-gray-100 text-gray-800'
+    } as const;
+    return (colors as any)[skill] || 'bg-gray-100 text-gray-800';
+  };
 </script>
 
-<section class="relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-	<div class="absolute inset-0 bg-black/20"></div>
-	<div class="relative container mx-auto px-4 py-20 lg:py-32">
-		<div class="mx-auto max-w-4xl text-center">
-			<div class="mb-8">
-				<div
-					class="mx-auto mb-6 h-32 w-32 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 p-1"
-				>
-					<div
-						class="flex h-full w-full items-center justify-center rounded-full bg-slate-800 text-4xl font-bold"
-					>
-						李
-					</div>
-				</div>
-				<h1
-					class="mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-4xl font-bold text-transparent lg:text-6xl"
-				>
-					李明峯
-				</h1>
-				<p class="mb-2 text-xl text-gray-300 lg:text-2xl">Frontend Developer</p>
-				<p class="text-lg text-gray-400">熱愛創造優質使用者體驗的前端工程師</p>
-			</div>
+<section id="hero" class="bg-white">
+  <div class="container mx-auto px-4 py-20">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 items-start gap-10 md:grid-cols-2">
+      <!-- 左：主標與敘事 -->
+      <div>
+        <p class="mb-2 text-sm tracking-wider text-purple-700">Hi，我是</p>
+        <h1 class="mb-2 text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
+          <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            {NAME}
+          </span>
+        </h1>
+        <h2 class="mb-5 text-2xl font-bold text-gray-800">
+          資深前端工程師 · {YEARS_TOTAL} 年軟體開發經驗
+        </h2>
 
-			<p class="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-gray-300 lg:text-xl">
-				嗨！我是李明峯，我熱愛將想法轉化為動態且具有吸引力的網頁應用程序。在過去的三年中，我積極參與了各種前端項目，從簡單的網站到複雜的
-				Web 應用程式，我都有豐富的實踐經驗。我喜歡追求技術的最新趨勢，並將其應用於我的工作中。
-			</p>
+        <p class="mb-6 text-lg leading-relaxed text-gray-700">
+          目前以前端為主（<strong>{YEARS_FE} 年</strong>，Cyberbiz），
+          也有 <strong>.NET 後端 {YEARS_BE} 年</strong>（Kenmec）經驗。
+          在 Cyberbiz 擔任過 <strong>Scrum Master</strong>，
+          關注產品交付節奏、品質與跨部門協作。
+          我熱愛打造穩定、可擴充、好維護的使用者體驗，
+          同時也樂於嘗試並承擔更多後端與平台相關工作。
+        </p>
 
-			<div class="mb-8 flex flex-wrap justify-center gap-4">
-				<a
-					href="#contact"
-					class="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-3 font-medium text-white transition-colors hover:bg-purple-700"
-				>
-					<Mail size={20} />
-					聯絡我
-				</a>
-				<a
-					href="/resume.pdf"
-					class="inline-flex items-center gap-2 rounded-lg border border-purple-400 px-6 py-3 font-medium text-purple-400 transition-colors hover:bg-purple-400 hover:text-white"
-				>
-					<Download size={20} />
-					下載履歷
-				</a>
-			</div>
+        <!-- 標籤 -->
+        <ul class="mb-8 flex flex-wrap gap-2">
+          {#each tags as t}
+            <li class="rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-700">{t}</li>
+          {/each}
+        </ul>
 
-			<div class="flex justify-center gap-6">
-				<a
-					href="https://github.com/krok1029"
-					class="text-gray-400 transition-colors hover:text-white"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Github size={24} />
-				</a>
-				<a
-					href="https://linkedin.com/in/your-profile"
-					class="text-gray-400 transition-colors hover:text-white"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Linkedin size={24} />
-				</a>
-			</div>
-		</div>
-	</div>
+        <!-- CTA -->
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="#projects"
+            class="inline-flex items-center justify-center rounded-xl bg-purple-600 px-5 py-3 text-sm font-medium text-white shadow hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            aria-label="查看作品專案"
+            >查看作品</a
+          >
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            aria-label="與我聯絡"
+            >與我聯絡</a
+          >
+        </div>
+      </div>
+
+      <!-- 右：迷你經歷卡（沿用 ExperienceSection 的視覺） -->
+      <div class="space-y-6">
+        {#each experiences as exp}
+          <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-lg">
+            <div class="flex items-start gap-4">
+              <div class="flex h-14 w-14 items-center justify-center rounded-lg bg-gray-100">
+                <img src={exp.logo} alt={exp.company} class="h-10 w-10 object-contain" />
+              </div>
+              <div class="flex-1">
+                <div class="mb-2 flex flex-col gap-1">
+                  <p class="text-base font-semibold text-gray-900">{exp.title}</p>
+                  <p class="text-sm font-medium text-purple-600">{exp.company}</p>
+                </div>
+
+                <div class="mb-3 flex flex-wrap items-center gap-4 text-gray-600">
+                  <div class="flex items-center gap-1">
+                    <Calendar size={16} />
+                    <span class="text-xs">{exp.period}</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <MapPin size={16} />
+                    <span class="text-xs">{exp.location}</span>
+                  </div>
+                </div>
+
+                <div class="mb-3 flex flex-wrap gap-2">
+                  {#each exp.skills as s}
+                    <span class="rounded-full px-3 py-1 text-xs {getSkillColor(s)}">{s}</span>
+                  {/each}
+                </div>
+
+                <ul class="ml-4 list-disc space-y-1 text-sm text-gray-700">
+                  {#each exp.points as p}
+                    <li>{p}</li>
+                  {/each}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {/each}
+
+        <!-- 目標句 -->
+        <div class="rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 p-4 text-sm text-white">
+          目前<strong>以前端為主</strong>，並持續投入<strong>後端 / 平台</strong>（Vite、架構遷移、Electron、Tauri）等領域的實務。
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<style lang="postcss">
+  @reference "tailwindcss";
+</style>

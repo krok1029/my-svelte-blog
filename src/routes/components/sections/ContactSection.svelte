@@ -12,7 +12,7 @@
 
 			<div class="flex flex-wrap justify-center gap-6">
 				<a
-					href="mailto:your.email@example.com"
+					href="mailto:krok1029@gmail.com"
 					class="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-3 font-medium text-white transition-colors hover:bg-purple-700"
 				>
 					<Mail size={20} />

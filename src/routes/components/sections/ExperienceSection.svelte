@@ -7,16 +7,30 @@
 	const experiences = [
 		{
 			id: 'cyberbiz',
-			title: '前端工程師',
+			title: '前端工程師 / Scrum Master',
 			company: '順立智慧股份有限公司',
 			period: '二月 2021 - 現在',
 			location: '台北, 台灣',
 			logo: 'https://static.104.com.tw/b_profile/cust_picture/6441/130000000046441/logo.png?v=20230911163752',
-			skills: ['React', 'Redux', 'Vue', 'TypeScript', 'Electron', 'Storybook'],
+			skills: [
+				'React',
+				'Redux',
+				'TypeScript',
+				'Vue',
+				'Electron',
+				'Storybook',
+				'Vite',
+				'RTK Query',
+				'Jest',
+				'React Testing Library',
+				'Ruby on Rails'
+			],
 			description: [
-				'當我加入公司的第一年，我的主要職責是產品維護。我專注於解決客戶端回饋的問題，同時積極學習和掌握公司的產品。在這段期間，我廣泛運用了多種技術，包括jQuery、React、Vue、Liquid、Haml、Backbone等。',
-				'隨後，我轉到POS團隊，開始參與開發工作。我的工作範疇包括開發和優化線下商店POS系統。在這個過程中，我逐漸深入研究前端開發技術，包括Redux/Toolkit、TypeScript、Electron.js，並掌握了一些硬體串接的技巧。',
-				'此外，在POS團隊工作一年多後，我擔任了Scrum團隊的Scrum Master角色，開始積極學習如何更有效地推動團隊的開發流程，以確保順暢的團隊合作和高效的產品交付。'
+				'入職第一年以產品維護為主，處理客戶端回饋與缺陷修復，快速熟悉產品脈絡與代碼基礎。期間使用 jQuery、React、Vue、Liquid、Haml、Backbone 等技術。',
+				'其後轉至 POS 團隊，參與線下門市 POS 系統的開發與優化，深化 React 生態與型別化開發（Redux Toolkit、TypeScript、Electron），並處理硬體串接相關需求。',
+				'擔任 Scrum Master 後，推動敏捷儀式與流程優化，協調跨部門合作，關注交付節奏與可視透明度（看板／燃盡趨勢）。',
+				'參與新產品線「門市助理」行動版 Web App（供門市店員使用），實作會員註冊、LINE 綁定、導購推播與會員權益等流程。專案採前後端分離：後端 Ruby on Rails，前端自 esbuild 遷移至 Vite；導入 Jest 與 React Testing Library，並以 RTK Query 串接 API。',
+				'協助打造公司自用 UI 元件庫，統一設計語言並降低重複開發成本；配合 Storybook 建立文件化與視覺回歸基礎，提升跨產品線的一致性與開發效率。'
 			],
 			isLatest: true
 		},
@@ -42,7 +56,7 @@
 			logo: 'https://static.104.com.tw/b_profile/cust_picture/1000/4757891000/logo.png?v=20230914104647',
 			skills: ['C#', 'MSSQL', 'ROS'],
 			description: [
-				'主要負責實作客戶所需的自動化倉庫物流及資料流，以Ｃ＃作為主要開發語言，通過讀寫PLC的記憶體來操作設備的運作，另外使用了SQL的store procedure來操作資料庫的資料變化，完成三個新專案及一個維護專案。',
+				'主要負責實作客戶所需的自動化倉庫物流及資料流，以Ｃ＃作為主要開發語言來開發.net WinForms 應用，通過讀寫PLC的記憶體來操作設備的運作，另外使用了SQL的store procedure來操作資料庫的資料變化，完成三個新專案及一個維護專案。',
 				'並且與凌華科技共同合作，調教使用ROS技術，公司自主研發的載貨自走車。',
 				'之後公司決定發展數據中心，開始運用網頁前後端技術，當時是以ASP .NET MVC 為開發工具，接觸網頁程式設計後，認為這是一個很有發展空間的領域，於是決定離職再進修。'
 			],
@@ -104,7 +118,7 @@
 						</div>
 						<div class="flex-1">
 							<div class="mb-4 flex flex-col lg:flex-row lg:items-start lg:justify-between">
-								<div>
+								<div class="flex-1">
 									<h3 class="text-xl font-semibold text-gray-900">{experience.title}</h3>
 									<h4 class="text-lg font-medium text-purple-600">{experience.company}</h4>
 									<div class="mt-2 flex items-center gap-4 text-gray-600">
@@ -118,7 +132,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="mt-4 lg:mt-0">
+								<div class="flex-1 mt-4 lg:mt-0">
 									<div class="flex flex-wrap gap-2">
 										{#each experience.skills as skill}
 											<span class="px-3 py-1 {getSkillColor(skill)} rounded-full text-sm"
