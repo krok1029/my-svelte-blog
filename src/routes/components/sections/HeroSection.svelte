@@ -2,7 +2,7 @@
   import { Calendar, MapPin } from 'lucide-svelte';
 
   // === 基本資訊 ===
-  const NAME = 'Gandalf Lee';
+  const NAME = '李明峯';
   const YEARS_TOTAL = 6;
   const YEARS_FE = 4; // Cyberbiz
   const YEARS_BE = 2; // Kenmec
