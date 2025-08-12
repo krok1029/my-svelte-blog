@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
 	import { Separator } from '$lib/components/ui/separator';
 	import {
@@ -12,24 +12,24 @@
 		webpack,
 		vue,
 		vite,
-		electorn,
+		electron,
 		esbuild
 	} from '$asset/logo/index';
 
-	const iconMap = {
-		HTML5: { src: html5, alt: 'HTML5' },
-		CSS3: { src: css3, alt: 'CSS3' },
-		JavaScript: { src: javascript, alt: 'JavaScript' },
-		TypeScript: { src: typescript, alt: 'TypeScript' },
-		React: { src: react, alt: 'React' },
-		Redux: { src: redux, alt: 'Redux' },
-		Storybook: { src: storybook, alt: 'Storybook' },
-		Webpack: { src: webpack, alt: 'Webpack' },
-		Vue: { src: vue, alt: 'Vue' },
-		Vite: { src: vite, alt: 'Vite' },
-		Electorn: { src: electorn, alt: 'Electron' },
-		Esbuild: { src: esbuild, alt: 'esbuild' }
-	};
+  const iconMap: Record<string, { src: string; alt: string }> = {
+    HTML5: { src: html5, alt: 'HTML5' },
+    CSS3: { src: css3, alt: 'CSS3' },
+    JavaScript: { src: javascript, alt: 'JavaScript' },
+    TypeScript: { src: typescript, alt: 'TypeScript' },
+    React: { src: react, alt: 'React' },
+    Redux: { src: redux, alt: 'Redux' },
+    Storybook: { src: storybook, alt: 'Storybook' },
+    Webpack: { src: webpack, alt: 'Webpack' },
+    Vue: { src: vue, alt: 'Vue' },
+    Vite: { src: vite, alt: 'Vite' },
+    Electron: { src: electron, alt: 'Electron' },
+    Esbuild: { src: esbuild, alt: 'esbuild' }
+  };
 
 	// 只保留兩大組，避免失焦
 	const groups = [
@@ -132,7 +132,7 @@
 						'Tauri：Rust 後端、Commands、權限安全、打包與更新',
 						'前端框架與桌面殼層的整合與部署'
 					],
-					iconKey: 'Electorn'
+					iconKey: 'Electron'
 				},
 				{
 					title: '遷移實戰',

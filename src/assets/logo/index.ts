@@ -8,7 +8,7 @@ import storybook from './storybook.svg';
 import webpack from './webpack.svg';
 import vue from './vue.svg';
 import vite from './vite.svg';
-import electorn from './electron.svg';
+import electron from './electron.svg';
 import esbuild from './esbuild.svg';
 
 export {
@@ -23,5 +23,5 @@ export {
 	vue,
 	vite,
 	esbuild,
-	electorn
+	electron
 };
