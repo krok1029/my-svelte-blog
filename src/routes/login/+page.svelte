@@ -40,8 +40,12 @@
 	<meta name="description" content="登入李明峯的部落格管理系統" />
 </svelte:head>
 
-<div class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-	<div class="grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-2">
+<div
+	class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-900"
+>
+	<div
+		class="grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-2 dark:bg-gray-800"
+	>
 		<!-- Left Side - Branding -->
 		<div
 			class="relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 p-8 text-white lg:p-12"
@@ -89,8 +93,11 @@
 		<div class="flex items-center justify-center p-8 lg:p-12">
 			<Card class="w-full max-w-sm border-0 shadow-none">
 				<CardHeader class="pb-6 text-center">
-					<CardTitle class="text-2xl font-bold text-gray-900">登入帳號</CardTitle>
-					<CardDescription class="text-gray-600">請輸入您的登入資訊</CardDescription>
+					<CardTitle class="text-2xl font-bold text-gray-900 dark:text-gray-100">登入帳號</CardTitle
+					>
+					<CardDescription class="text-gray-600 dark:text-gray-300"
+						>請輸入您的登入資訊</CardDescription
+					>
 				</CardHeader>
 
 				<CardContent>
@@ -107,9 +114,11 @@
 					>
 						<!-- Email Input -->
 						<div class="flex flex-col gap-2">
-							<Label for="email" class="text-sm font-semibold text-gray-700">Email 地址</Label>
+							<Label for="email" class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+								>Email 地址</Label
+							>
 							<div class="relative flex items-center">
-								<Mail size={20} class="absolute left-4 z-10 text-gray-400" />
+								<Mail size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-400" />
 								<Input
 									id="email"
 									name="email"
@@ -125,9 +134,11 @@
 
 						<!-- Password Input -->
 						<div class="flex flex-col gap-2">
-							<Label for="password" class="text-sm font-semibold text-gray-700">密碼</Label>
+							<Label for="password" class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+								>密碼</Label
+							>
 							<div class="relative flex items-center">
-								<Lock size={20} class="absolute left-4 z-10 text-gray-400" />
+								<Lock size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-400" />
 								<Input
 									id="password"
 									name="password"
@@ -141,7 +152,7 @@
 									type="button"
 									variant="ghost"
 									size="sm"
-									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
 									onclick={togglePasswordVisibility}
 									disabled={isLoading}
 								>
@@ -179,12 +190,12 @@
 						</Button>
 
 						<!-- Register Link -->
-						<div class="border-t border-gray-200 pt-5 text-center">
-							<span class="text-sm text-gray-600">還沒有帳號？</span>
+						<div class="border-t border-gray-200 pt-5 text-center dark:border-gray-700">
+							<span class="text-sm text-gray-600 dark:text-gray-300">還沒有帳號？</span>
 							<Button
 								type="button"
 								variant="link"
-								class="h-auto p-0 font-semibold text-blue-500 hover:text-blue-700"
+								class="h-auto p-0 font-semibold text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-600"
 								onclick={goToRegister}
 								disabled={isLoading}
 							>
