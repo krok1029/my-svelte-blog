@@ -52,12 +52,12 @@
 	];
 </script>
 
-<section class="bg-gray-50 py-20">
+<section class="bg-gray-50 dark:bg-gray-800 py-20">
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-6xl">
 			<div class="mb-16 text-center">
-				<h2 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">精選專案</h2>
-				<p class="text-lg text-gray-600">我開發的一些有趣的 Side Projects</p>
+				<h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 lg:text-4xl">精選專案</h2>
+				<p class="text-lg text-gray-600 dark:text-gray-400">我開發的一些有趣的 Side Projects</p>
 			</div>
 
 			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +78,7 @@
 			<div class="mt-12 text-center">
 				<a
 					href="/blog"
-					class="inline-flex items-center gap-2 font-medium text-purple-600 hover:text-purple-700"
+					class="inline-flex items-center gap-2 font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
 				>
 					查看更多專案
 					<ExternalLink size={16} />

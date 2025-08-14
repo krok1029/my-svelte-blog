@@ -6,6 +6,11 @@
 	import ProfileDropdown from './ProfileDropdown.svelte';
 	import MobileMenuDropdown from './MobileMenuDropdown.svelte';
 	import { navbarList } from '$lib/const';
+	import SunIcon from '@lucide/svelte/icons/sun';
+	import MoonIcon from '@lucide/svelte/icons/moon';
+
+	import { toggleMode } from 'mode-watcher';
+	import { Button } from '$lib/components/ui/button';
 
 	let showMainMenu = $state(false);
 	const handleMainIconClick = () => {
@@ -18,11 +23,11 @@
 	};
 	const checkCurrentUrl = (current: Page, url: string) =>
 		current.url.pathname === url
-			? 'bg-purple-100 text-purple-700'
-			: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900';
+			? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'
+			: 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100';
 </script>
 
-<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
+<nav class="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="relative flex h-16 items-center justify-between">
 			<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -30,7 +35,7 @@
 				<button
 					onclick={handleMainIconClick}
 					type="button"
-					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-purple-500 focus:outline-none focus:ring-inset"
+					class="inline-flex items-center justify-center rounded-md p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:outline-none focus:ring-inset"
 					aria-controls="mobile-menu"
 					aria-expanded="false"
 				>
@@ -66,7 +71,15 @@
 					</div>
 				</div>
 			</div>
-
+			<Button onclick={toggleMode} variant="outline" size="icon">
+				<SunIcon
+					class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 !transition-all dark:scale-0 dark:-rotate-90"
+				/>
+				<MoonIcon
+					class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 !transition-all dark:scale-100 dark:rotate-0"
+				/>
+				<span class="sr-only">Toggle theme</span>
+			</Button>
 			<div
 				class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 			>
@@ -76,7 +89,7 @@
 						<button
 							onclick={handleUserIconClick}
 							type="button"
-							class="flex rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none"
+							class="flex rounded-full p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none"
 							id="user-menu-button"
 							aria-expanded="false"
 							aria-haspopup="true"

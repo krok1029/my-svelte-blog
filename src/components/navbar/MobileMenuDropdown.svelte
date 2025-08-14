@@ -22,8 +22,8 @@
 
 	const checkCurrentUrl = (current: Page, url: string) =>
 		current.url.pathname === url
-			? 'bg-purple-100 text-purple-700 block rounded-md px-3 py-2 text-base font-medium'
-			: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 block rounded-md px-3 py-2 text-base font-medium transition-colors';
+			? 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 block rounded-md px-3 py-2 text-base font-medium'
+			: 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 block rounded-md px-3 py-2 text-base font-medium transition-colors';
 </script>
 
 <div bind:this={dropdown} class="sm:hidden" id="mobile-menu">

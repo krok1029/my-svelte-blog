@@ -77,38 +77,43 @@
 
 	const getSkillColor = (skill: string) => {
 		const colors = {
-			React: 'bg-blue-100 text-blue-800',
-			Redux: 'bg-purple-100 text-purple-800',
-			Vue: 'bg-green-100 text-green-800',
-			TypeScript: 'bg-yellow-100 text-yellow-800',
-			Electron: 'bg-red-100 text-red-800',
-			Storybook: 'bg-indigo-100 text-indigo-800',
-			HTML: 'bg-orange-100 text-orange-800',
-			CSS: 'bg-blue-100 text-blue-800',
-			JavaScript: 'bg-yellow-100 text-yellow-800',
-			PHP: 'bg-green-100 text-green-800',
-			'C#': 'bg-blue-100 text-blue-800',
-			MSSQL: 'bg-green-100 text-green-800',
-			ROS: 'bg-red-100 text-red-800'
+			React: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+			Redux: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200',
+			Vue: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
+			TypeScript: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200',
+			Electron: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
+			Storybook: 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200',
+			HTML: 'bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200',
+			CSS: 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+			JavaScript: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200',
+			PHP: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
+			'C#': 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+			MSSQL: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
+			ROS: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
+			Vite: 'bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200',
+			'RTK Query': 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200',
+			Jest: 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
+			'React Testing Library': 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
+			'Ruby on Rails': 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
 		};
-		return colors[skill as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+		return colors[skill as keyof typeof colors] || 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200';
 	};
 </script>
 
-<section class="bg-gray-50 py-20">
+<section class="bg-gray-50 dark:bg-gray-800 py-20">
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-6xl">
 			<div class="mb-16 text-center">
-				<h2 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">工作經歷</h2>
-				<p class="text-lg text-gray-600">我的職業發展歷程</p>
+				<h2 class="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 lg:text-4xl">工作經歷</h2>
+				<p class="text-lg text-gray-600 dark:text-gray-400">我的職業發展歷程</p>
 			</div>
 
 			<!-- Latest Experience (Always Visible) -->
 			{#each experiences.filter((exp) => exp.isLatest) as experience}
-				<div class="mb-8 rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+				<div class="mb-8 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 p-8 shadow-lg">
 					<div class="flex flex-col gap-6 lg:flex-row">
 						<div class="flex-shrink-0">
-							<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
+							<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
 								<img
 									src={experience.logo}
 									alt={experience.company}
@@ -119,9 +124,9 @@
 						<div class="flex-1">
 							<div class="mb-4 flex flex-col lg:flex-row lg:items-start lg:justify-between">
 								<div class="flex-1">
-									<h3 class="text-xl font-semibold text-gray-900">{experience.title}</h3>
-									<h4 class="text-lg font-medium text-purple-600">{experience.company}</h4>
-									<div class="mt-2 flex items-center gap-4 text-gray-600">
+									<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{experience.title}</h3>
+									<h4 class="text-lg font-medium text-purple-600 dark:text-purple-400">{experience.company}</h4>
+									<div class="mt-2 flex items-center gap-4 text-gray-600 dark:text-gray-400">
 										<div class="flex items-center gap-1">
 											<Calendar size={16} />
 											<span>{experience.period}</span>
@@ -142,7 +147,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="space-y-3 text-gray-700">
+							<div class="space-y-3 text-gray-700 dark:text-gray-300">
 								{#each experience.description as paragraph}
 									<p>{paragraph}</p>
 								{/each}
@@ -156,7 +161,7 @@
 			<div class="mb-8 text-center">
 				<button
 					onclick={toggleExperience}
-					class="inline-flex items-center gap-2 rounded-lg bg-purple-600 px-6 py-3 font-medium text-white transition-colors hover:bg-purple-700"
+					class="inline-flex items-center gap-2 rounded-lg bg-purple-600 hover:bg-purple-700 px-6 py-3 font-medium text-white transition-colors"
 				>
 					{showAllExperience ? '收合更多經歷' : '查看更多經歷'}
 					{#if showAllExperience}
@@ -172,10 +177,10 @@
 				<div transition:slide={{ duration: 300 }}>
 					<div class="space-y-8">
 						{#each experiences.filter((exp) => !exp.isLatest) as experience}
-							<div class="rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+							<div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 p-8 shadow-lg">
 								<div class="flex flex-col gap-6 lg:flex-row">
 									<div class="flex-shrink-0">
-										<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
+										<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
 											<img
 												src={experience.logo}
 												alt={experience.company}
@@ -186,9 +191,9 @@
 									<div class="flex-1">
 										<div class="mb-4 flex flex-col lg:flex-row lg:items-start lg:justify-between">
 											<div>
-												<h3 class="text-xl font-semibold text-gray-900">{experience.title}</h3>
-												<h4 class="text-lg font-medium text-purple-600">{experience.company}</h4>
-												<div class="mt-2 flex items-center gap-4 text-gray-600">
+												<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{experience.title}</h3>
+												<h4 class="text-lg font-medium text-purple-600 dark:text-purple-400">{experience.company}</h4>
+												<div class="mt-2 flex items-center gap-4 text-gray-600 dark:text-gray-400">
 													<div class="flex items-center gap-1">
 														<Calendar size={16} />
 														<span>{experience.period}</span>
@@ -209,7 +214,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="space-y-3 text-gray-700">
+										<div class="space-y-3 text-gray-700 dark:text-gray-300">
 											{#each experience.description as paragraph}
 												<p>{paragraph}</p>
 											{/each}
@@ -220,22 +225,22 @@
 						{/each}
 
 						<!-- Education Section -->
-						<div class="rounded-xl border border-gray-100 bg-white p-8 shadow-lg">
+						<div class="rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 p-8 shadow-lg">
 							<div class="mb-6 text-center">
-								<h3 class="text-2xl font-bold text-gray-900">教育背景</h3>
+								<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100">教育背景</h3>
 							</div>
 							<div class="flex flex-col gap-6 lg:flex-row">
 								<div class="flex-shrink-0">
-									<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100">
+									<div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700">
 										<img src={education.logo} alt="NCKU" class="h-12 w-12 object-contain" />
 									</div>
 								</div>
 								<div class="flex-1">
 									<div class="flex flex-col lg:flex-row lg:items-start lg:justify-between">
 										<div>
-											<h4 class="text-xl font-semibold text-gray-900">{education.title}</h4>
-											<h5 class="text-lg font-medium text-purple-600">{education.subtitle}</h5>
-											<div class="mt-2 flex items-center gap-1 text-gray-600">
+											<h4 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{education.title}</h4>
+											<h5 class="text-lg font-medium text-purple-600 dark:text-purple-400">{education.subtitle}</h5>
+											<div class="mt-2 flex items-center gap-1 text-gray-600 dark:text-gray-400">
 												<Calendar size={16} />
 												<span>{education.period}</span>
 											</div>
