@@ -164,9 +164,9 @@
 	<meta name="description" content="編輯部落格文章" />
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<!-- Header -->
-	<header class="sticky top-0 z-50 border-b bg-white">
+	<header class="sticky top-0 z-50 border-b bg-white dark:border-gray-800 dark:bg-gray-950">
 		<div class="flex items-center justify-between p-6">
 			<div class="flex items-center gap-6">
 				<Button variant="ghost" size="sm" onclick={goBack} class="gap-2">
@@ -174,8 +174,8 @@
 					返回列表
 				</Button>
 				<div>
-					<h1 class="text-2xl font-bold text-gray-900">編輯文章</h1>
-					<div class="mt-1 flex items-center gap-4 text-sm text-gray-600">
+					<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">編輯文章</h1>
+					<div class="mt-1 flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
 						<span class="flex items-center gap-1">
 							<User size={14} />
 							文章 ID: {id}
@@ -233,17 +233,21 @@
 			<CardContent>
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="flex items-center gap-3">
-						<Calendar size={16} class="text-gray-500" />
+						<Calendar size={16} class="text-gray-500 dark:text-gray-400" />
 						<div>
-							<div class="text-xs font-medium text-gray-500">建立時間</div>
-							<div class="text-sm font-medium text-gray-900">{formatDateWithTime(createdAt)}</div>
+							<div class="text-xs font-medium text-gray-500 dark:text-gray-400">建立時間</div>
+							<div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+								{formatDateWithTime(createdAt)}
+							</div>
 						</div>
 					</div>
 					<div class="flex items-center gap-3">
-						<Clock size={16} class="text-gray-500" />
+						<Clock size={16} class="text-gray-500 dark:text-gray-400" />
 						<div>
-							<div class="text-xs font-medium text-gray-500">最後更新</div>
-							<div class="text-sm font-medium text-gray-900">{formatDateWithTime(updatedAt)}</div>
+							<div class="text-xs font-medium text-gray-500 dark:text-gray-400">最後更新</div>
+							<div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+								{formatDateWithTime(updatedAt)}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -320,7 +324,7 @@
 								rows={3}
 								class="resize-none"
 							/>
-							<div class="text-right text-xs text-gray-500">
+							<div class="text-right text-xs text-gray-500 dark:text-gray-400">
 								{brief.length} / 200 字符
 							</div>
 						</div>
@@ -343,7 +347,7 @@
 							<CardTitle>文章內容</CardTitle>
 							<CardDescription>使用 Markdown 語法編輯文章內容</CardDescription>
 						</div>
-						<div class="flex items-center gap-4 text-sm text-gray-500">
+						<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
 							<span>{content.length} 字符</span>
 							<Separator orientation="vertical" class="h-4" />
 							<span>支援 Markdown</span>
@@ -369,7 +373,9 @@
 						</TabsContent>
 
 						<TabsContent value="preview" class="mt-4">
-							<div class="min-h-[500px] rounded-lg border bg-white p-6">
+							<div
+								class="min-h-[500px] rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+							>
 								<div class="prose max-w-none">
 									{@html marked(content, { mangle: false, headerIds: false })}
 								</div>

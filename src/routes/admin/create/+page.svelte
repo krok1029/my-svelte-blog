@@ -107,9 +107,9 @@ console.log('Hello, World!');
 	<meta name="description" content="建立新的部落格文章" />
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<!-- Header -->
-	<header class="sticky top-0 z-50 border-b bg-white">
+	<header class="sticky top-0 z-50 border-b bg-white dark:border-gray-800 dark:bg-gray-950">
 		<div class="flex items-center justify-between p-6">
 			<div class="flex items-center gap-6">
 				<Button variant="ghost" size="sm" onclick={goBack} class="gap-2">
@@ -117,8 +117,8 @@ console.log('Hello, World!');
 					返回列表
 				</Button>
 				<div>
-					<h1 class="text-2xl font-bold text-gray-900">建立新文章</h1>
-					<p class="text-sm text-gray-600">撰寫並發布您的部落格文章</p>
+					<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">建立新文章</h1>
+					<p class="text-sm text-gray-600 dark:text-gray-400">撰寫並發布您的部落格文章</p>
 				</div>
 			</div>
 		</div>
@@ -189,7 +189,7 @@ console.log('Hello, World!');
 								rows={3}
 								class="resize-none"
 							/>
-							<div class="text-right text-xs text-gray-500">
+							<div class="text-right text-xs text-gray-500 dark:text-gray-400">
 								{brief.length} / 200 字符
 							</div>
 						</div>
@@ -229,7 +229,7 @@ console.log('Hello, World!');
 							<CardTitle>文章內容</CardTitle>
 							<CardDescription>使用 Markdown 語法撰寫文章內容</CardDescription>
 						</div>
-						<div class="flex items-center gap-4 text-sm text-gray-500">
+						<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
 							<span>{content.length} 字符</span>
 							<Separator orientation="vertical" class="h-4" />
 							<span>支援 Markdown</span>
@@ -255,7 +255,9 @@ console.log('Hello, World!');
 						</TabsContent>
 
 						<TabsContent value="preview" class="mt-4">
-							<div class="min-h-[500px] rounded-lg border bg-white p-6">
+							<div
+								class="min-h-[500px] rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+							>
 								<div class="prose max-w-none">
 									{@html marked(content, { mangle: false, headerIds: false })}
 								</div>
