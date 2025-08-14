@@ -41,15 +41,15 @@
 </svelte:head>
 
 <div
-	class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-900"
+        class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 p-5"
 >
-	<div
-		class="grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-2 dark:bg-gray-800"
-	>
-		<!-- Left Side - Branding -->
-		<div
-			class="relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 p-8 text-white lg:p-12"
-		>
+        <div
+                class="grid min-h-[700px] w-full max-w-4xl overflow-hidden rounded-3xl bg-white shadow-2xl md:grid-cols-2 dark:bg-gray-800"
+        >
+                <!-- Left Side - Branding -->
+                <div
+                        class="relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 p-12 text-white lg:p-16"
+                >
 			<!-- Background Pattern -->
 			<div
 				class="absolute inset-0 opacity-30"
@@ -64,24 +64,24 @@
 						<User size={40} />
 					</div>
 					<h1 class="mb-2 text-3xl font-bold">李明峯</h1>
-					<p class="text-lg text-purple-100">Frontend Developer</p>
+                                        <p class="text-lg text-emerald-100">Frontend Developer</p>
 				</div>
 
 				<div class="mb-10">
 					<h2 class="mb-3 text-2xl font-semibold">歡迎回來</h2>
-					<p class="leading-relaxed text-purple-100">登入您的帳號以管理部落格內容和查看統計資料</p>
+                                        <p class="leading-relaxed text-emerald-100">登入您的帳號以管理部落格內容和查看統計資料</p>
 				</div>
 
 				<div class="flex flex-col gap-4">
-					<div class="flex items-center gap-3 text-purple-100">
+                                        <div class="flex items-center gap-3 text-emerald-100">
 						<div class="text-xl">✨</div>
 						<span>管理部落格文章</span>
 					</div>
-					<div class="flex items-center gap-3 text-purple-100">
+                                        <div class="flex items-center gap-3 text-emerald-100">
 						<div class="text-xl">📊</div>
 						<span>查看訪問統計</span>
 					</div>
-					<div class="flex items-center gap-3 text-purple-100">
+                                        <div class="flex items-center gap-3 text-emerald-100">
 						<div class="text-xl">🎨</div>
 						<span>自訂網站設定</span>
 					</div>
@@ -92,7 +92,7 @@
 		<!-- Right Side - Login Form -->
 		<div class="flex items-center justify-center p-8 lg:p-12">
 			<Card class="w-full max-w-sm border-0 shadow-none">
-				<CardHeader class="pb-6 text-center">
+                                <CardHeader class="pb-8 text-center">
 					<CardTitle class="text-2xl font-bold text-gray-900 dark:text-gray-100">登入帳號</CardTitle
 					>
 					<CardDescription class="text-gray-600 dark:text-gray-300"
@@ -173,11 +173,11 @@
 						{/if}
 
 						<!-- Submit Button -->
-						<Button
-							type="submit"
-							class="w-full bg-gradient-to-r from-blue-500 to-blue-700 py-4 text-base font-semibold shadow-lg shadow-blue-500/30 hover:from-blue-600 hover:to-blue-800 hover:shadow-xl hover:shadow-blue-500/40"
-							disabled={isLoading}
-						>
+                                                <Button
+                                                        type="submit"
+                                                        class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 py-4 text-base font-semibold shadow-lg shadow-emerald-500/30 hover:from-emerald-600 hover:to-emerald-700 hover:shadow-xl hover:shadow-emerald-500/40"
+                                                        disabled={isLoading}
+                                                >
 							{#if isLoading}
 								<div
 									class="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"
@@ -192,13 +192,13 @@
 						<!-- Register Link -->
 						<div class="border-t border-gray-200 pt-5 text-center dark:border-gray-700">
 							<span class="text-sm text-gray-600 dark:text-gray-300">還沒有帳號？</span>
-							<Button
-								type="button"
-								variant="link"
-								class="h-auto p-0 font-semibold text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-600"
-								onclick={goToRegister}
-								disabled={isLoading}
-							>
+                                                        <Button
+                                                                type="button"
+                                                                variant="link"
+                                                                class="h-auto p-0 font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-600"
+                                                                onclick={goToRegister}
+                                                                disabled={isLoading}
+                                                        >
 								立即註冊
 								<ArrowRight size={14} class="ml-1" />
 							</Button>
