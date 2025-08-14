@@ -31,11 +31,11 @@
 	const getTypeColor = (type: string) => {
 		switch (type) {
 			case 'css':
-				return 'bg-blue-100 text-blue-800 border-blue-200';
+				return 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700';
 			case 'js':
-				return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+				return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700';
 			default:
-				return 'bg-gray-100 text-gray-800 border-gray-200';
+				return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600';
 		}
 	};
 
@@ -55,13 +55,13 @@
 	const getDifficultyColor = (difficulty: string) => {
 		switch (difficulty) {
 			case 'easy':
-				return 'bg-green-100 text-green-800';
+				return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
 			case 'medium':
-				return 'bg-yellow-100 text-yellow-800';
+				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
 			case 'hard':
-				return 'bg-red-100 text-red-800';
+				return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
 			default:
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
 		}
 	};
 
@@ -93,9 +93,9 @@
 			/>
 			{#if !card.image}
 				<div
-					class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
+					class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700"
 				>
-					<Icon class="text-gray-400" size={48} />
+					<Icon class="text-gray-400 dark:text-gray-500" size={48} />
 				</div>
 			{/if}
 		</div>
@@ -127,7 +127,7 @@
 
 				<!-- Title -->
 				<h3
-					class="mb-3 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-emerald-600"
+					class="mb-3 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-emerald-600 dark:text-gray-100 dark:group-hover:text-emerald-400"
 				>
 					<a href={path} class="hover:underline">
 						{card.title}
@@ -136,7 +136,7 @@
 
 				<!-- Description (if available) -->
 				{#if card.description}
-					<p class="mb-4 line-clamp-2 text-sm text-gray-600">
+					<p class="mb-4 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
 						{card.description}
 					</p>
 				{/if}
@@ -145,12 +145,14 @@
 				{#if card.tags && card.tags.length > 0}
 					<div class="mb-4 flex flex-wrap gap-1">
 						{#each card.tags.slice(0, 3) as tag}
-							<span class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600">
+							<span
+								class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-300"
+							>
 								#{tag}
 							</span>
 						{/each}
 						{#if card.tags.length > 3}
-							<span class="text-xs text-gray-400">+{card.tags.length - 3}</span>
+							<span class="text-xs text-gray-400 dark:text-gray-500">+{card.tags.length - 3}</span>
 						{/if}
 					</div>
 				{/if}
@@ -158,14 +160,14 @@
 
 			<!-- Action Area -->
 			<div class="flex items-center justify-between">
-				<div class="text-xs text-gray-500">
+				<div class="text-xs text-gray-500 dark:text-gray-400">
 					練習 #{card.id}
 				</div>
 
 				<div class="flex items-center gap-2">
 					<a
 						href={path}
-						class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition-all group-hover:gap-3 hover:text-emerald-700"
+						class="inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition-all group-hover:gap-3 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
 					>
 						查看練習
 						<ArrowRight size={16} class="transition-transform group-hover:translate-x-1" />
@@ -180,7 +182,7 @@
 	@reference "tailwindcss";
 
 	.practice-card {
-		@apply cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg;
+		@apply cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800;
 	}
 
 	.line-clamp-2 {
