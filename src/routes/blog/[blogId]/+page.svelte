@@ -52,9 +52,9 @@
 	{/if}
 </svelte:head>
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<!-- Back Button -->
-	<div class="border-b bg-white">
+	<div class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
 		<div class="container mx-auto px-4 py-4">
 			<Button variant="ghost" onclick={() => goto('/blog')} class="gap-2">
 				<ArrowLeft size={18} />
@@ -64,17 +64,21 @@
 	</div>
 
 	<!-- Article Header -->
-	<header class="bg-gradient-to-br from-purple-50 to-pink-50 py-16">
+	<header
+		class="bg-gradient-to-br from-purple-50 to-pink-50 py-16 dark:from-purple-900 dark:to-gray-900"
+	>
 		<div class="container mx-auto px-4">
 			<div class="mx-auto max-w-4xl">
 				<!-- Title -->
-				<h1 class="mb-6 text-3xl leading-tight font-bold text-gray-900 lg:text-5xl">
+				<h1
+					class="mb-6 text-3xl leading-tight font-bold text-gray-900 lg:text-5xl dark:text-gray-100"
+				>
 					{title}
 				</h1>
 
 				<!-- Brief -->
 				{#if brief}
-					<p class="mb-8 text-xl leading-relaxed text-gray-600">
+					<p class="mb-8 text-xl leading-relaxed text-gray-600 dark:text-gray-300">
 						{brief}
 					</p>
 				{/if}
@@ -127,7 +131,7 @@
 	</main>
 
 	<!-- Article Footer -->
-	<footer class="bg-gray-100 py-12">
+	<footer class="bg-gray-100 py-12 dark:bg-gray-800">
 		<div class="container mx-auto px-4">
 			<div class="mx-auto max-w-4xl">
 				<Card>
@@ -139,11 +143,11 @@
 								李
 							</div>
 							<div>
-								<h3 class="text-xl font-semibold text-gray-900">李明峯</h3>
-								<p class="text-gray-600">Frontend Developer</p>
+								<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">李明峯</h3>
+								<p class="text-gray-600 dark:text-gray-300">Frontend Developer</p>
 							</div>
 						</div>
-						<p class="mb-6 text-gray-700">
+						<p class="mb-6 text-gray-700 dark:text-gray-300">
 							熱愛前端技術的工程師，專注於創造優質的使用者體驗。喜歡分享技術心得與學習過程。
 						</p>
 						<div class="flex gap-4">
