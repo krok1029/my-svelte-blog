@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Card from './components/PracticeCard.svelte';
 	import { Search, Filter, Code, Palette, Zap } from 'lucide-svelte';
+	import { Input } from '$lib/components/ui/input';
+	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils';
 	import type { PageData } from './$types';
+	import { Card as CardRoot, CardContent } from '$lib/components/ui/card';
 
 	interface Props {
 		data: PageData;
@@ -11,6 +15,13 @@
 
 	let searchQuery = $state('');
 	let selectedType = $state('');
+
+	const filterButtonClass = (active: boolean) =>
+		cn(
+			'gap-1 rounded-full',
+			active &&
+				'bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900 dark:text-emerald-100 dark:border-emerald-600'
+		);
 
 	// 獲取所有類型
 	let allTypes = $derived([...new Set(data.practice.map((item) => item.type))]);
@@ -70,11 +81,11 @@
 						class="absolute top-1/2 left-4 -translate-y-1/2 transform text-gray-400 dark:text-gray-500"
 						size={20}
 					/>
-					<input
+					<Input
 						type="text"
 						placeholder="搜尋練習..."
 						bind:value={searchQuery}
-						class="w-full rounded-xl border border-gray-200 bg-white py-3 pr-4 pl-12 transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400 dark:focus:ring-emerald-900"
+						class="h-11 w-full rounded-xl pl-12"
 					/>
 				</div>
 			</div>
@@ -92,23 +103,27 @@
 					<span class="font-medium">篩選類型：</span>
 				</div>
 
-				<button
+				<Button
+					variant="outline"
+					size="sm"
+					class={filterButtonClass(selectedType === '')}
 					onclick={() => (selectedType = '')}
-					class="filter-tag {selectedType === '' ? 'active' : ''}"
 				>
 					<Zap size={14} />
 					全部
-				</button>
+				</Button>
 
 				{#each allTypes as type}
 					{@const Icon = getTypeIcon(type)}
-					<button
+					<Button
+						variant="outline"
+						size="sm"
+						class={filterButtonClass(selectedType === type)}
 						onclick={() => (selectedType = type)}
-						class="filter-tag {selectedType === type ? 'active' : ''}"
 					>
 						<Icon size={14} />
 						{type.toUpperCase()}
-					</button>
+					</Button>
 				{/each}
 			</div>
 
@@ -163,41 +178,51 @@
 		<div class="mx-auto max-w-4xl">
 			<h2 class="mb-8 text-center text-2xl font-bold text-gray-900 dark:text-gray-100">練習統計</h2>
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-				<div class="stat-card">
-					<div
-						class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900"
-					>
-						<Palette class="text-blue-600" size={24} />
-					</div>
-					<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
-						{data.practice.filter((p) => p.type === 'css').length}
-					</div>
-					<div class="text-gray-600 dark:text-gray-400">CSS 練習</div>
-				</div>
-
-				<div class="stat-card">
-					<div
-						class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-100 dark:bg-yellow-900"
-					>
-						<Code class="text-yellow-600" size={24} />
-					</div>
-					<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
-						{data.practice.filter((p) => p.type === 'js').length}
-					</div>
-					<div class="text-gray-600 dark:text-gray-400">JavaScript 練習</div>
-				</div>
-
-				<div class="stat-card">
-					<div
-						class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900"
-					>
-						<Zap class="text-emerald-600" size={24} />
-					</div>
-					<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
-						{data.practice.length}
-					</div>
-					<div class="text-gray-600 dark:text-gray-400">總練習數</div>
-				</div>
+				<CardRoot
+					class="rounded-xl border border-gray-100 bg-white py-6 text-center shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+				>
+					<CardContent>
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900"
+						>
+							<Palette class="text-blue-600" size={24} />
+						</div>
+						<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+							{data.practice.filter((p) => p.type === 'css').length}
+						</div>
+						<div class="text-gray-600 dark:text-gray-400">CSS 練習</div>
+					</CardContent>
+				</CardRoot>
+				<CardRoot
+					class="rounded-xl border border-gray-100 bg-white py-6 text-center shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+				>
+					<CardContent>
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-100 dark:bg-yellow-900"
+						>
+							<Code class="text-yellow-600" size={24} />
+						</div>
+						<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+							{data.practice.filter((p) => p.type === 'js').length}
+						</div>
+						<div class="text-gray-600 dark:text-gray-400">JavaScript 練習</div>
+					</CardContent>
+				</CardRoot>
+				<CardRoot
+					class="rounded-xl border border-gray-100 bg-white py-6 text-center shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+				>
+					<CardContent>
+						<div
+							class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-900"
+						>
+							<Zap class="text-emerald-600" size={24} />
+						</div>
+						<div class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
+							{data.practice.length}
+						</div>
+						<div class="text-gray-600 dark:text-gray-400">總練習數</div>
+					</CardContent>
+				</CardRoot>
 			</div>
 		</div>
 	</div>
@@ -206,19 +231,7 @@
 <style lang="postcss">
 	@reference "tailwindcss";
 
-	.filter-tag {
-		@apply inline-flex items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 transition-all hover:border-emerald-300 hover:text-emerald-600 dark:border-gray-700 dark:text-gray-300 dark:hover:border-emerald-600 dark:hover:text-emerald-400;
-	}
-
-	.filter-tag.active {
-		@apply border-emerald-300 bg-emerald-100 text-emerald-700 dark:border-emerald-600 dark:bg-emerald-900 dark:text-emerald-100;
-	}
-
 	.practice-card-wrapper {
 		@apply transform transition-all duration-300 hover:-translate-y-1;
-	}
-
-	.stat-card {
-		@apply rounded-xl border border-gray-100 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800;
 	}
 </style>
