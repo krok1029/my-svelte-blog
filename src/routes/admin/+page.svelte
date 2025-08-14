@@ -185,8 +185,8 @@
 						<FileText size={24} class="text-blue-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{totalPosts}</div>
-						<div class="text-sm text-gray-600">總文章數</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalPosts}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">總文章數</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -197,8 +197,8 @@
 						<Tag size={24} class="text-green-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{allTags.length}</div>
-						<div class="text-sm text-gray-600">標籤數量</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{allTags.length}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">標籤數量</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -209,8 +209,8 @@
 						<Calendar size={24} class="text-purple-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{recentPosts.length}</div>
-						<div class="text-sm text-gray-600">最近文章</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{recentPosts.length}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">最近文章</div>
 					</div>
 				</CardContent>
 			</Card>
