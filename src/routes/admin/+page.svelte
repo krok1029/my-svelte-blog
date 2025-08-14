@@ -209,7 +209,9 @@
 						<Calendar size={24} class="text-purple-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{recentPosts.length}</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+							{recentPosts.length}
+						</div>
 						<div class="text-sm text-gray-600 dark:text-gray-500">最近文章</div>
 					</div>
 				</CardContent>
