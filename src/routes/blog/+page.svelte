@@ -65,24 +65,30 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-purple-50 to-pink-50 py-16">
+<section
+	class="bg-gradient-to-br from-purple-50 to-pink-50 py-16 dark:from-purple-900 dark:to-gray-900"
+>
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-4xl text-center">
-			<h1 class="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl">技術部落格</h1>
-			<p class="mb-8 text-xl text-gray-600">分享我在前端開發路上的學習心得與技術見解</p>
+			<h1 class="mb-4 text-4xl font-bold text-gray-900 lg:text-5xl dark:text-gray-100">
+				技術部落格
+			</h1>
+			<p class="mb-8 text-xl text-gray-600 dark:text-gray-300">
+				分享我在前端開發路上的學習心得與技術見解
+			</p>
 
 			<!-- Search Bar -->
 			<div class="mx-auto max-w-2xl">
 				<div class="relative">
 					<Search
-						class="absolute top-1/2 left-4 -translate-y-1/2 transform text-gray-400"
+						class="absolute top-1/2 left-4 -translate-y-1/2 transform text-gray-400 dark:text-gray-400"
 						size={20}
 					/>
 					<Input
 						type="text"
 						placeholder="搜尋文章..."
 						bind:value={searchQuery}
-						class="rounded-xl border-gray-200 py-3 pl-12 text-base focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+						class="rounded-xl border-gray-200 py-3 pl-12 text-base focus:border-purple-500 focus:ring-2 focus:ring-purple-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400 dark:focus:ring-purple-800"
 					/>
 				</div>
 			</div>
@@ -91,11 +97,11 @@
 </section>
 
 <!-- Filter Section -->
-<section class="border-b border-gray-100 bg-white py-8">
+<section class="border-b border-gray-100 bg-white py-8 dark:border-gray-700 dark:bg-gray-800">
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-6xl">
 			<div class="flex flex-wrap items-center gap-4">
-				<div class="flex items-center gap-2 text-gray-600">
+				<div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
 					<Filter size={18} />
 					<span class="font-medium">篩選標籤：</span>
 				</div>
@@ -122,7 +128,7 @@
 				{/each}
 			</div>
 
-			<div class="mt-4 text-sm text-gray-500">
+			<div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
 				共找到 {filteredPosts.length} 篇文章
 			</div>
 		</div>
@@ -130,7 +136,7 @@
 </section>
 
 <!-- Blog Posts Grid -->
-<section class="bg-gray-50 py-16">
+<section class="bg-gray-50 py-16 dark:bg-gray-900">
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-6xl">
 			{#if filteredPosts.length > 0}
@@ -144,12 +150,14 @@
 			{:else}
 				<div class="py-16 text-center">
 					<div
-						class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gray-200"
+						class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
 					>
-						<Search class="text-gray-400" size={32} />
+						<Search class="text-gray-400 dark:text-gray-400" size={32} />
 					</div>
-					<h3 class="mb-2 text-xl font-semibold text-gray-900">找不到相關文章</h3>
-					<p class="mb-6 text-gray-600">試試調整搜尋關鍵字或選擇不同的標籤</p>
+					<h3 class="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
+						找不到相關文章
+					</h3>
+					<p class="mb-6 text-gray-600 dark:text-gray-300">試試調整搜尋關鍵字或選擇不同的標籤</p>
 					<Button
 						onclick={() => {
 							searchQuery = '';

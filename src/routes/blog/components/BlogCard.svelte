@@ -11,10 +11,12 @@
 </script>
 
 <article
-	class="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200/60 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-100/50"
+	class="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200/60 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-100/50 dark:border-gray-700 dark:bg-gray-800 dark:hover:shadow-purple-900/50"
 >
 	<!-- Image Container -->
-	<div class="relative overflow-hidden rounded-t-2xl bg-gradient-to-br from-purple-50 to-blue-50">
+	<div
+		class="relative overflow-hidden rounded-t-2xl bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900 dark:to-blue-900"
+	>
 		<img
 			class="h-48 w-full object-cover transition-all duration-500 group-hover:scale-110"
 			src={card?.image || defaultImageUrl}
@@ -26,14 +28,18 @@
 			class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80"
 		></div>
 		<!-- Decorative corner accent -->
-		<div class="absolute top-4 right-4 h-2 w-2 rounded-full bg-white/30 backdrop-blur-sm"></div>
+		<div
+			class="absolute top-4 right-4 h-2 w-2 rounded-full bg-white/30 backdrop-blur-sm dark:bg-gray-500/30"
+		></div>
 	</div>
 
 	<!-- Content Container -->
-	<div class="flex flex-1 flex-col bg-gradient-to-b from-white to-gray-50/30 p-6">
+	<div
+		class="flex flex-1 flex-col bg-gradient-to-b from-white to-gray-50/30 p-6 dark:from-gray-800 dark:to-gray-900"
+	>
 		<!-- Title -->
 		<h2
-			class="mb-3 line-clamp-2 text-xl leading-tight font-bold text-gray-900 transition-colors group-hover:text-purple-700"
+			class="mb-3 line-clamp-2 text-xl leading-tight font-bold text-gray-900 transition-colors group-hover:text-purple-700 dark:text-gray-100 dark:group-hover:text-purple-400"
 		>
 			<a
 				href={`/blog/${card.id}`}
@@ -44,7 +50,7 @@
 		</h2>
 
 		<!-- Brief -->
-		<p class="mb-4 line-clamp-3 flex-1 text-base leading-relaxed text-gray-600">
+		<p class="mb-4 line-clamp-3 flex-1 text-base leading-relaxed text-gray-600 dark:text-gray-300">
 			{card.brief}
 		</p>
 
@@ -53,14 +59,14 @@
 			<div class="mb-5 flex flex-wrap gap-2">
 				{#each card.tags.slice(0, 3) as tag}
 					<span
-						class="inline-flex items-center gap-1.5 rounded-full border border-purple-100 bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-1.5 text-xs font-medium text-purple-700 transition-all hover:scale-105 hover:shadow-sm"
+						class="inline-flex items-center gap-1.5 rounded-full border border-purple-100 bg-gradient-to-r from-purple-50 to-blue-50 px-3 py-1.5 text-xs font-medium text-purple-700 transition-all hover:scale-105 hover:shadow-sm dark:border-purple-800 dark:from-purple-900 dark:to-blue-900 dark:text-purple-300"
 					>
-						<Tag size={12} class="text-purple-500" />
+						<Tag size={12} class="text-purple-500 dark:text-purple-400" />
 						{tag}
 					</span>
 				{/each}
 				{#if card.tags.length > 3}
-					<span class="self-center text-xs font-medium text-gray-400"
+					<span class="self-center text-xs font-medium text-gray-400 dark:text-gray-500"
 						>+{card.tags.length - 3} 更多</span
 					>
 				{/if}
@@ -68,10 +74,10 @@
 		{/if}
 
 		<!-- Read More Button -->
-		<div class="mt-auto border-t border-gray-100 pt-2">
+		<div class="mt-auto border-t border-gray-100 pt-2 dark:border-gray-700">
 			<a
 				href={`/blog/${card.id}`}
-				class="inline-flex items-center gap-2 py-2 text-sm font-semibold text-purple-600 transition-all duration-300 group-hover:gap-3 hover:text-purple-700"
+				class="inline-flex items-center gap-2 py-2 text-sm font-semibold text-purple-600 transition-all duration-300 group-hover:gap-3 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
 			>
 				<span class="relative">
 					閱讀更多
@@ -81,7 +87,7 @@
 				</span>
 				<ArrowRight
 					size={16}
-					class="transition-all duration-300 group-hover:translate-x-1 group-hover:text-purple-700"
+					class="transition-all duration-300 group-hover:translate-x-1 group-hover:text-purple-700 dark:group-hover:text-purple-400"
 				/>
 			</a>
 		</div>
