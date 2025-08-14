@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
@@ -78,7 +76,6 @@
 	let isSubmitting = $state(false);
 	let isDeleting = $state(false);
 	let showDeleteModal = $state(false);
-	let hasUnsavedChanges = $state(false);
 	let activeTab = $state('write');
 
 	// 原始資料，用於檢測變更
@@ -90,14 +87,12 @@
 	};
 
 	// 檢測是否有未儲存的變更
-	run(() => {
-		hasUnsavedChanges =
-			title !== originalData.title ||
+	const hasUnsavedChanges = $derived(
+		title !== originalData.title ||
 			inputTags !== originalData.inputTags ||
 			brief !== originalData.brief ||
-			content !== originalData.content;
-	});
-
+			content !== originalData.content
+	);
 	const handleDelete = () => {
 		showDeleteModal = true;
 	};

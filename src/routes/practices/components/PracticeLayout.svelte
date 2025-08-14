@@ -99,7 +99,7 @@
 </svelte:head>
 
 <!-- Header -->
-<header class="sticky top-0 z-50 border-b border-gray-200 bg-white">
+<header class="sticky top-0 z-10 border-b border-gray-200 bg-white">
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex items-center justify-between">
 			<button

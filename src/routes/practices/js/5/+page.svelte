@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import PracticeLayout from '../../components/PracticeLayout.svelte';
 	import { Upload, Copy, Check, Image, Eye } from 'lucide-svelte';
 	import { enhance } from '$app/forms';
@@ -20,14 +18,9 @@
 
 	const reader = $state(new FileReader());
 
-	run(() => {
-		if (files) {
-			for (const file of files) {
-				console.log(`${file.name}: ${file.size} bytes`);
-			}
-			if (files[0]) {
-				reader.readAsDataURL(files[0]);
-			}
+	$effect(() => {
+		if (files && files[0]) {
+			reader.readAsDataURL(files[0]);
 		}
 	});
 

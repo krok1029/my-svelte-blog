@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
 	import { enhance } from '$app/forms';
@@ -61,7 +59,7 @@ console.log('Hello, World!');
 	let activeTab = $state('write');
 
 	// 如果有 form 數據，恢復表單狀態
-	run(() => {
+	$effect(() => {
 		if (form) {
 			title = form.title || title;
 			inputTags = form.tags || inputTags;

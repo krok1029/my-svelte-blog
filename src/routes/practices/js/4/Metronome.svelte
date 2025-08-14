@@ -1,79 +1,95 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
+  // 移除：import { run } from 'svelte/legacy';
+  import metronome1 from '$asset/audio/metronome1.mp3';
+  import metronome2 from '$asset/audio/metronome2.mp3';
+  import { Play, Pause, Volume2, Music } from 'lucide-svelte';
+  import { onDestroy } from 'svelte';
 
-	import metronome1 from '$asset/audio/metronome1.mp3';
-	import metronome2 from '$asset/audio/metronome2.mp3';
-	import { Play, Pause, Volume2, Music } from 'lucide-svelte';
+  const MIN_TEMPO = 60;
+  const MAX_TEMPO = 300;
+  const BEAT = 2;
 
-	const MIN_TEMPO = 60;
-	const MAX_TEMPO = 300;
-	const BEAT = 2;
-	let beatCount = 0;
-	let tempo = $state(180);
-	let volume = $state(0.8);
-	let isPlaying = $state(false);
-	let interval: number = $state(0);
-	let currentBeat = $state(0); // 用於視覺指示
+  let beatCount = 0;
+  let tempo = $state(180);
+  let volume = $state(0.8);
+  let isPlaying = $state(false);
+  let currentBeat = $state(0); // 視覺指示 1~4
 
-	const mainBeat = $state(new Audio(metronome1));
-	const subBeat = $state(new Audio(metronome2));
+  const mainBeat = $state(new Audio(metronome1));
+  const subBeat = $state(new Audio(metronome2));
+  mainBeat.preload = 'auto';
+  subBeat.preload = 'auto';
 
-	mainBeat.preload = 'auto';
-	subBeat.preload = 'auto';
+  const playSound = () => {
+    beatCount++;
+    currentBeat = (currentBeat % 4) + 1; // 1 -> 4
 
-	const playSound = () => {
-		beatCount++;
-		currentBeat = (currentBeat % 4) + 1; // 視覺節拍指示 1-4
+    if (beatCount % BEAT === 0) {
+      subBeat.pause();
+      subBeat.currentTime = 0;
+      mainBeat.play();
+    } else {
+      mainBeat.pause();
+      mainBeat.currentTime = 0;
+      subBeat.play();
+    }
+  };
 
-		if (beatCount % BEAT === 0) {
-			subBeat.pause();
-			subBeat.currentTime = 0;
-			mainBeat.play();
-		} else {
-			mainBeat.pause();
-			mainBeat.currentTime = 0;
-			subBeat.play();
-		}
-	};
+  // 只切換狀態與重置視覺，不直接 setInterval/clearInterval
+  const toggleMetronome = () => {
+    if (isPlaying) {
+      // 正在播放 -> 停止時，暫停音訊並重置狀態
+      mainBeat.pause();
+      subBeat.pause();
+      beatCount = 0;
+      currentBeat = 0;
+      isPlaying = false; // 觸發 effect 清理 interval
+    } else {
+      // 停止 -> 開始
+      isPlaying = true;  // 觸發 effect 建立 interval
+    }
+  };
 
-	const toggleMetronome = () => {
-		if (isPlaying) {
-			clearInterval(interval);
-			beatCount = 0;
-			currentBeat = 0;
-		} else {
-			interval = setInterval(() => {
-				playSound();
-			}, 60000 / tempo) as unknown as number;
-		}
-		isPlaying = !isPlaying;
-	};
+  // 單一來源：由 effect 依 isPlaying/tempo 控制計時器生命週期
+  $effect(() => {
+    if (!isPlaying || !tempo || tempo <= 0) return;
 
-	// 當 tempo 改變時，如果正在播放則重新設定間隔
-	run(() => {
-		if (isPlaying && tempo) {
-			clearInterval(interval);
-			interval = setInterval(() => {
-				playSound();
-			}, 60000 / tempo) as unknown as number;
-		}
-	});
+    // 以輸入框限制為主，但加個保護仍然好
+    const clamped = Math.min(MAX_TEMPO, Math.max(MIN_TEMPO, tempo));
+    const delay = Math.max(1, Math.round(60000 / clamped));
 
-	run(() => {
-		mainBeat.volume = volume;
-		subBeat.volume = volume;
-	});
+    const id = setInterval(() => {
+      // 不讀/寫其他 reactive 值以外的依賴，避免自觸發
+      playSound();
+    }, delay) as unknown as number;
 
-	// 獲取 tempo 的描述
-	const getTempoDescription = (bpm: number) => {
-		if (bpm < 80) return 'Largo (很慢)';
-		if (bpm < 100) return 'Andante (行板)';
-		if (bpm < 120) return 'Moderato (中板)';
-		if (bpm < 140) return 'Allegro (快板)';
-		if (bpm < 180) return 'Vivace (活潑)';
-		return 'Presto (急板)';
-	};
+    // 依賴變更或元件卸載時自動清除
+    return () => clearInterval(id);
+  });
+
+  // 音量同步（加存在性判斷）
+  $effect(() => {
+    if (mainBeat && mainBeat.volume !== volume) mainBeat.volume = volume;
+    if (subBeat && subBeat.volume !== volume) subBeat.volume = volume;
+  });
+
+  // 節奏描述（不涉及 reactivity）
+  const getTempoDescription = (bpm: number) => {
+    if (bpm < 80) return 'Largo (很慢)';
+    if (bpm < 100) return 'Andante (行板)';
+    if (bpm < 120) return 'Moderato (中板)';
+    if (bpm < 140) return 'Allegro (快板)';
+    if (bpm < 180) return 'Vivace (活潑)';
+    return 'Presto (急板)';
+  };
+
+  // 卸載時保險起見也暫停聲音（interval 已由 effect 清理）
+  onDestroy(() => {
+    mainBeat.pause();
+    subBeat.pause();
+  });
 </script>
+
 
 <div class="metronome-container">
 	<div class="metronome-card">
@@ -363,7 +379,6 @@
 		border-radius: 3px;
 		background: #e5e7eb;
 		outline: none;
-		-webkit-appearance: none;
 	}
 
 	.tempo-slider::-webkit-slider-thumb,
