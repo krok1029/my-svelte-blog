@@ -89,12 +89,14 @@
 	{#snippet tips()}
 		<div>
 			<div class="space-y-4">
-				<p class="text-gray-700">
+				<p class="text-gray-700 dark:text-gray-300">
 					這個練習展示了 CSS :not() 偽類選擇器的強大功能，通過組合 :hover 狀態創造出獨特的互動效果。
 				</p>
-				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
-					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
-					<ul class="space-y-1 text-sm text-blue-800">
+				<div
+					class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900"
+				>
+					<h4 class="mb-2 font-semibold text-blue-900 dark:text-blue-300">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800 dark:text-blue-200">
 						<li>• :not() 選擇器可以排除特定狀態的元素</li>
 						<li>• 組合偽類選擇器創造複雜的互動效果</li>
 						<li>• CSS transform 和 transition 的配合使用</li>

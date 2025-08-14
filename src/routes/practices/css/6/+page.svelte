@@ -104,12 +104,14 @@
 	{#snippet tips()}
 		<div>
 			<div class="space-y-4">
-				<p class="text-gray-700">
+				<p class="text-gray-700 dark:text-gray-300">
 					這個練習展示了如何使用 CSS 偽類選擇器創建流暢的表單動畫，提升使用者體驗。
 				</p>
-				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
-					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
-					<ul class="space-y-1 text-sm text-blue-800">
+				<div
+					class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900"
+				>
+					<h4 class="mb-2 font-semibold text-blue-900 dark:text-blue-300">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800 dark:text-blue-200">
 						<li>• :focus 偽類在元素獲得焦點時觸發</li>
 						<li>• :valid 偽類在輸入內容有效時觸發</li>
 						<li>• pointer-events: none 讓標籤不阻擋點擊</li>
