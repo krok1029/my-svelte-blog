@@ -185,8 +185,8 @@
 						<FileText size={24} class="text-blue-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{totalPosts}</div>
-						<div class="text-sm text-gray-600">總文章數</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalPosts}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">總文章數</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -197,8 +197,8 @@
 						<Tag size={24} class="text-green-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{allTags.length}</div>
-						<div class="text-sm text-gray-600">標籤數量</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{allTags.length}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">標籤數量</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -209,8 +209,8 @@
 						<Calendar size={24} class="text-purple-600" />
 					</div>
 					<div>
-						<div class="text-2xl font-bold text-gray-900">{recentPosts.length}</div>
-						<div class="text-sm text-gray-600">最近文章</div>
+						<div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{recentPosts.length}</div>
+						<div class="text-sm text-gray-600 dark:text-gray-500">最近文章</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -659,5 +659,100 @@
 		.search-box {
 			max-width: none;
 		}
+	}
+
+	:global(.dark) .admin-container {
+		background: #111827;
+	}
+
+	:global(.dark) .sidebar {
+		background: #1f2937;
+		border-right: 1px solid #374151;
+	}
+
+	:global(.dark) .sidebar-header {
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .logo {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .nav-item {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .nav-item:hover {
+		background: #374151;
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .nav-item.active {
+		background: #1e40af;
+		color: #60a5fa;
+		border-right: 3px solid #60a5fa;
+	}
+
+	:global(.dark) .sidebar-footer {
+		border-top: 1px solid #374151;
+	}
+
+	:global(.dark) .logout-btn {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .logout-btn:hover {
+		background: #7f1d1d;
+		color: #fca5a5;
+	}
+
+	:global(.dark) .main-content {
+		color: #d1d5db;
+	}
+
+	:global(.dark) .page-title {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .page-subtitle {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .filter-group {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .tag-filter {
+		border-color: #4b5563;
+		background: #1f2937;
+		color: #d1d5db;
+	}
+
+	:global(.dark) .posts-table th {
+		background: #1f2937;
+		color: #d1d5db;
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .posts-table td {
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .table-row:hover {
+		background: #374151;
+	}
+
+	:global(.dark) .post-title-link {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .post-title-link:hover {
+		color: #60a5fa;
+	}
+
+	:global(.dark) .no-tags,
+	:global(.dark) .brief-text,
+	:global(.dark) .date-cell {
+		color: #9ca3af;
 	}
 </style>
