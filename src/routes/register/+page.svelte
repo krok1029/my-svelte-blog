@@ -98,15 +98,15 @@
 </svelte:head>
 
 <div
-        class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 dark:from-emerald-900 dark:via-emerald-950 dark:to-emerald-900 p-5"
+	class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 p-5 dark:from-emerald-900 dark:via-emerald-950 dark:to-emerald-900"
 >
-        <div
-                class="grid min-h-[700px] w-full max-w-4xl overflow-hidden rounded-3xl bg-white dark:bg-gray-900 shadow-2xl md:grid-cols-2"
-        >
+	<div
+		class="grid min-h-[700px] w-full max-w-4xl overflow-hidden rounded-3xl bg-white shadow-2xl md:grid-cols-2 dark:bg-gray-900"
+	>
 		<!-- Left Side - Branding -->
-                <div
-                        class="relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 dark:from-emerald-700 dark:via-emerald-800 dark:to-emerald-900 p-12 text-white lg:p-16"
-                >
+		<div
+			class="relative flex flex-col justify-center overflow-hidden bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 p-12 text-white lg:p-16 dark:from-emerald-700 dark:via-emerald-800 dark:to-emerald-900"
+		>
 			<!-- Background Pattern -->
 			<div
 				class="absolute inset-0 opacity-30"
@@ -159,12 +159,16 @@
 		</div>
 
 		<!-- Right Side - Register Form -->
-                <div class="flex items-center justify-center overflow-y-auto p-12 lg:p-16">
-                        <Card class="w-full max-w-md border-0 shadow-none">
-                                <CardHeader class="pb-8 text-center">
-                                        <CardTitle class="text-2xl font-bold text-gray-900 dark:text-gray-100">建立新帳號</CardTitle>
-                                        <CardDescription class="text-gray-600 dark:text-gray-400">請填寫以下資訊完成註冊</CardDescription>
-                                </CardHeader>
+		<div class="flex items-center justify-center overflow-y-auto p-12 lg:p-16">
+			<Card class="w-full max-w-md border-0 shadow-none">
+				<CardHeader class="pb-8 text-center">
+					<CardTitle class="text-2xl font-bold text-gray-900 dark:text-gray-100"
+						>建立新帳號</CardTitle
+					>
+					<CardDescription class="text-gray-600 dark:text-gray-400"
+						>請填寫以下資訊完成註冊</CardDescription
+					>
+				</CardHeader>
 
 				<CardContent>
 					<form
@@ -179,10 +183,12 @@
 						}}
 					>
 						<!-- Email Input -->
-                                                <div class="flex flex-col gap-2">
-                                                        <Label for="email" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Email 地址</Label>
-                                                        <div class="relative flex items-center">
-                                                                <Mail size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
+						<div class="flex flex-col gap-2">
+							<Label for="email" class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+								>Email 地址</Label
+							>
+							<div class="relative flex items-center">
+								<Mail size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
 								<Input
 									id="email"
 									name="email"
@@ -197,10 +203,12 @@
 						</div>
 
 						<!-- Password Input -->
-                                                <div class="flex flex-col gap-2">
-                                                        <Label for="password" class="text-sm font-semibold text-gray-700 dark:text-gray-300">密碼</Label>
-                                                        <div class="relative flex items-center">
-                                                                <Lock size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
+						<div class="flex flex-col gap-2">
+							<Label for="password" class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+								>密碼</Label
+							>
+							<div class="relative flex items-center">
+								<Lock size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
 								<Input
 									id="password"
 									name="password"
@@ -211,14 +219,14 @@
 									disabled={isLoading}
 									required
 								/>
-                                                                <Button
-                                                                        type="button"
-                                                                        variant="ghost"
-                                                                        size="sm"
-                                                                        class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
-                                                                        onclick={togglePasswordVisibility}
-                                                                        disabled={isLoading}
-                                                                >
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
+									onclick={togglePasswordVisibility}
+									disabled={isLoading}
+								>
 									{#if showPassword}
 										<EyeOff size={20} />
 									{:else}
@@ -230,7 +238,9 @@
 							<!-- Password Strength Indicator -->
 							{#if password}
 								<div class="mt-2">
-                                                                          <div class="mb-2 h-1 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+									<div
+										class="mb-2 h-1 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"
+									>
 										<div
 											class="h-full transition-all duration-300"
 											style="width: {(passwordStrength.score / 5) *
@@ -241,7 +251,7 @@
 										密碼強度: {passwordStrength.text}
 									</div>
 									{#if passwordStrength.feedback && passwordStrength.feedback.length > 0}
-                                                                                  <div class="mt-2 text-xs text-gray-600 dark:text-gray-400">
+										<div class="mt-2 text-xs text-gray-600 dark:text-gray-400">
 											<p class="mb-1 font-medium">建議改進:</p>
 											<ul class="list-inside list-disc space-y-0.5">
 												{#each passwordStrength.feedback as tip}
@@ -255,12 +265,13 @@
 						</div>
 
 						<!-- Confirm Password Input -->
-                                                <div class="flex flex-col gap-2">
-                                                        <Label for="confirmPassword" class="text-sm font-semibold text-gray-700 dark:text-gray-300"
-                                                                >確認密碼</Label
-                                                        >
-                                                        <div class="relative flex items-center">
-                                                                <Lock size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
+						<div class="flex flex-col gap-2">
+							<Label
+								for="confirmPassword"
+								class="text-sm font-semibold text-gray-700 dark:text-gray-300">確認密碼</Label
+							>
+							<div class="relative flex items-center">
+								<Lock size={20} class="absolute left-4 z-10 text-gray-400 dark:text-gray-500" />
 								<Input
 									id="confirmPassword"
 									name="confirmPassword"
@@ -275,14 +286,14 @@
 									disabled={isLoading}
 									required
 								/>
-                                                                <Button
-                                                                        type="button"
-                                                                        variant="ghost"
-                                                                        size="sm"
-                                                                        class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
-                                                                        onclick={toggleConfirmPasswordVisibility}
-                                                                        disabled={isLoading}
-                                                                >
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									class="absolute right-2 h-8 w-8 p-0 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400"
+									onclick={toggleConfirmPasswordVisibility}
+									disabled={isLoading}
+								>
 									{#if showConfirmPassword}
 										<EyeOff size={20} />
 									{:else}
@@ -294,12 +305,16 @@
 							{#if confirmPassword}
 								<div class="mt-2">
 									{#if passwordsMatch}
-                                                                                <div class="flex items-center gap-2 text-sm font-medium text-green-600 dark:text-green-400">
+										<div
+											class="flex items-center gap-2 text-sm font-medium text-green-600 dark:text-green-400"
+										>
 											<CheckCircle size={16} />
 											<span>密碼一致</span>
 										</div>
 									{:else}
-                                                                                <div class="flex items-center gap-2 text-sm font-medium text-red-600 dark:text-red-400">
+										<div
+											class="flex items-center gap-2 text-sm font-medium text-red-600 dark:text-red-400"
+										>
 											<AlertCircle size={16} />
 											<span>密碼不一致</span>
 										</div>
@@ -338,16 +353,16 @@
 						</Button>
 
 						<!-- Login Link -->
-                                                <div class="border-t border-gray-200 dark:border-gray-700 pt-5 text-center">
-                                                        <p class="text-sm text-gray-600 dark:text-gray-400">
-                                                                已經有帳號了？
-                                                                <Button
-                                                                        type="button"
-                                                                        variant="link"
-                                                                        class="h-auto p-0 font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
-                                                                        onclick={goToLogin}
-                                                                        disabled={isLoading}
-                                                                >
+						<div class="border-t border-gray-200 pt-5 text-center dark:border-gray-700">
+							<p class="text-sm text-gray-600 dark:text-gray-400">
+								已經有帳號了？
+								<Button
+									type="button"
+									variant="link"
+									class="h-auto p-0 font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+									onclick={goToLogin}
+									disabled={isLoading}
+								>
 									<ArrowLeft size={16} class="mr-1" />
 									返回登入
 								</Button>
