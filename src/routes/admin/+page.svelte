@@ -660,4 +660,99 @@
 			max-width: none;
 		}
 	}
+
+	:global(.dark) .admin-container {
+		background: #111827;
+	}
+
+	:global(.dark) .sidebar {
+		background: #1f2937;
+		border-right: 1px solid #374151;
+	}
+
+	:global(.dark) .sidebar-header {
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .logo {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .nav-item {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .nav-item:hover {
+		background: #374151;
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .nav-item.active {
+		background: #1e40af;
+		color: #60a5fa;
+		border-right: 3px solid #60a5fa;
+	}
+
+	:global(.dark) .sidebar-footer {
+		border-top: 1px solid #374151;
+	}
+
+	:global(.dark) .logout-btn {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .logout-btn:hover {
+		background: #7f1d1d;
+		color: #fca5a5;
+	}
+
+	:global(.dark) .main-content {
+		color: #d1d5db;
+	}
+
+	:global(.dark) .page-title {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .page-subtitle {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .filter-group {
+		color: #9ca3af;
+	}
+
+	:global(.dark) .tag-filter {
+		border-color: #4b5563;
+		background: #1f2937;
+		color: #d1d5db;
+	}
+
+	:global(.dark) .posts-table th {
+		background: #1f2937;
+		color: #d1d5db;
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .posts-table td {
+		border-bottom: 1px solid #374151;
+	}
+
+	:global(.dark) .table-row:hover {
+		background: #374151;
+	}
+
+	:global(.dark) .post-title-link {
+		color: #f3f4f6;
+	}
+
+	:global(.dark) .post-title-link:hover {
+		color: #60a5fa;
+	}
+
+	:global(.dark) .no-tags,
+	:global(.dark) .brief-text,
+	:global(.dark) .date-cell {
+		color: #9ca3af;
+	}
 </style>

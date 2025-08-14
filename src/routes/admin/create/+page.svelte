@@ -109,7 +109,7 @@ console.log('Hello, World!');
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<!-- Header -->
-	<header class="sticky top-0 z-50 border-b bg-white dark:border-gray-800 dark:bg-gray-950">
+	<header class="sticky top-0 z-50 border-b bg-white dark:border-gray-700 dark:bg-gray-900">
 		<div class="flex items-center justify-between p-6">
 			<div class="flex items-center gap-6">
 				<Button variant="ghost" size="sm" onclick={goBack} class="gap-2">
@@ -256,7 +256,7 @@ console.log('Hello, World!');
 
 						<TabsContent value="preview" class="mt-4">
 							<div
-								class="min-h-[500px] rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-950"
+								class="min-h-[500px] rounded-lg border bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
 							>
 								<div class="prose max-w-none">
 									{@html marked(content, { mangle: false, headerIds: false })}
