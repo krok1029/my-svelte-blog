@@ -82,13 +82,15 @@ document.querySelectorAll('.box').forEach(box => {
 	{#snippet tips()}
 		<div>
 			<div class="space-y-4">
-				<p class="text-gray-700">
+				<p class="text-gray-700 dark:text-gray-300">
 					這個練習展示了如何使用現代的 Intersection Observer API 來創建滾動動畫效果，相比傳統的
 					scroll 事件監聽，具有更好的性能表現。
 				</p>
-				<div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
-					<h4 class="mb-2 font-semibold text-blue-900">💡 學習要點：</h4>
-					<ul class="space-y-1 text-sm text-blue-800">
+				<div
+					class="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900"
+				>
+					<h4 class="mb-2 font-semibold text-blue-900 dark:text-blue-300">💡 學習要點：</h4>
+					<ul class="space-y-1 text-sm text-blue-800 dark:text-blue-200">
 						<li>• Intersection Observer 比 scroll 事件更高效</li>
 						<li>• CSS transform 比改變 position 屬性性能更好</li>
 						<li>• 適當的 transition timing 讓動畫更自然</li>

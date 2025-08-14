@@ -44,11 +44,11 @@
 	const getTypeColor = (type: string) => {
 		switch (type) {
 			case 'css':
-				return 'bg-blue-100 text-blue-800 border-blue-200';
+				return 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700';
 			case 'js':
-				return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+				return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700';
 			default:
-				return 'bg-gray-100 text-gray-800 border-gray-200';
+				return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600';
 		}
 	};
 
@@ -56,13 +56,13 @@
 	const getDifficultyColor = (difficulty: string) => {
 		switch (difficulty) {
 			case 'easy':
-				return 'bg-green-100 text-green-800';
+				return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
 			case 'medium':
-				return 'bg-yellow-100 text-yellow-800';
+				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
 			case 'hard':
-				return 'bg-red-100 text-red-800';
+				return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
 			default:
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200';
 		}
 	};
 
@@ -99,12 +99,14 @@
 </svelte:head>
 
 <!-- Header -->
-<header class="sticky top-0 z-10 border-b border-gray-200 bg-white">
+<header
+	class="sticky top-0 z-10 border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+>
 	<div class="container mx-auto px-4 py-4">
 		<div class="flex items-center justify-between">
 			<button
 				onclick={() => goto('/practices')}
-				class="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900"
+				class="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
 			>
 				<ArrowLeft size={18} />
 				回到練習列表
@@ -134,8 +136,11 @@
 <!-- Practice Info -->
 <Collapsible.Root>
 	<Collapsible.Trigger onclick={() => (open = !open)} class="flex items-center justify-between">
-		<div class="flex items-center gap-2 px-3 py-2 text-gray-500">
-			<span class="text-gray-600 transition-colors hover:text-gray-900">練習重點</span>
+		<div class="flex items-center gap-2 px-3 py-2 text-gray-500 dark:text-gray-400">
+			<span
+				class="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
+				>練習重點</span
+			>
 
 			{#if open}
 				<ChevronUp size={18} />
@@ -145,19 +150,21 @@
 		</div>
 	</Collapsible.Trigger>
 	<Collapsible.Content>
-		<section class="bg-gradient-to-br from-gray-50 to-blue-50 py-12">
+		<section
+			class="bg-gradient-to-br from-gray-50 to-blue-50 py-12 dark:from-gray-900 dark:to-blue-900"
+		>
 			<div class="container mx-auto px-4">
 				<div class="mx-auto max-w-4xl">
-					<div class="mb-4 flex items-center gap-2 text-sm text-gray-600">
+					<div class="mb-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
 						<span>練習 #{practiceInfo.id}</span>
 						<span>•</span>
 						<span>{getTypeName(practiceInfo.type)} 練習</span>
 					</div>
 
-					<h1 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
+					<h1 class="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl dark:text-gray-100">
 						{practiceInfo.title}
 					</h1>
-					<p class="mb-6 text-lg text-gray-600">
+					<p class="mb-6 text-lg text-gray-600 dark:text-gray-300">
 						{practiceInfo.description}
 					</p>
 
@@ -165,7 +172,7 @@
 					<div class="mb-6 flex flex-wrap gap-2">
 						{#each practiceInfo.tags as tag}
 							<span
-								class="rounded-full border border-gray-200 bg-white/80 px-3 py-1 text-sm text-gray-700 backdrop-blur-sm"
+								class="rounded-full border border-gray-200 bg-white/80 px-3 py-1 text-sm text-gray-700 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80 dark:text-gray-300"
 							>
 								#{tag}
 							</span>
@@ -173,14 +180,18 @@
 					</div>
 
 					<!-- Key Concepts -->
-					<div class="rounded-xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm">
-						<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
+					<div
+						class="rounded-xl border border-gray-200 bg-white/80 p-6 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/80"
+					>
+						<h3
+							class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100"
+						>
 							<Lightbulb size={20} />
 							主要概念
 						</h3>
 						<div class="grid grid-cols-1 gap-3 md:grid-cols-2">
 							{#each practiceInfo.concepts as concept}
-								<div class="flex items-center gap-2 text-gray-700">
+								<div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
 									<div class="h-2 w-2 rounded-full bg-blue-500"></div>
 									{concept}
 								</div>
@@ -202,24 +213,27 @@
 
 <!-- Code Explanation -->
 {#if practiceInfo.codeExamples && practiceInfo.codeExamples.length > 0}
-	<section class="bg-white py-16">
+	<section class="bg-white py-16 dark:bg-gray-800">
 		<div class="container mx-auto px-4">
 			<div class="mx-auto max-w-4xl">
-				<h2 class="mb-8 flex items-center gap-2 text-2xl font-bold text-gray-900">
+				<h2
+					class="mb-8 flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100"
+				>
 					<Code size={24} />
 					實作說明
 				</h2>
 
 				<div class="space-y-8">
 					{#each practiceInfo.codeExamples as example, index}
-						<div class="rounded-xl bg-gray-50 p-6">
-							<h3 class="mb-4 text-lg font-semibold text-gray-900">
+						<div class="rounded-xl bg-gray-50 p-6 dark:bg-gray-900">
+							<h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
 								{index + 1}. {example.title}
 							</h3>
-							<p class="mb-4 text-gray-700">
+							<p class="mb-4 text-gray-700 dark:text-gray-300">
 								{example.description}
 							</p>
-							<pre class="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100"><code
+							<pre
+								class="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100 dark:bg-gray-950"><code
 									>{example.code}</code
 								></pre>
 						</div>
@@ -231,16 +245,22 @@
 {/if}
 
 <!-- Tips Section -->
-<section class="bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+<section
+	class="bg-gradient-to-br from-blue-50 to-indigo-50 py-12 dark:from-gray-800 dark:to-indigo-900"
+>
 	<div class="container mx-auto px-4">
 		<div class="mx-auto max-w-4xl">
-			<div class="rounded-xl border border-blue-200 bg-white/80 p-6 backdrop-blur-sm">
-				<h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
+			<div
+				class="rounded-xl border border-blue-200 bg-white/80 p-6 backdrop-blur-sm dark:border-blue-800 dark:bg-gray-800/80"
+			>
+				<h3
+					class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-gray-100"
+				>
 					<Info size={20} />
 					學習重點
 				</h3>
 				{#if tips}{@render tips()}{:else}
-					<p class="text-gray-700">
+					<p class="text-gray-700 dark:text-gray-300">
 						這個練習幫助你理解 {getTypeName(practiceInfo.type)} 的核心概念，通過實際操作加深對相關技術的理解。
 					</p>
 				{/if}
@@ -253,7 +273,7 @@
 	@reference "tailwindcss";
 
 	.practice-demo-section {
-		@apply min-h-screen bg-gray-900;
+		@apply min-h-screen bg-gray-50 dark:bg-gray-900;
 	}
 
 	.demo-container {
