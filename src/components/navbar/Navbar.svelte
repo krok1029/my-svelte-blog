@@ -126,12 +126,12 @@
                 </div>
         </div>
 
-        <CollapsibleContent class="sm:hidden">
+        <CollapsibleContent class="sm:hidden border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
                 <div class="space-y-1 px-2 pt-2 pb-3">
                         {#each navbarList as navbar}
                                 <a
                                         href={navbar.link}
-                                        class={checkCurrentUrl(page, navbar.link)}
+                                        class="block rounded-md px-3 py-2 text-base font-medium transition-colors {checkCurrentUrl(page, navbar.link)}"
                                 >
                                         {navbar.text}
                                 </a>
